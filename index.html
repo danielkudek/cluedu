@@ -35,7 +35,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .back-btn:hover{background:rgba(255,255,255,.3)}
 .err{color:#ff6b6b;font-size:14px;text-align:center;display:none;margin-top:-6px}
 
-/* ── SCREEN 1: KOD DOSTĘPU ── */
+/* ── SCREEN 1 ── */
 #screen-access{justify-content:center;align-items:center;padding:24px}
 .access-inner{width:100%;max-width:380px;text-align:center;display:flex;flex-direction:column;align-items:center}
 .access-logo{font-size:80px;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.2))}
@@ -47,7 +47,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .reset-btn{background:none;border:none;color:rgba(255,255,255,.5);font-size:13px;cursor:pointer;text-decoration:underline;margin-top:4px;padding:4px}
 .reset-btn:hover{color:rgba(255,255,255,.8)}
 
-/* ── SCREEN 2: ONBOARDING ── */
+/* ── SCREEN 2 ── */
 #screen-onboarding{justify-content:center;align-items:center;padding:24px}
 .ob-inner{width:100%;max-width:400px;display:flex;flex-direction:column;align-items:center}
 .ob-logo{font-size:64px;margin-bottom:12px}
@@ -62,7 +62,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .level-btn:hover{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.6)}
 .level-btn.sel{background:#fff;border-color:#fff;color:#7B4FD4}
 
-/* ── SCREEN 3: GŁÓWNY ── */
+/* ── SCREEN 3 ── */
 #screen-main{justify-content:center;align-items:center;padding:24px;min-height:100vh}
 .main-inner{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center}
 .main-owl{font-size:72px;margin-bottom:12px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.2))}
@@ -85,7 +85,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .ac-prz,.ac-bio,.ac-geo{--accent:#A8E063}.ac-his{--accent:#F7B731}
 .ac-che{--accent:#A29BFE}.ac-fiz{--accent:#74B9FF}
 
-/* ── SCREEN 4: ZADANIE ── */
+/* ── SCREEN 4 ── */
 #screen-task{background:#F0F4FF}
 .task-hdr{background:linear-gradient(135deg,#7B4FD4,#C05FA0);padding:20px;display:flex;align-items:center;gap:12px}
 .task-hdr-info .title{font-size:20px;font-weight:700;color:#fff}
@@ -106,7 +106,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .ex-chip:hover{border-color:#7B4FD4;color:#7B4FD4;background:#F3EEFF}
 .task-footer{padding:16px 20px 24px;background:#F0F4FF}
 
-/* ── SCREEN 5: CHAT ── */
+/* ── SCREEN 5 ── */
 .chat-hdr{background:linear-gradient(135deg,#7B4FD4,#C05FA0);padding:14px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
 .chat-subj-name{font-weight:700;font-size:16px;color:#fff}
 .chat-subj-hint{font-size:11px;color:rgba(255,255,255,.75)}
@@ -137,7 +137,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .send-btn:hover{transform:scale(1.08)}
 .send-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 
-/* ── SCREEN 6: RAPORT ── */
+/* ── SCREEN 6 ── */
 #screen-report{background:#F0F4FF}
 .report-hdr{background:linear-gradient(135deg,#7B4FD4,#C05FA0);padding:20px;display:flex;align-items:center;gap:12px}
 .report-body{padding:20px;flex:1;overflow-y:auto}
@@ -162,7 +162,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .set-value{font-size:13px;color:#888}
 .set-arrow{color:#999}
 
-/* ── MODAL: PIN ── */
+/* ── MODAL PIN ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .modal-overlay.active{display:flex;animation:fIn .25s ease}
 .modal-box{background:#fff;border-radius:24px;padding:32px 24px;width:100%;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
@@ -303,7 +303,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
     <button class="back-btn" onclick="exitChat()">←</button>
     <div>
       <div class="chat-subj-name" id="chat-subj-name">Matematyka</div>
-      <div class="chat-subj-hint">Nie podaję gotowych odpowiedzi — uczę myślenia 😊</div>
+      <div class="chat-subj-hint">Pomagam myśleć, nie myślę za Ciebie 😊</div>
     </div>
   </div>
   <div class="chat-msgs" id="chat-msgs"></div>
@@ -371,12 +371,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
   </div>
 </div>
 
-<!-- MODAL: PIN -->
+<!-- MODAL PIN -->
 <div class="modal-overlay" id="modal-pin">
   <div class="modal-box">
     <div class="modal-title" id="pin-title">🔐 Raport rodzica</div>
     <div class="modal-sub" id="pin-sub">Wpisz 4-cyfrowy PIN</div>
-    <div class="pin-dots" id="pin-dots">
+    <div class="pin-dots">
       <div class="pin-dot"></div><div class="pin-dot"></div>
       <div class="pin-dot"></div><div class="pin-dot"></div>
     </div>
@@ -421,8 +421,8 @@ const S = {
   total:    parseInt(localStorage.getItem('ctotal') || '0'),
   sessions: JSON.parse(localStorage.getItem('csess') || '[]'),
   stats:    JSON.parse(localStorage.getItem('cstats') || '{}'),
-  subj:     null, msgs:[], photo:null, method:'text',
-  pinMode:null, pinBuf:'', pinFirst:'', rec:null, sesQ:0
+  subj:null, msgs:[], photo:null, method:'text',
+  pinMode:null, pinBuf:'', pinFirst:'', sesQ:0
 };
 
 const SUBJECTS = {
@@ -471,63 +471,82 @@ const EXAMPLES = {
     high:['Pros and cons of social media','Since vs for — różnica','Passive voice — co to?','Essay: climate change']
   },
   prz:{primary:['Jakie są pory roku?','Dlaczego niebo jest niebieskie?','Co to jest fotosynteza?','Wymień 5 zwierząt z lasu'],middle:[],high:[]},
-  bio:{primary:[],middle:['Co to jest DNA?','Budowa komórki roślinnej','Etapy mitozy','Co to jest ekosystem?'],high:['Translacja — synteza białek','Ewolucja i dobór naturalny','Jak działa układ immunologiczny?','Co to jest homeostaza?']},
-  his:{primary:[],middle:['Kim był Napoleon?','Przyczyny I Wojny Światowej','Co to była rewolucja francuska?','Kiedy upadł mur berliński?'],high:['Skutki II Wojny Światowej','Co to była zimna wojna?','Rewolucja przemysłowa','Kim był Józef Piłsudski?']},
-  che:{primary:[],middle:['Co to jest atom i cząsteczka?','Masa molowa H₂O = ?','Kwasy i zasady — co to?','Układ okresowy — jak czytać?'],high:['Zbilansuj: Fe + O₂ → Fe₂O₃','Co to jest elektrochemia?','Rodzaje wiązań chemicznych','pH — co to i jak obliczyć?']},
-  fiz:{primary:[],middle:['Co to jest siła? F = ma','Czym jest prędkość średnia?','Co to jest ciśnienie?','Jak działa dźwignia?'],high:['Energia kinetyczna: m=2 kg, v=10 m/s','Prawo Ohma','Ruch jednostajnie przyspieszony','Co to jest fala elektromagnetyczna?']},
-  geo:{primary:[],middle:['Wymień kontynenty i oceany','Klimat vs pogoda — różnica','Jak powstają góry?','Co to jest południk?'],high:['Strefy klimatyczne Ziemi','Urbanizacja i jej skutki','Jak działa El Niño?','Problem przeludnienia']}
+  bio:{primary:[],middle:['Co to jest DNA?','Budowa komórki roślinnej','Etapy mitozy','Co to jest ekosystem?'],high:['Translacja — synteza białek','Ewolucja i dobór naturalny','Jak działa układ immunologiczny?','Homeostaza']},
+  his:{primary:[],middle:['Kim był Napoleon?','Przyczyny I Wojny Światowej','Rewolucja francuska','Kiedy upadł mur berliński?'],high:['Skutki II Wojny Światowej','Zimna wojna','Rewolucja przemysłowa','Kim był Józef Piłsudski?']},
+  che:{primary:[],middle:['Co to jest atom?','Masa molowa H₂O','Kwasy i zasady','Układ okresowy — jak czytać?'],high:['Zbilansuj: Fe + O₂ → Fe₂O₃','Elektrochemia','Wiązania chemiczne','pH — co to i jak obliczyć?']},
+  fiz:{primary:[],middle:['Co to jest siła? F = ma','Prędkość średnia','Co to jest ciśnienie?','Jak działa dźwignia?'],high:['Energia kinetyczna: m=2 kg, v=10 m/s','Prawo Ohma','Ruch jednostajnie przyspieszony','Fale elektromagnetyczne']},
+  geo:{primary:[],middle:['Kontynenty i oceany','Klimat vs pogoda','Jak powstają góry?','Południk i równoleżnik'],high:['Strefy klimatyczne','Urbanizacja','El Niño','Problem przeludnienia']}
 };
 
 // ═══ SYSTEM PROMPT ═══
 function buildPrompt(subjId, subjName){
   const lv = S.level || 'middle';
   const lvName = {primary:'szkoła podstawowa kl. 1-3',middle:'szkoła podstawowa kl. 4-8',high:'liceum'}[lv];
+
+  const helpLevels = {
+    primary:  {l1:2, l2:2},
+    middle:   {l1:3, l2:2},
+    high:     {l1:4, l2:2}
+  }[lv];
+
   const styles = {
     primary:`Używaj bardzo prostego języka. Dużo emojis 😊🎉. Krótkie zdania. Bądź entuzjastyczny i ciepły.`,
     middle:`Używaj normalnego języka. Emojis z umiarem. Bądź przyjazny i motywujący.`,
     high:`Używaj dojrzałego, merytorycznego języka. Traktuj jak dorosłego. Minimalne emojis.`
   };
+
   return `Jesteś Cluedu — AI korepetytorem dla polskich uczniów.
 
 UCZEŃ: ${S.name||'uczeń'}, poziom: ${lvName}, przedmiot: ${subjName}
 
-ZASADY DOTYCZĄCE IMIENIA I JĘZYKA UCZNIA:
-• Używaj imienia ucznia WYŁĄCZNIE w formie podstawowej (mianownik): "${S.name||'uczeń'}". Nigdy nie odmieniaj imienia przez przypadki.
-• Nigdy nie poprawiaj formy gramatycznej ani rodzaju gramatycznego w wypowiedzi ucznia (np. "zrobiłem/zrobiłam"). Skup się wyłącznie na treści merytorycznej zadania.
+━━━ ZASADY JĘZYKOWE ━━━
+• Imię ucznia ZAWSZE w formie podstawowej: "${S.name||'uczeń'}". Nigdy nie odmieniaj.
+• Nigdy nie poprawiaj formy gramatycznej ani rodzaju w wypowiedzi ucznia. Skup się wyłącznie na treści zadania.
 
-ZASADA POTWIERDZANIA POPRAWNYCH ODPOWIEDZI:
-Gdy uczeń poda PRAWIDŁOWĄ odpowiedź — natychmiast i entuzjastycznie ją potwierdź słowami "Tak!", "Dokładnie!", "Świetnie!", "Brawo!" itp. Nigdy nie ignoruj poprawnej odpowiedzi ani nie każ sprawdzać jeszcze raz gdy uczeń ma rację.
+━━━ ZADANIA TESTOWE (A/B/C/D/E) ━━━
+Gdy uczeń wskazuje odpowiedź literą (np. "A", "B", "odpowiedź C"):
+1. Sprawdź czy jest poprawna
+2. Jeśli TAK → potwierdź natychmiast i entuzjastycznie: "Tak! Odpowiedź A jest prawidłowa! 🎉"
+3. Jeśli NIE → nie mów "źle", zapytaj dlaczego wybrał tę odpowiedź i naprowadź
 
-GŁÓWNA ZASADA: Nie podajesz gotowej odpowiedzi gdy uczeń jeszcze nie próbował. Prowadzisz metodą sokratejską.
+━━━ 3-POZIOMOWY SYSTEM POMOCY ━━━
 
-FAZY PRACY:
+POZIOM 1 — NAPROWADZANIE (domyślny):
+• Zadawaj jedno pytanie na raz, prowadź krok po kroku
+• Oceniaj zaangażowanie ucznia, nie liczbę wiadomości
+• Uczeń wykazuje myślenie (pokazuje tok rozumowania, zadaje pytania) → kontynuuj naprowadzanie
+• Po ${helpLevels.l1} wymianach gdzie uczeń szczerze próbuje ale utyka → przejdź do Poziomu 2
+• Gdy uczeń odpowiada bezsensownie lub "nie wiem" bez żadnej próby → zapytaj inaczej, max 2 razy, potem zaproponuj wskazówkę
 
-FAZA 1 — ROZPOZNANIE:
-• Jedno zadanie → od razu Faza 2
+POZIOM 2 — WSKAZÓWKA:
+• Daj konkretną wskazówkę która naprowadza na rozwiązanie, ale go nie zdradza
+• Przykład: "Spróbuj zacząć od obliczenia 2−0, co wychodzi?"
+• Max ${helpLevels.l2} wskazówki, potem przejdź do Poziomu 3
+• Jeśli uczeń po wskazówce sam dojdzie do odpowiedzi → potwierdź entuzjastycznie!
+
+POZIOM 3 — PEŁNE ROZWIĄZANIE:
+• Pokaż rozwiązanie krok po kroku z wyjaśnieniem każdego kroku
+• NIGDY nie podawaj samej odpowiedzi bez wyjaśnienia
+• Na końcu zapytaj: "Rozumiesz dlaczego tak wychodzi?"
+• WYJĄTEK: Zadania twórcze (opowiadania, wypracowania) — Poziom 3 nie istnieje, zawsze pomagasz rozwijać pomysły ucznia
+
+━━━ POTWIERDZANIE POPRAWNYCH ODPOWIEDZI ━━━
+Gdy uczeń poda prawidłową odpowiedź na DOWOLNYM etapie — natychmiast potwierdź:
+"Tak!", "Dokładnie!", "Świetnie!", "Brawo!" itp.
+Nigdy nie każ uczniowi sprawdzać jeszcze raz gdy już ma rację.
+
+━━━ ROZPOZNANIE ZADANIA ━━━
+• Jedno zadanie → od razu zacznij pomagać
 • Kilka zadań na zdjęciu → zapytaj które
 • Nieczytelne → poproś o ponowne przesłanie
-
-FAZA 2 — NAPROWADZANIE (min. 3-4 wymiany):
-• JEDNO pytanie na raz
-• Błąd ucznia → nie mów "źle", naprowadzaj dalej pytaniem
-• POPRAWNA odpowiedź → POTWIERDŹ natychmiast: "Tak! Dokładnie! 🎉"
-
-FAZA 3 — OCENA:
-• Dobry kierunek → kontynuuj naprowadzanie
-• Kręci się w kółko po 3-4 próbach → zaproponuj: "Chcesz, żebym pokazał krok po kroku?"
-
-FAZA 4 — POKAŻ ROZWIĄZANIE (tylko gdy konieczne):
-• Zawsze krok po kroku z wyjaśnieniem — NIGDY sama odpowiedź
-• Na końcu: "Rozumiesz dlaczego tak wychodzi?"
-• WYJĄTEK: Zadania twórcze — nigdy nie piszesz za ucznia
 
 STYL: ${styles[lv]}
 Odpowiadaj zawsze po polsku. Max 3-4 zdania na wiadomość.`;
 }
 
 // ═══ MARKDOWN ═══
-function mdToHtml(text){
-  return text
+function mdToHtml(t){
+  return t
     .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
     .replace(/\*(.+?)\*/g,'<em>$1</em>')
     .replace(/\n\n+/g,'</p><p>')
@@ -545,7 +564,7 @@ function showScreen(name){
 
 // ═══ RESET ═══
 function resetAll(){
-  if(!confirm('Resetować ustawienia? Kod dostępu wróci do domyślnego, dane zostaną usunięte.')) return;
+  if(!confirm('Resetować ustawienia? Kod dostępu wróci do domyślnego, wszystkie dane zostaną usunięte.')) return;
   localStorage.clear();
   location.reload();
 }
@@ -619,7 +638,6 @@ function selectSubject(id,data){
   document.getElementById('voice-result-task').style.display='none';
   showScreen('task');
 }
-
 function setMethod(m){
   S.method=m;
   document.querySelectorAll('.method-btn').forEach(b=>b.classList.toggle('active',b.dataset.method===m));
@@ -632,11 +650,7 @@ function setMethod(m){
 function onPhotoSelected(e){
   const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
-  r.onload=ev=>{
-    S.photo=ev.target.result;
-    const prev=document.getElementById('photo-prev');
-    prev.src=S.photo;prev.style.display='block';
-  };
+  r.onload=ev=>{S.photo=ev.target.result;const p=document.getElementById('photo-prev');p.src=S.photo;p.style.display='block';};
   r.readAsDataURL(f);
 }
 function onChatPhoto(e){
@@ -658,7 +672,7 @@ function hideVoiceOverlay(){document.getElementById('voice-overlay').classList.r
 
 function toggleVoiceTask(){
   const r=makeRec();
-  if(!r){alert('Twoja przeglądarka nie obsługuje rozpoznawania głosu.\nUżyj opcji Tekst lub Zdjęcie.');return;}
+  if(!r){alert('Twoja przeglądarka nie obsługuje rozpoznawania głosu.\nUżyj Tekstu lub Zdjęcia.');return;}
   r.onstart=()=>showVoiceOverlay();
   r.onresult=ev=>{
     const t=ev.results[0][0].transcript;
@@ -675,11 +689,7 @@ function chatVoice(){
   const r=makeRec();
   if(!r){alert('Twoja przeglądarka nie obsługuje rozpoznawania głosu.');return;}
   r.onstart=()=>showVoiceOverlay();
-  r.onresult=ev=>{
-    const inp=document.getElementById('chat-in');
-    inp.value=ev.results[0][0].transcript;
-    autoH(inp);
-  };
+  r.onresult=ev=>{const inp=document.getElementById('chat-in');inp.value=ev.results[0][0].transcript;autoH(inp);};
   r.onend=()=>hideVoiceOverlay();
   r.onerror=()=>{hideVoiceOverlay();alert('Nie udało się rozpoznać mowy. Spróbuj ponownie.');};
   r.start();
@@ -807,11 +817,10 @@ function renderReport(){
   const days=[...new Set(S.sessions.map(s=>s.date))].length;
   document.getElementById('st-days').textContent=days;
   document.getElementById('st-sess').textContent=S.sessions.length;
-  const bars=document.getElementById('subj-bars');
   const maxV=Math.max(...Object.values(S.stats),1);
   const subjs=SUBJECTS[S.level]||SUBJECTS.middle;
   const filtered=subjs.filter(s=>S.stats[s.id]>0);
-  bars.innerHTML=filtered.length
+  document.getElementById('subj-bars').innerHTML=filtered.length
     ?filtered.map(s=>{const c=S.stats[s.id]||0;const p=Math.round(c/maxV*100);
       return `<div class="subj-bar"><div class="subj-bar-lbl">${s.emoji} ${s.name}</div><div class="subj-bar-track"><div class="subj-bar-fill" style="width:${p}%"></div></div><div class="subj-bar-num">${c}</div></div>`;
     }).join('')
@@ -825,18 +834,9 @@ function renderReport(){
   document.getElementById('set-level').textContent=lvLabels[S.level]||'—';
   showScreen('report');
 }
-function chgName(){
-  const n=prompt('Nowe imię dziecka:',S.name);
-  if(n&&n.trim()){S.name=n.trim();localStorage.setItem('cname',S.name);renderReport();renderMain();}
-}
-function chgLevel(){
-  const v=prompt('Poziom (primary / middle / high):',S.level);
-  if(v&&['primary','middle','high'].includes(v)){S.level=v;localStorage.setItem('clevel',v);renderReport();renderMain();}
-}
-function chgCode(){
-  const v=prompt('Nowy kod dostępu (min. 4 znaki):','');
-  if(v&&v.length>=4){S.code=v;localStorage.setItem('code',v);alert('Kod zmieniony! ✅');}
-}
+function chgName(){const n=prompt('Nowe imię dziecka:',S.name);if(n&&n.trim()){S.name=n.trim();localStorage.setItem('cname',S.name);renderReport();renderMain();}}
+function chgLevel(){const v=prompt('Poziom (primary / middle / high):',S.level);if(v&&['primary','middle','high'].includes(v)){S.level=v;localStorage.setItem('clevel',v);renderReport();renderMain();}}
+function chgCode(){const v=prompt('Nowy kod dostępu (min. 4 znaki):','');if(v&&v.length>=4){S.code=v;localStorage.setItem('code',v);alert('Kod zmieniony! ✅');}}
 function chgPin(){startPin('set');}
 
 // ═══ PIN ═══
@@ -882,9 +882,7 @@ function pinDone(){
   }
 }
 
-function esc(t){
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
-}
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
 
 (function(){if(S.name&&S.level) renderMain();})();
 </script>
