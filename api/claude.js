@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+const handler = async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,POST');
@@ -38,4 +38,6 @@ export default async function handler(req, res) {
     console.error('Server error:', error);
     return res.status(500).json({ error: 'Błąd serwera: ' + error.message });
   }
-}
+};
+
+module.exports = handler;

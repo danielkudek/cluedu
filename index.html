@@ -3,172 +3,193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Cluedu — AI Korepetytor</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .3s}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;overflow-x:hidden}
 
-/* ── THEMES ── */
-body{--bg:#F0F4FF;--bg2:#E0E8FF;--primary:#4C6EF5;--pl:#BAC8FF;--secondary:#38D9A9;--card:#FFF;--text:#1A1A2E;--textl:#6C757D;--border:#D0D9FF;--radius:16px;--br:12px;--fs:16px;--sp:16px}
-body.t-primary{--bg:#FFF5E6;--bg2:#FFE8CC;--primary:#FF6B35;--pl:#FFD4C2;--secondary:#4ECDC4;--card:#FFF;--text:#2D2D2D;--textl:#8D8D8D;--border:#FFD4B8;--radius:24px;--br:20px;--fs:18px;--sp:20px}
-body.t-high{--bg:#0F172A;--bg2:#1E293B;--primary:#818CF8;--pl:#312E81;--secondary:#34D399;--card:#1E293B;--text:#F1F5F9;--textl:#94A3B8;--border:#334155;--radius:12px;--br:8px;--fs:16px;--sp:16px}
-
-/* ── SCREENS ── */
-.screen{display:none;min-height:100vh;padding:var(--sp);flex-direction:column}
+.screen{display:none;min-height:100vh;flex-direction:column}
 .screen.active{display:flex;animation:fIn .3s ease}
-@keyframes fIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-#screen-chat{padding:0;height:100dvh;height:100vh;overflow:hidden}
+@keyframes fIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+#screen-chat{height:100dvh;height:100vh;overflow:hidden}
 
-/* ── COMMON ── */
-.btn{border:none;border-radius:var(--br);padding:16px 24px;font-size:var(--fs);font-weight:600;cursor:pointer;width:100%;transition:all .2s}
-.btn-primary{background:var(--primary);color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.15)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.grad-bg{background:linear-gradient(160deg,#7B4FD4 0%,#9B59D0 40%,#C05FA0 75%,#D4556A 100%);position:relative;overflow:hidden}
+.grad-bg::before,.grad-bg::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+.grad-bg::before{width:300px;height:300px;top:-80px;right:-80px}
+.grad-bg::after{width:200px;height:200px;bottom:-60px;left:-60px}
+.flat-bg{background:#F0F4FF}
+
+.btn{border:none;border-radius:16px;padding:16px 24px;font-size:16px;font-weight:700;cursor:pointer;width:100%;transition:all .2s}
+.btn-white{background:#fff;color:#7B4FD4;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.btn-white:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-primary{background:#7B4FD4;color:#fff;box-shadow:0 4px 12px rgba(123,79,212,.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(123,79,212,.5)}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.btn-secondary{background:var(--card);color:var(--primary);border:2px solid var(--border)}
-.btn-secondary:hover{border-color:var(--primary);background:var(--pl)}
-.input{width:100%;padding:16px;border:2px solid var(--border);border-radius:var(--br);font-size:var(--fs);background:var(--card);color:var(--text);outline:none;transition:border-color .2s;font-family:inherit}
-.input:focus{border-color:var(--primary)}
-.back-btn{background:var(--card);border:1px solid var(--border);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;transition:all .2s}
-.back-btn:hover{border-color:var(--primary)}
-.screen-hdr{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-.screen-title{font-size:20px;font-weight:700;color:var(--text)}
-.err{color:#E74C3C;font-size:14px;text-align:center;display:none;margin-top:-8px}
-.mt{margin-top:16px}
+.btn-secondary{background:#fff;color:#7B4FD4;border:2px solid #D0BCFF}
+.btn-secondary:hover{border-color:#7B4FD4;background:#F3EEFF}
+.input{width:100%;padding:16px;border:2px solid #D0BCFF;border-radius:14px;font-size:16px;background:#fff;color:#1A1A2E;outline:none;transition:border-color .2s;font-family:inherit}
+.input:focus{border-color:#7B4FD4}
+.back-btn{background:rgba(255,255,255,.2);border:none;border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;color:#fff;transition:all .2s}
+.back-btn:hover{background:rgba(255,255,255,.3)}
+.err{color:#ff6b6b;font-size:14px;text-align:center;display:none;margin-top:-6px}
 
-/* ── SCREEN 1: ACCESS ── */
-#screen-access{justify-content:center;align-items:center;max-width:400px;margin:0 auto;width:100%;gap:0}
-.access-emoji{font-size:72px;text-align:center;margin-bottom:12px}
-#screen-access h1{font-size:32px;font-weight:800;text-align:center;color:var(--primary)}
-#screen-access p{color:var(--textl);font-size:15px;margin:4px 0 32px;text-align:center}
+/* ── SCREEN 1: KOD DOSTĘPU ── */
+#screen-access{justify-content:center;align-items:center;padding:24px}
+.access-inner{width:100%;max-width:380px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.access-logo{font-size:80px;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.2))}
+.access-title{font-size:36px;font-weight:800;color:#fff;margin-bottom:4px}
+.access-sub{color:rgba(255,255,255,.75);font-size:15px;margin-bottom:36px}
 .access-form{width:100%;display:flex;flex-direction:column;gap:14px}
+.access-form .input{background:rgba(255,255,255,.95);border-color:transparent;font-size:16px;text-align:center;letter-spacing:2px}
+.access-form .input:focus{border-color:#fff;background:#fff}
+.reset-btn{background:none;border:none;color:rgba(255,255,255,.5);font-size:13px;cursor:pointer;text-decoration:underline;margin-top:4px;padding:4px}
+.reset-btn:hover{color:rgba(255,255,255,.8)}
 
 /* ── SCREEN 2: ONBOARDING ── */
-#screen-onboarding{max-width:480px;margin:0 auto;width:100%}
-.ob-hdr{text-align:center;margin-bottom:32px}
-.ob-hdr .em{font-size:52px;margin-bottom:12px}
-.ob-hdr h2{font-size:24px;font-weight:700}
-.form-group{margin-bottom:22px}
-.form-label{display:block;font-weight:600;color:var(--text);margin-bottom:8px;font-size:16px}
-.class-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.cls-btn{background:var(--card);border:2px solid var(--border);border-radius:var(--br);padding:14px 8px;font-size:15px;font-weight:600;cursor:pointer;color:var(--text);transition:all .2s;text-align:center}
-.cls-btn:hover{border-color:var(--primary);color:var(--primary)}
-.cls-btn.sel{background:var(--primary);border-color:var(--primary);color:#fff}
+#screen-onboarding{justify-content:center;align-items:center;padding:24px}
+.ob-inner{width:100%;max-width:400px;display:flex;flex-direction:column;align-items:center}
+.ob-logo{font-size:64px;margin-bottom:12px}
+.ob-title{font-size:26px;font-weight:800;color:#fff;margin-bottom:4px}
+.ob-sub{color:rgba(255,255,255,.75);font-size:15px;margin-bottom:32px}
+.ob-card{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:24px;width:100%;display:flex;flex-direction:column;gap:18px}
+.ob-label{font-size:13px;font-weight:700;color:rgba(255,255,255,.9);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.ob-card .input{background:rgba(255,255,255,.95);border-color:transparent;font-size:17px}
+.ob-card .input:focus{border-color:#fff;background:#fff}
+.level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.level-btn{background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.3);border-radius:14px;padding:14px 8px;font-size:14px;font-weight:700;cursor:pointer;color:#fff;transition:all .2s;text-align:center;line-height:1.3}
+.level-btn:hover{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.6)}
+.level-btn.sel{background:#fff;border-color:#fff;color:#7B4FD4}
 
-/* ── SCREEN 3: MAIN ── */
-#screen-main{max-width:600px;margin:0 auto;width:100%}
-.main-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
-.greeting{flex:1}
-.greeting h2{font-size:22px;font-weight:700}
-.greeting p{color:var(--textl);font-size:14px;margin-top:3px}
-.parent-btn{background:var(--card);border:1px solid var(--border);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;transition:all .2s;flex-shrink:0}
-.parent-btn:hover{border-color:var(--primary);transform:scale(1.08)}
-.subj-label{font-size:13px;font-weight:600;color:var(--textl);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
-.subj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px}
-.subj-card{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:20px 16px;cursor:pointer;transition:all .2s;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.subj-card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
-.subj-card:active{transform:translateY(0)}
-.subj-em{font-size:36px;margin-bottom:8px}
-.subj-name{font-size:14px;font-weight:600}
-body.t-primary .subj-card{border-width:3px}
-body.t-primary .subj-em{font-size:42px}
-body.t-primary .subj-name{font-size:16px}
-.btn-dontknow{background:var(--bg2);border:2px dashed var(--border);border-radius:var(--radius);padding:16px;width:100%;cursor:pointer;font-size:15px;color:var(--textl);font-weight:500;transition:all .2s}
-.btn-dontknow:hover{border-color:var(--primary);color:var(--primary)}
+/* ── SCREEN 3: GŁÓWNY ── */
+#screen-main{justify-content:center;align-items:center;padding:24px;min-height:100vh}
+.main-inner{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center}
+.main-owl{font-size:72px;margin-bottom:12px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.2))}
+.main-greeting{font-size:30px;font-weight:800;color:#fff;margin-bottom:6px;text-align:center}
+.main-greeting span{color:#FFD95A}
+.main-sub{color:rgba(255,255,255,.8);font-size:15px;margin-bottom:32px;text-align:center}
+.subj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;width:100%;margin-bottom:14px}
+.subj-card{background:#fff;border:none;border-radius:20px;padding:22px 16px;cursor:pointer;transition:all .25s;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.12);position:relative;overflow:hidden}
+.subj-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--accent,#7B4FD4);border-radius:0 0 20px 20px}
+.subj-card:hover{transform:translateY(-4px);box-shadow:0 10px 32px rgba(0,0,0,.18)}
+.subj-card:active{transform:translateY(-1px)}
+.subj-em{font-size:40px;margin-bottom:8px;display:block}
+.subj-name{font-size:15px;font-weight:700;color:#1A1A2E}
+.btn-dontknow{background:rgba(255,255,255,.2);border:2px dashed rgba(255,255,255,.5);border-radius:16px;padding:16px;width:100%;cursor:pointer;font-size:15px;color:rgba(255,255,255,.9);font-weight:600;transition:all .2s}
+.btn-dontknow:hover{background:rgba(255,255,255,.3);border-color:#fff}
+.parent-icon{position:fixed;top:16px;right:16px;background:rgba(255,255,255,.25);border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;transition:all .2s;z-index:10}
+.parent-icon:hover{background:rgba(255,255,255,.4)}
 
-/* ── SCREEN 4: TASK ── */
-#screen-task{max-width:600px;margin:0 auto;width:100%}
-.task-q{font-size:18px;font-weight:600;margin-bottom:20px}
-.methods{display:flex;gap:10px;margin-bottom:18px}
-.method-btn{flex:1;background:var(--card);border:2px solid var(--border);border-radius:var(--br);padding:14px 6px;cursor:pointer;text-align:center;transition:all .2s;font-size:13px;color:var(--textl);font-weight:500}
-.method-btn:hover{border-color:var(--primary);color:var(--primary)}
-.method-btn.active{border-color:var(--primary);background:var(--pl);color:var(--primary)}
+.ac-mat{--accent:#FF6B6B}.ac-pol{--accent:#FF9ECD}.ac-ang{--accent:#4ECDC4}
+.ac-prz,.ac-bio,.ac-geo{--accent:#A8E063}.ac-his{--accent:#F7B731}
+.ac-che{--accent:#A29BFE}.ac-fiz{--accent:#74B9FF}
+
+/* ── SCREEN 4: ZADANIE ── */
+#screen-task{background:#F0F4FF}
+.task-hdr{background:linear-gradient(135deg,#7B4FD4,#C05FA0);padding:20px;display:flex;align-items:center;gap:12px}
+.task-hdr-info .title{font-size:20px;font-weight:700;color:#fff}
+.task-hdr-info .hint{font-size:12px;color:rgba(255,255,255,.75)}
+.task-body{padding:20px;flex:1;overflow-y:auto}
+.task-q{font-size:18px;font-weight:600;color:#1A1A2E;margin-bottom:20px}
+.methods{display:flex;gap:10px;margin-bottom:20px}
+.method-btn{flex:1;background:#fff;border:2px solid #D0BCFF;border-radius:14px;padding:14px 6px;cursor:pointer;text-align:center;transition:all .2s;font-size:13px;color:#666;font-weight:600}
+.method-btn:hover{border-color:#7B4FD4;color:#7B4FD4}
+.method-btn.active{border-color:#7B4FD4;background:#F3EEFF;color:#7B4FD4}
 .method-icon{font-size:24px;display:block;margin-bottom:4px}
-.task-ta{width:100%;min-height:120px;padding:16px;border:2px solid var(--border);border-radius:var(--radius);font-size:16px;background:var(--card);color:var(--text);outline:none;resize:vertical;font-family:inherit;transition:border-color .2s}
-.task-ta:focus{border-color:var(--primary)}
-.photo-preview{width:100%;max-height:280px;border-radius:var(--radius);object-fit:contain;border:2px solid var(--border);display:none;margin-bottom:14px}
-.voice-ui{display:none;text-align:center;padding:24px;border:2px solid var(--border);border-radius:var(--radius);margin-bottom:14px}
-.voice-ui.listening{border-color:#E74C3C;animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(231,76,60,.3)}50%{box-shadow:0 0 0 10px rgba(231,76,60,0)}}
-.voice-icon{font-size:48px;margin-bottom:8px}
-.voice-status{font-size:14px;color:var(--textl)}
-.voice-result{margin-top:12px;font-size:14px;color:var(--textl);display:none}
-.ex-label{font-size:12px;font-weight:600;color:var(--textl);text-transform:uppercase;letter-spacing:.5px;margin:16px 0 8px}
-.ex-list{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
-.ex-chip{background:var(--card);border:1px solid var(--border);border-radius:var(--br);padding:12px 16px;cursor:pointer;font-size:14px;color:var(--text);transition:all .2s;text-align:left}
-.ex-chip:hover{border-color:var(--primary);color:var(--primary)}
+.task-ta{width:100%;min-height:120px;padding:16px;border:2px solid #D0BCFF;border-radius:14px;font-size:16px;background:#fff;color:#1A1A2E;outline:none;resize:vertical;font-family:inherit;transition:border-color .2s}
+.task-ta:focus{border-color:#7B4FD4}
+.photo-preview{width:100%;max-height:260px;border-radius:14px;object-fit:contain;border:2px solid #D0BCFF;display:none;margin-bottom:14px}
+.ex-label{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin:16px 0 10px}
+.ex-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.ex-chip{background:#fff;border:1px solid #D0BCFF;border-radius:12px;padding:12px 16px;cursor:pointer;font-size:14px;color:#333;transition:all .2s;text-align:left}
+.ex-chip:hover{border-color:#7B4FD4;color:#7B4FD4;background:#F3EEFF}
+.task-footer{padding:16px 20px 24px;background:#F0F4FF}
 
 /* ── SCREEN 5: CHAT ── */
-.chat-hdr{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--card);border-bottom:1px solid var(--border);flex-shrink:0}
-.chat-subj{flex:1}
-.chat-subj-name{font-weight:700;font-size:16px}
-.chat-subj-hint{font-size:11px;color:var(--textl)}
-.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.chat-hdr{background:linear-gradient(135deg,#7B4FD4,#C05FA0);padding:14px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.chat-subj-name{font-weight:700;font-size:16px;color:#fff}
+.chat-subj-hint{font-size:11px;color:rgba(255,255,255,.75)}
+.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;background:#F0F4FF}
 .chat-msgs::-webkit-scrollbar{width:4px}
-.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.chat-msgs::-webkit-scrollbar-thumb{background:#D0BCFF;border-radius:2px}
 .msg{max-width:85%;animation:msgIn .25s ease}
 @keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .msg.user{align-self:flex-end}
 .msg.assistant{align-self:flex-start}
-.bubble{padding:12px 16px;border-radius:18px;font-size:15px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
-.msg.user .bubble{background:var(--primary);color:#fff;border-bottom-right-radius:4px}
-.msg.assistant .bubble{background:var(--card);color:var(--text);border:1px solid var(--border);border-bottom-left-radius:4px}
+.bubble{padding:12px 16px;border-radius:18px;font-size:15px;line-height:1.6;word-break:break-word}
+.bubble p{margin:0 0 8px}.bubble p:last-child{margin-bottom:0}
+.bubble strong{font-weight:700}.bubble em{font-style:italic}
+.msg.user .bubble{background:linear-gradient(135deg,#7B4FD4,#9B59D0);color:#fff;border-bottom-right-radius:4px}
+.msg.assistant .bubble{background:#fff;color:#1A1A2E;border:1px solid #E0D5FF;border-bottom-left-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .msg-img{max-width:220px;border-radius:12px;display:block;margin-bottom:4px}
-.typing{display:flex;gap:5px;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:18px;border-bottom-left-radius:4px;width:fit-content;align-self:flex-start}
-.tdot{width:8px;height:8px;border-radius:50%;background:var(--textl);animation:tb 1.2s infinite}
-.tdot:nth-child(2){animation-delay:.2s}
-.tdot:nth-child(3){animation-delay:.4s}
+.typing{display:flex;gap:5px;padding:12px 16px;background:#fff;border:1px solid #E0D5FF;border-radius:18px;border-bottom-left-radius:4px;width:fit-content;align-self:flex-start;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.tdot{width:8px;height:8px;border-radius:50%;background:#C0A8FF;animation:tb 1.2s infinite}
+.tdot:nth-child(2){animation-delay:.2s}.tdot:nth-child(3){animation-delay:.4s}
 @keyframes tb{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
-.chat-input-area{padding:10px 14px;background:var(--card);border-top:1px solid var(--border);flex-shrink:0}
+.chat-input-area{padding:10px 14px 16px;background:#fff;border-top:1px solid #E0D5FF;flex-shrink:0}
 .chat-row{display:flex;gap:8px;align-items:flex-end}
-.chat-in{flex:1;padding:11px 15px;border:2px solid var(--border);border-radius:22px;font-size:15px;background:var(--bg);color:var(--text);outline:none;resize:none;max-height:100px;font-family:inherit;line-height:1.4}
-.chat-in:focus{border-color:var(--primary)}
-.cab{background:var(--bg2);border:1px solid var(--border);border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;flex-shrink:0}
-.cab:hover{border-color:var(--primary)}
-.send-btn{background:var(--primary);border:none;border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;flex-shrink:0}
+.chat-in{flex:1;padding:11px 15px;border:2px solid #D0BCFF;border-radius:22px;font-size:15px;background:#F8F4FF;color:#1A1A2E;outline:none;resize:none;max-height:100px;font-family:inherit;line-height:1.4;transition:border-color .2s}
+.chat-in:focus{border-color:#7B4FD4}
+.cab{background:#F0EAFF;border:1px solid #D0BCFF;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;flex-shrink:0}
+.cab:hover{border-color:#7B4FD4;background:#E8DEFF}
+.send-btn{background:linear-gradient(135deg,#7B4FD4,#9B59D0);border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;flex-shrink:0;box-shadow:0 3px 10px rgba(123,79,212,.4)}
 .send-btn:hover{transform:scale(1.08)}
 .send-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 
-/* ── SCREEN 6: REPORT ── */
-#screen-report{max-width:600px;margin:0 auto;width:100%}
+/* ── SCREEN 6: RAPORT ── */
+#screen-report{background:#F0F4FF}
+.report-hdr{background:linear-gradient(135deg,#7B4FD4,#C05FA0);padding:20px;display:flex;align-items:center;gap:12px}
+.report-body{padding:20px;flex:1;overflow-y:auto}
 .rpt-section{margin-bottom:24px}
-.rpt-section h3{font-size:12px;font-weight:600;color:var(--textl);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.rpt-section h3{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px 12px;text-align:center}
-.stat-val{font-size:28px;font-weight:800;color:var(--primary)}
-.stat-lbl{font-size:12px;color:var(--textl);margin-top:3px}
+.stat-card{background:#fff;border:1px solid #E0D5FF;border-radius:16px;padding:16px 12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.stat-val{font-size:30px;font-weight:800;color:#7B4FD4}
+.stat-lbl{font-size:12px;color:#888;margin-top:3px}
 .subj-bar{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.subj-bar-lbl{font-size:13px;color:var(--text);width:110px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.subj-bar-track{flex:1;height:8px;background:var(--bg2);border-radius:4px;overflow:hidden}
-.subj-bar-fill{height:100%;background:var(--primary);border-radius:4px;transition:width .6s ease}
-.subj-bar-num{font-size:13px;font-weight:600;color:var(--primary);width:28px;text-align:right}
-.sess-item{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:var(--br);margin-bottom:7px;font-size:14px}
-.sess-item span:last-child{color:var(--primary);font-weight:600}
-.set-item{background:var(--card);border:1px solid var(--border);border-radius:var(--br);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;transition:all .2s}
-.set-item:hover{border-color:var(--primary)}
+.subj-bar-lbl{font-size:13px;color:#333;width:110px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.subj-bar-track{flex:1;height:8px;background:#EDE8FF;border-radius:4px;overflow:hidden}
+.subj-bar-fill{height:100%;background:linear-gradient(90deg,#7B4FD4,#C05FA0);border-radius:4px;transition:width .6s ease}
+.subj-bar-num{font-size:13px;font-weight:700;color:#7B4FD4;width:28px;text-align:right}
+.sess-item{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#fff;border:1px solid #E0D5FF;border-radius:12px;margin-bottom:7px;font-size:14px}
+.sess-item span:last-child{color:#7B4FD4;font-weight:700}
+.set-item{background:#fff;border:1px solid #E0D5FF;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;transition:all .2s}
+.set-item:hover{border-color:#7B4FD4}
 .set-icon{font-size:20px}
 .set-text{flex:1}
-.set-label{font-size:15px;font-weight:600}
-.set-value{font-size:13px;color:var(--textl)}
-.set-arrow{color:var(--textl)}
+.set-label{font-size:15px;font-weight:600;color:#1A1A2E}
+.set-value{font-size:13px;color:#888}
+.set-arrow{color:#999}
 
 /* ── MODAL: PIN ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .modal-overlay.active{display:flex;animation:fIn .25s ease}
-.modal-box{background:var(--card);border-radius:var(--radius);padding:32px 24px;width:100%;max-width:340px}
-.modal-title{font-size:20px;font-weight:700;text-align:center;margin-bottom:6px}
-.modal-sub{font-size:14px;color:var(--textl);text-align:center;margin-bottom:22px}
+.modal-box{background:#fff;border-radius:24px;padding:32px 24px;width:100%;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-title{font-size:22px;font-weight:800;text-align:center;color:#1A1A2E;margin-bottom:4px}
+.modal-sub{font-size:14px;color:#888;text-align:center;margin-bottom:22px}
 .pin-dots{display:flex;gap:14px;justify-content:center;margin-bottom:22px}
-.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border);transition:all .2s}
-.pin-dot.filled{background:var(--primary);border-color:var(--primary)}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid #D0BCFF;transition:all .2s}
+.pin-dot.filled{background:#7B4FD4;border-color:#7B4FD4}
 .pin-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.pin-key{background:var(--bg);border:1px solid var(--border);border-radius:var(--br);padding:15px;font-size:20px;font-weight:600;cursor:pointer;text-align:center;color:var(--text);transition:all .2s}
-.pin-key:hover{background:var(--pl);border-color:var(--primary)}
-.pin-key:active{transform:scale(.94)}
+.pin-key{background:#F3EEFF;border:1px solid #E0D5FF;border-radius:14px;padding:16px;font-size:22px;font-weight:700;cursor:pointer;text-align:center;color:#1A1A2E;transition:all .2s}
+.pin-key:hover{background:#E8DEFF;border-color:#7B4FD4}
+.pin-key:active{transform:scale(.92)}
 .pin-err{color:#E74C3C;font-size:13px;text-align:center;display:none;margin-bottom:10px}
 
-/* ── HIDDEN ── */
+/* ── VOICE OVERLAY ── */
+.voice-overlay{display:none;position:fixed;inset:0;background:rgba(30,0,60,.8);z-index:2000;align-items:center;justify-content:center;flex-direction:column;gap:24px;backdrop-filter:blur(8px)}
+.voice-overlay.active{display:flex;animation:fIn .2s ease}
+.voice-anim{position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center}
+.voice-ring{position:absolute;width:120px;height:120px;border-radius:50%;border:3px solid rgba(255,255,255,.35);animation:ring 1.8s ease-out infinite}
+.voice-ring:nth-child(2){animation-delay:.6s}
+.voice-ring:nth-child(3){animation-delay:1.2s}
+@keyframes ring{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+.voice-mic{font-size:52px;position:relative;z-index:1;animation:micPulse 1s ease-in-out infinite}
+@keyframes micPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.voice-label{color:#fff;font-size:22px;font-weight:800;letter-spacing:.5px}
+.voice-hint{color:rgba(255,255,255,.55);font-size:14px}
+
 .hidden{display:none!important}
 #cam-in,#chat-cam-in{display:none}
 </style>
@@ -176,115 +197,111 @@ body.t-primary .subj-name{font-size:16px}
 <body>
 
 <!-- SCREEN 1: KOD DOSTĘPU -->
-<div id="screen-access" class="screen active">
-  <div class="access-emoji">🎓</div>
-  <h1>Cluedu</h1>
-  <p>AI Korepetytor dla dzieci</p>
-  <div class="access-form">
-    <input type="password" id="access-in" class="input" placeholder="Wpisz kod dostępu" autocomplete="off">
-    <div id="access-err" class="err">❌ Nieprawidłowy kod dostępu</div>
-    <button class="btn btn-primary" onclick="checkAccess()">Wejdź →</button>
+<div id="screen-access" class="screen grad-bg active">
+  <div class="access-inner">
+    <div class="access-logo">🦉</div>
+    <h1 class="access-title">Cluedu</h1>
+    <p class="access-sub">AI Korepetytor dla dzieci</p>
+    <div class="access-form">
+      <input type="password" id="access-in" class="input" placeholder="Wpisz kod dostępu" autocomplete="off">
+      <div id="access-err" class="err">❌ Nieprawidłowy kod dostępu</div>
+      <button class="btn btn-white" onclick="checkAccess()">Wchodzę! →</button>
+      <button class="reset-btn" onclick="resetAll()">Resetuj ustawienia</button>
+    </div>
   </div>
 </div>
 
 <!-- SCREEN 2: ONBOARDING -->
-<div id="screen-onboarding" class="screen">
-  <div class="ob-hdr">
-    <div class="em">👋</div>
-    <h2>Cześć! Jak masz na imię?</h2>
-  </div>
-  <div class="form-group">
-    <label class="form-label">Imię</label>
-    <input type="text" id="name-in" class="input" placeholder="Wpisz swoje imię..." maxlength="30" autocomplete="off">
-  </div>
-  <div class="form-group">
-    <label class="form-label">Klasa</label>
-    <div class="class-grid" id="class-grid">
-      <button class="cls-btn" data-class="1">Klasa 1</button>
-      <button class="cls-btn" data-class="2">Klasa 2</button>
-      <button class="cls-btn" data-class="3">Klasa 3</button>
-      <button class="cls-btn" data-class="4">Klasa 4</button>
-      <button class="cls-btn" data-class="5">Klasa 5</button>
-      <button class="cls-btn" data-class="6">Klasa 6</button>
-      <button class="cls-btn" data-class="7">Klasa 7</button>
-      <button class="cls-btn" data-class="8">Klasa 8</button>
-      <button class="cls-btn" data-class="LO1">LO 1</button>
-      <button class="cls-btn" data-class="LO2">LO 2</button>
-      <button class="cls-btn" data-class="LO3">LO 3</button>
-      <button class="cls-btn" data-class="LO4">LO 4</button>
+<div id="screen-onboarding" class="screen grad-bg">
+  <div class="ob-inner">
+    <div class="ob-logo">👋</div>
+    <h2 class="ob-title">Cześć! Jak masz na imię?</h2>
+    <p class="ob-sub">Powiedz mi o sobie, żebym mógł lepiej pomóc</p>
+    <div class="ob-card">
+      <div>
+        <div class="ob-label">Twoje imię</div>
+        <input type="text" id="name-in" class="input" placeholder="Wpisz imię..." maxlength="30" autocomplete="off">
+      </div>
+      <div>
+        <div class="ob-label">Klasa</div>
+        <div class="level-grid">
+          <button class="level-btn" data-level="primary" onclick="selLevel(this)">Klasy<br>1–3</button>
+          <button class="level-btn" data-level="middle" onclick="selLevel(this)">Klasy<br>4–8</button>
+          <button class="level-btn" data-level="high" onclick="selLevel(this)">Liceum</button>
+        </div>
+      </div>
+      <button class="btn btn-white" onclick="saveOnboarding()">Zaczynamy! 🚀</button>
     </div>
   </div>
-  <button class="btn btn-primary mt" onclick="saveOnboarding()">Zaczynamy! 🚀</button>
 </div>
 
 <!-- SCREEN 3: GŁÓWNY -->
-<div id="screen-main" class="screen">
-  <div class="main-hdr">
-    <div class="greeting">
-      <h2 id="greeting-text">Cześć!</h2>
-      <p id="greeting-sub">Czego się dzisiaj uczymy?</p>
-    </div>
-    <button class="parent-btn" onclick="openReport()" title="Dla rodziców">👤</button>
+<div id="screen-main" class="screen grad-bg">
+  <button class="parent-icon" onclick="openReport()">👤</button>
+  <div class="main-inner">
+    <div class="main-owl">🦉</div>
+    <h2 class="main-greeting">Cześć, <span id="greeting-name">!</span></h2>
+    <p class="main-sub">Czego się dzisiaj uczymy? 📚</p>
+    <div class="subj-grid" id="subj-grid"></div>
+    <button class="btn-dontknow" onclick="selectSubject('unknown',{id:'unknown',name:'Dowolny przedmiot',emoji:'🤔'})">
+      🤷 Nie wiem z jakiego to przedmiotu
+    </button>
   </div>
-  <div class="subj-label">Wybierz przedmiot</div>
-  <div class="subj-grid" id="subj-grid"></div>
-  <button class="btn-dontknow" onclick="selectSubject('unknown',{id:'unknown',name:'Dowolny przedmiot',emoji:'🤔'})">
-    🤷 Nie wiem z jakiego to przedmiotu
-  </button>
 </div>
 
-<!-- SCREEN 4: WPROWADZANIE ZADANIA -->
-<div id="screen-task" class="screen">
-  <div class="screen-hdr">
+<!-- SCREEN 4: ZADANIE -->
+<div id="screen-task" class="screen flat-bg">
+  <div class="task-hdr">
     <button class="back-btn" onclick="showScreen('main')">←</button>
-    <div>
-      <div class="screen-title" id="task-title">Matematyka</div>
-      <div style="font-size:12px;color:var(--textl)">Pokaż mi swoje zadanie</div>
+    <div class="task-hdr-info">
+      <div class="title" id="task-title">Matematyka</div>
+      <div class="hint">Pokaż mi swoje zadanie</div>
     </div>
   </div>
-  <div class="task-q" id="task-q">Co chcesz dzisiaj poćwiczyć?</div>
-  <div class="methods">
-    <button class="method-btn active" data-method="text" onclick="setMethod('text')">
-      <span class="method-icon">⌨️</span>Tekst
-    </button>
-    <button class="method-btn" data-method="photo" onclick="setMethod('photo')">
-      <span class="method-icon">📷</span>Zdjęcie
-    </button>
-    <button class="method-btn" data-method="voice" onclick="setMethod('voice')">
-      <span class="method-icon">🎤</span>Głos
-    </button>
-  </div>
-  <!-- Tekst -->
-  <div id="m-text">
-    <textarea id="task-ta" class="task-ta" placeholder="Wpisz treść zadania..."></textarea>
-  </div>
-  <!-- Zdjęcie -->
-  <div id="m-photo" class="hidden">
-    <img id="photo-prev" class="photo-preview" alt="Podgląd">
-    <input type="file" id="cam-in" accept="image/*" capture="environment" onchange="onPhotoSelected(event)">
-    <button class="btn btn-secondary" onclick="document.getElementById('cam-in').click()" style="margin-bottom:14px">
-      📷 Zrób lub wybierz zdjęcie
-    </button>
-  </div>
-  <!-- Głos -->
-  <div id="m-voice" class="hidden">
-    <div class="voice-ui" id="voice-ui">
-      <div class="voice-icon" id="voice-icon">🎤</div>
-      <div class="voice-status" id="voice-status">Kliknij przycisk, żeby mówić</div>
+  <div class="task-body">
+    <div class="task-q" id="task-q">Co chcesz dzisiaj poćwiczyć?</div>
+    <div class="methods">
+      <button class="method-btn active" data-method="text" onclick="setMethod('text')">
+        <span class="method-icon">⌨️</span>Tekst
+      </button>
+      <button class="method-btn" data-method="photo" onclick="setMethod('photo')">
+        <span class="method-icon">📷</span>Zdjęcie
+      </button>
+      <button class="method-btn" data-method="voice" onclick="setMethod('voice')">
+        <span class="method-icon">🎤</span>Głos
+      </button>
     </div>
-    <button class="btn btn-primary" id="voice-btn" onclick="toggleVoice()">🎤 Naciśnij i mów</button>
-    <div class="voice-result" id="voice-result">Rozpoznano: "<span id="voice-txt"></span>"</div>
+    <div id="m-text">
+      <textarea id="task-ta" class="task-ta" placeholder="Wpisz treść zadania..."></textarea>
+    </div>
+    <div id="m-photo" class="hidden">
+      <img id="photo-prev" class="photo-preview" alt="Podgląd">
+      <input type="file" id="cam-in" accept="image/*" capture="environment" onchange="onPhotoSelected(event)">
+      <button class="btn btn-secondary" onclick="document.getElementById('cam-in').click()" style="margin-bottom:14px">
+        📷 Zrób lub wybierz zdjęcie
+      </button>
+    </div>
+    <div id="m-voice" class="hidden">
+      <button class="btn btn-primary" onclick="toggleVoiceTask()" style="margin-bottom:14px">
+        🎤 Naciśnij i mów
+      </button>
+      <div id="voice-result-task" style="display:none;padding:12px 16px;background:#fff;border:1px solid #D0BCFF;border-radius:12px;font-size:14px;color:#555;margin-bottom:14px">
+        Rozpoznano: "<span id="voice-txt-task"></span>"
+      </div>
+    </div>
+    <div class="ex-label">Przykładowe zadania</div>
+    <div class="ex-list" id="ex-list"></div>
   </div>
-  <div class="ex-label">Przykładowe zadania</div>
-  <div class="ex-list" id="ex-list"></div>
-  <button class="btn btn-primary" onclick="startChat()">Porozmawiajmy! →</button>
+  <div class="task-footer">
+    <button class="btn btn-primary" onclick="startChat()">Porozmawiajmy! →</button>
+  </div>
 </div>
 
 <!-- SCREEN 5: CHAT -->
 <div id="screen-chat" class="screen">
   <div class="chat-hdr">
     <button class="back-btn" onclick="exitChat()">←</button>
-    <div class="chat-subj">
+    <div>
       <div class="chat-subj-name" id="chat-subj-name">Matematyka</div>
       <div class="chat-subj-hint">Nie podaję gotowych odpowiedzi — uczę myślenia 😊</div>
     </div>
@@ -302,49 +319,54 @@ body.t-primary .subj-name{font-size:16px}
   </div>
 </div>
 
-<!-- SCREEN 6: RAPORT RODZICA -->
-<div id="screen-report" class="screen">
-  <div class="screen-hdr">
+<!-- SCREEN 6: RAPORT -->
+<div id="screen-report" class="screen flat-bg">
+  <div class="report-hdr">
     <button class="back-btn" onclick="showScreen('main')">←</button>
-    <div class="screen-title">Raport rodzica</div>
-  </div>
-  <div class="rpt-section">
-    <h3>Statystyki</h3>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-val" id="st-total">0</div><div class="stat-lbl">Zapytań łącznie</div></div>
-      <div class="stat-card"><div class="stat-val" id="st-days">0</div><div class="stat-lbl">Dni nauki</div></div>
-      <div class="stat-card"><div class="stat-val" id="st-sess">0</div><div class="stat-lbl">Sesji</div></div>
+    <div style="color:#fff">
+      <div style="font-size:20px;font-weight:800">Raport rodzica</div>
+      <div style="font-size:12px;opacity:.75">Postępy i statystyki</div>
     </div>
   </div>
-  <div class="rpt-section">
-    <h3>Aktywność per przedmiot</h3>
-    <div id="subj-bars"></div>
-  </div>
-  <div class="rpt-section">
-    <h3>Ostatnie sesje</h3>
-    <div id="recent-sess"></div>
-  </div>
-  <div class="rpt-section">
-    <h3>Ustawienia</h3>
-    <div class="set-item" onclick="chgName()">
-      <div class="set-icon">👤</div>
-      <div class="set-text"><div class="set-label">Imię dziecka</div><div class="set-value" id="set-name">—</div></div>
-      <div class="set-arrow">›</div>
+  <div class="report-body">
+    <div class="rpt-section">
+      <h3>Statystyki</h3>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-val" id="st-total">0</div><div class="stat-lbl">Zapytań łącznie</div></div>
+        <div class="stat-card"><div class="stat-val" id="st-days">0</div><div class="stat-lbl">Dni nauki</div></div>
+        <div class="stat-card"><div class="stat-val" id="st-sess">0</div><div class="stat-lbl">Sesji</div></div>
+      </div>
     </div>
-    <div class="set-item" onclick="chgClass()">
-      <div class="set-icon">🎒</div>
-      <div class="set-text"><div class="set-label">Klasa</div><div class="set-value" id="set-class">—</div></div>
-      <div class="set-arrow">›</div>
+    <div class="rpt-section">
+      <h3>Aktywność per przedmiot</h3>
+      <div id="subj-bars"></div>
     </div>
-    <div class="set-item" onclick="chgCode()">
-      <div class="set-icon">🔑</div>
-      <div class="set-text"><div class="set-label">Kod dostępu</div><div class="set-value">Zmień kod</div></div>
-      <div class="set-arrow">›</div>
+    <div class="rpt-section">
+      <h3>Ostatnie sesje</h3>
+      <div id="recent-sess"></div>
     </div>
-    <div class="set-item" onclick="chgPin()">
-      <div class="set-icon">🔐</div>
-      <div class="set-text"><div class="set-label">PIN rodzica</div><div class="set-value">Zmień PIN</div></div>
-      <div class="set-arrow">›</div>
+    <div class="rpt-section">
+      <h3>Ustawienia</h3>
+      <div class="set-item" onclick="chgName()">
+        <div class="set-icon">👤</div>
+        <div class="set-text"><div class="set-label">Imię dziecka</div><div class="set-value" id="set-name">—</div></div>
+        <div class="set-arrow">›</div>
+      </div>
+      <div class="set-item" onclick="chgLevel()">
+        <div class="set-icon">🎒</div>
+        <div class="set-text"><div class="set-label">Poziom</div><div class="set-value" id="set-level">—</div></div>
+        <div class="set-arrow">›</div>
+      </div>
+      <div class="set-item" onclick="chgCode()">
+        <div class="set-icon">🔑</div>
+        <div class="set-text"><div class="set-label">Kod dostępu</div><div class="set-value">Zmień kod</div></div>
+        <div class="set-arrow">›</div>
+      </div>
+      <div class="set-item" onclick="chgPin()">
+        <div class="set-icon">🔐</div>
+        <div class="set-text"><div class="set-label">PIN rodzica</div><div class="set-value">Zmień PIN</div></div>
+        <div class="set-arrow">›</div>
+      </div>
     </div>
   </div>
 </div>
@@ -369,177 +391,151 @@ body.t-primary .subj-name{font-size:16px}
       <button class="pin-key" onclick="pk('7')">7</button>
       <button class="pin-key" onclick="pk('8')">8</button>
       <button class="pin-key" onclick="pk('9')">9</button>
-      <button class="pin-key" style="font-size:14px" onclick="pk('X')">Anuluj</button>
+      <button class="pin-key" style="font-size:14px;font-weight:600" onclick="pk('X')">Anuluj</button>
       <button class="pin-key" onclick="pk('0')">0</button>
       <button class="pin-key" onclick="pk('DEL')">⌫</button>
     </div>
   </div>
 </div>
 
+<!-- VOICE OVERLAY -->
+<div class="voice-overlay" id="voice-overlay">
+  <div class="voice-anim">
+    <div class="voice-ring"></div>
+    <div class="voice-ring"></div>
+    <div class="voice-ring"></div>
+    <div class="voice-mic">🎤</div>
+  </div>
+  <div class="voice-label">Mów teraz...</div>
+  <div class="voice-hint">Powiedz swoje zadanie lub odpowiedź</div>
+</div>
+
 <script>
-// ═══════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════
+const DEFAULT_CODE = 'cluedu2026';
+
 const S = {
-  code:     localStorage.getItem('code') || 'cluedu2024',
+  code:     localStorage.getItem('code') || DEFAULT_CODE,
   name:     localStorage.getItem('cname') || '',
-  cls:      localStorage.getItem('ccls') || '',
+  level:    localStorage.getItem('clevel') || '',
   pin:      localStorage.getItem('cpin') || '',
   total:    parseInt(localStorage.getItem('ctotal') || '0'),
   sessions: JSON.parse(localStorage.getItem('csess') || '[]'),
   stats:    JSON.parse(localStorage.getItem('cstats') || '{}'),
-  subj:     null,
-  msgs:     [],
-  photo:    null,
-  method:   'text',
-  pinMode:  null,
-  pinBuf:   '',
-  pinFirst: '',
-  rec:      null,
-  listening:false,
-  sesQ:     0,
-  sesStart: null
+  subj:     null, msgs:[], photo:null, method:'text',
+  pinMode:null, pinBuf:'', pinFirst:'', rec:null, sesQ:0
 };
 
-function level(){
-  const c = S.cls;
-  if(!c) return 'middle';
-  if(['1','2','3'].includes(c)) return 'primary';
-  if(['4','5','6','7','8'].includes(c)) return 'middle';
-  return 'high';
-}
-
-// ═══════════════════════════════════════════
-// DANE PRZEDMIOTÓW
-// ═══════════════════════════════════════════
 const SUBJECTS = {
   primary:[
-    {id:'mat',name:'Matematyka',emoji:'🔢'},
-    {id:'pol',name:'Język polski',emoji:'📖'},
-    {id:'ang',name:'Angielski',emoji:'🇬🇧'},
-    {id:'prz',name:'Przyroda',emoji:'🌿'}
+    {id:'mat',name:'Matematyka',emoji:'🔢',ac:'ac-mat'},
+    {id:'pol',name:'Polski',emoji:'📖',ac:'ac-pol'},
+    {id:'ang',name:'Angielski',emoji:'🌍',ac:'ac-ang'},
+    {id:'prz',name:'Przyroda',emoji:'🌿',ac:'ac-prz'}
   ],
   middle:[
-    {id:'mat',name:'Matematyka',emoji:'📐'},
-    {id:'pol',name:'Język polski',emoji:'📝'},
-    {id:'ang',name:'Angielski',emoji:'🌍'},
-    {id:'bio',name:'Biologia',emoji:'🧬'},
-    {id:'his',name:'Historia',emoji:'🏛️'},
-    {id:'che',name:'Chemia',emoji:'⚗️'},
-    {id:'fiz',name:'Fizyka',emoji:'⚡'},
-    {id:'geo',name:'Geografia',emoji:'🌎'}
+    {id:'mat',name:'Matematyka',emoji:'📐',ac:'ac-mat'},
+    {id:'pol',name:'Polski',emoji:'📝',ac:'ac-pol'},
+    {id:'ang',name:'Angielski',emoji:'🌍',ac:'ac-ang'},
+    {id:'bio',name:'Biologia',emoji:'🧬',ac:'ac-bio'},
+    {id:'his',name:'Historia',emoji:'🏛️',ac:'ac-his'},
+    {id:'che',name:'Chemia',emoji:'⚗️',ac:'ac-che'},
+    {id:'fiz',name:'Fizyka',emoji:'⚡',ac:'ac-fiz'},
+    {id:'geo',name:'Geografia',emoji:'🌎',ac:'ac-geo'}
   ],
   high:[
-    {id:'mat',name:'Matematyka',emoji:'∑'},
-    {id:'pol',name:'Język polski',emoji:'✒️'},
-    {id:'ang',name:'Angielski',emoji:'🌐'},
-    {id:'bio',name:'Biologia',emoji:'🔬'},
-    {id:'his',name:'Historia',emoji:'📜'},
-    {id:'che',name:'Chemia',emoji:'⚗️'},
-    {id:'fiz',name:'Fizyka',emoji:'🔭'},
-    {id:'geo',name:'Geografia',emoji:'🗺️'}
+    {id:'mat',name:'Matematyka',emoji:'∑',ac:'ac-mat'},
+    {id:'pol',name:'Polski',emoji:'✒️',ac:'ac-pol'},
+    {id:'ang',name:'Angielski',emoji:'🌐',ac:'ac-ang'},
+    {id:'bio',name:'Biologia',emoji:'🔬',ac:'ac-bio'},
+    {id:'his',name:'Historia',emoji:'📜',ac:'ac-his'},
+    {id:'che',name:'Chemia',emoji:'⚗️',ac:'ac-che'},
+    {id:'fiz',name:'Fizyka',emoji:'🔭',ac:'ac-fiz'},
+    {id:'geo',name:'Geografia',emoji:'🗺️',ac:'ac-geo'}
   ]
 };
 
 const EXAMPLES = {
   mat:{
     primary:['2 × 7 = ?','Mam 15 jabłek i oddałam 6. Ile zostało?','Napisz liczbę 237 słowami','Ile to 100 − 48?'],
-    middle:['Rozwiąż równanie: 2x + 5 = 13','Oblicz pole trójkąta: podstawa 8 cm, wysokość 6 cm','Ile to 20% z 150?','Uprość: 3a + 2b − a + 5b'],
-    high:['Rozwiąż układ równań: x+y=5, 2x−y=4','Pochodna f(x) = x³ − 2x² + 5','Miejsca zerowe: y = x² − 4x + 3','Oblicz ∫(2x+1)dx']
+    middle:['Rozwiąż równanie: 2x + 5 = 13','Pole trójkąta: podstawa 8 cm, wysokość 6 cm','Ile to 20% z 150?','Uprość: 3a + 2b − a + 5b'],
+    high:['Rozwiąż układ: x+y=5, 2x−y=4','Pochodna f(x) = x³ − 2x²','Miejsca zerowe: y = x² − 4x + 3','Oblicz ∫(2x+1)dx']
   },
   pol:{
-    primary:['Napisz zdanie z wyrazem "dom"','Co to jest rzeczownik?','Opowiadanie: Mój pies','Kiedy piszemy "ó", a kiedy "u"?'],
-    middle:['Napisz rozprawkę: Kłamstwo — czy zawsze jest złe?','Co to jest epitet i metafora?','Omów cechy renesansu','Analiza wiersza — jak zacząć?'],
+    primary:['Napisz zdanie z wyrazem "dom"','Co to jest rzeczownik?','Kiedy piszemy "ó", a kiedy "u"?','Opowiadanie: Mój najlepszy dzień'],
+    middle:['Rozprawka: Kłamstwo — czy zawsze złe?','Co to jest epitet i metafora?','Omów cechy renesansu','Jak napisać streszczenie?'],
     high:['Motywy patriotyczne w Panu Tadeuszu','Romantyzm w Dziadach Mickiewicza','Interpretacja wiersza Szymborskiej','Co to jest archetyp literacki?']
   },
   ang:{
     primary:['How do you say "pies" in English?','Count from 1 to 20','What color is the sky?','My name is... — przetłumacz'],
-    middle:['Present perfect vs past simple — różnica','Przetłumacz: Wczoraj byłem w kinie','Co to są czasowniki modalne?','Write about your hobby'],
-    high:['Pros and cons of social media','Since vs for — różnica','Passive voice — co to jest?','Essay: climate change']
+    middle:['Present perfect vs past simple','Przetłumacz: Wczoraj byłem w kinie','Co to są modalne?','Write about your hobby'],
+    high:['Pros and cons of social media','Since vs for — różnica','Passive voice — co to?','Essay: climate change']
   },
-  prz:{
-    primary:['Jakie są pory roku?','Dlaczego niebo jest niebieskie?','Co to jest fotosynteza?','Wymień 5 zwierząt z lasu'],
-    middle:[],high:[]
-  },
-  bio:{
-    primary:[],
-    middle:['Co to jest DNA?','Budowa komórki roślinnej','Etapy mitozy','Co to jest ekosystem?'],
-    high:['Translacja — synteza białek','Ewolucja i dobór naturalny','Jak działa układ immunologiczny?','Co to jest homeostaza?']
-  },
-  his:{
-    primary:[],
-    middle:['Kim był Napoleon?','Przyczyny I Wojny Światowej','Co to była rewolucja francuska?','Kiedy upadł mur berliński?'],
-    high:['Skutki II Wojny Światowej','Co to była zimna wojna?','Rewolucja przemysłowa','Kim był Józef Piłsudski?']
-  },
-  che:{
-    primary:[],
-    middle:['Co to jest atom i cząsteczka?','Masa molowa H₂O = ?','Kwasy i zasady — co to?','Układ okresowy — jak czytać?'],
-    high:['Zbilansuj: Fe + O₂ → Fe₂O₃','Co to jest elektrochemia?','Rodzaje wiązań chemicznych','pH — co to i jak obliczyć?']
-  },
-  fiz:{
-    primary:[],
-    middle:['Co to jest siła? F = ma','Czym jest prędkość średnia?','Co to jest ciśnienie?','Jak działa dźwignia?'],
-    high:['Energia kinetyczna: m=2 kg, v=10 m/s','Prawo Ohma','Ruch jednostajnie przyspieszony','Co to jest fala elektromagnetyczna?']
-  },
-  geo:{
-    primary:[],
-    middle:['Wymień kontynenty i oceany','Klimat vs pogoda — różnica','Jak powstają góry?','Co to jest południk i równoleżnik?'],
-    high:['Strefy klimatyczne Ziemi','Urbanizacja i jej skutki','Jak działa El Niño?','Problem przeludnienia']
-  }
+  prz:{primary:['Jakie są pory roku?','Dlaczego niebo jest niebieskie?','Co to jest fotosynteza?','Wymień 5 zwierząt z lasu'],middle:[],high:[]},
+  bio:{primary:[],middle:['Co to jest DNA?','Budowa komórki roślinnej','Etapy mitozy','Co to jest ekosystem?'],high:['Translacja — synteza białek','Ewolucja i dobór naturalny','Jak działa układ immunologiczny?','Co to jest homeostaza?']},
+  his:{primary:[],middle:['Kim był Napoleon?','Przyczyny I Wojny Światowej','Co to była rewolucja francuska?','Kiedy upadł mur berliński?'],high:['Skutki II Wojny Światowej','Co to była zimna wojna?','Rewolucja przemysłowa','Kim był Józef Piłsudski?']},
+  che:{primary:[],middle:['Co to jest atom i cząsteczka?','Masa molowa H₂O = ?','Kwasy i zasady — co to?','Układ okresowy — jak czytać?'],high:['Zbilansuj: Fe + O₂ → Fe₂O₃','Co to jest elektrochemia?','Rodzaje wiązań chemicznych','pH — co to i jak obliczyć?']},
+  fiz:{primary:[],middle:['Co to jest siła? F = ma','Czym jest prędkość średnia?','Co to jest ciśnienie?','Jak działa dźwignia?'],high:['Energia kinetyczna: m=2 kg, v=10 m/s','Prawo Ohma','Ruch jednostajnie przyspieszony','Co to jest fala elektromagnetyczna?']},
+  geo:{primary:[],middle:['Wymień kontynenty i oceany','Klimat vs pogoda — różnica','Jak powstają góry?','Co to jest południk?'],high:['Strefy klimatyczne Ziemi','Urbanizacja i jej skutki','Jak działa El Niño?','Problem przeludnienia']}
 };
 
-// ═══════════════════════════════════════════
-// SYSTEM PROMPT
-// ═══════════════════════════════════════════
+// ═══ SYSTEM PROMPT ═══
 function buildPrompt(subjId, subjName){
-  const lv = level();
+  const lv = S.level || 'middle';
   const lvName = {primary:'szkoła podstawowa kl. 1-3',middle:'szkoła podstawowa kl. 4-8',high:'liceum'}[lv];
   const styles = {
-    primary:`Używaj bardzo prostego języka. Dużo emojis 😊🎉. Krótkie zdania. Bądź entuzjastyczny i ciepły jak przyjaciel. Mów do ucznia po imieniu.`,
-    middle:`Używaj normalnego języka. Emojis z umiarem. Bądź przyjazny, cierpliwy i motywujący.`,
+    primary:`Używaj bardzo prostego języka. Dużo emojis 😊🎉. Krótkie zdania. Bądź entuzjastyczny i ciepły.`,
+    middle:`Używaj normalnego języka. Emojis z umiarem. Bądź przyjazny i motywujący.`,
     high:`Używaj dojrzałego, merytorycznego języka. Traktuj jak dorosłego. Minimalne emojis.`
   };
   return `Jesteś Cluedu — AI korepetytorem dla polskich uczniów.
 
-UCZEŃ: ${S.name||'uczeń'}, klasa ${S.cls} (${lvName}), przedmiot: ${subjName}
+UCZEŃ: ${S.name||'uczeń'}, poziom: ${lvName}, przedmiot: ${subjName}
 
-NAJWAŻNIEJSZA ZASADA: NIGDY nie podajesz gotowej odpowiedzi. Prowadzisz ucznia metodą sokratejską — pytasz, naprowadzasz, nie dajesz rozwiązania wprost.
+ZASADY DOTYCZĄCE IMIENIA I JĘZYKA UCZNIA:
+• Używaj imienia ucznia WYŁĄCZNIE w formie podstawowej (mianownik): "${S.name||'uczeń'}". Nigdy nie odmieniaj imienia przez przypadki.
+• Nigdy nie poprawiaj formy gramatycznej ani rodzaju gramatycznego w wypowiedzi ucznia (np. "zrobiłem/zrobiłam"). Skup się wyłącznie na treści merytorycznej zadania.
+
+ZASADA POTWIERDZANIA POPRAWNYCH ODPOWIEDZI:
+Gdy uczeń poda PRAWIDŁOWĄ odpowiedź — natychmiast i entuzjastycznie ją potwierdź słowami "Tak!", "Dokładnie!", "Świetnie!", "Brawo!" itp. Nigdy nie ignoruj poprawnej odpowiedzi ani nie każ sprawdzać jeszcze raz gdy uczeń ma rację.
+
+GŁÓWNA ZASADA: Nie podajesz gotowej odpowiedzi gdy uczeń jeszcze nie próbował. Prowadzisz metodą sokratejską.
 
 FAZY PRACY:
 
 FAZA 1 — ROZPOZNANIE:
-• Jedno zadanie, czytelne → od razu Faza 2
+• Jedno zadanie → od razu Faza 2
 • Kilka zadań na zdjęciu → zapytaj które
-• Nieczytelne → poproś o ponowne przesłanie lub wpisanie tekstu
+• Nieczytelne → poproś o ponowne przesłanie
 
 FAZA 2 — NAPROWADZANIE (min. 3-4 wymiany):
-• JEDNO pytanie na raz — nigdy więcej
-• Każde pytanie to jeden mały krok do przodu
-• NIE podajesz odpowiedzi nawet jeśli uczeń błaga
+• JEDNO pytanie na raz
 • Błąd ucznia → nie mów "źle", naprowadzaj dalej pytaniem
-• Dobry kierunek → pochwal: "Dobry trop! A co dalej?"
+• POPRAWNA odpowiedź → POTWIERDŹ natychmiast: "Tak! Dokładnie! 🎉"
 
 FAZA 3 — OCENA:
 • Dobry kierunek → kontynuuj naprowadzanie
-• Kręci się w kółko po 3-4 próbach → zaproponuj: "Chcesz, żebym pokazał/a jak to zrobić krok po kroku?"
-• Sam/a prosi o pomoc → oceń czy próbował wystarczająco długo
+• Kręci się w kółko po 3-4 próbach → zaproponuj: "Chcesz, żebym pokazał krok po kroku?"
 
 FAZA 4 — POKAŻ ROZWIĄZANIE (tylko gdy konieczne):
 • Zawsze krok po kroku z wyjaśnieniem — NIGDY sama odpowiedź
 • Na końcu: "Rozumiesz dlaczego tak wychodzi?"
-• WYJĄTEK: Zadania twórcze (opowiadania, wypracowania) — Fazy 4 NIE MA. Pomagaj rozwijać pomysły ucznia, ale nigdy nie piszesz za niego.
+• WYJĄTEK: Zadania twórcze — nigdy nie piszesz za ucznia
 
 STYL: ${styles[lv]}
-
-PAMIĘTAJ:
-• Odpowiadaj zawsze po polsku
-• Max 3-4 zdania na wiadomość — krótko i konkretnie
-• Twój sukces = uczeń, który SAM dojdzie do odpowiedzi`;
+Odpowiadaj zawsze po polsku. Max 3-4 zdania na wiadomość.`;
 }
 
-// ═══════════════════════════════════════════
-// NAWIGACJA
-// ═══════════════════════════════════════════
+// ═══ MARKDOWN ═══
+function mdToHtml(text){
+  return text
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/\n\n+/g,'</p><p>')
+    .replace(/\n/g,'<br>')
+    .replace(/^/,'<p>').replace(/$/,'</p>');
+}
+
+// ═══ NAWIGACJA ═══
 function showScreen(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   const el=document.getElementById('screen-'+name);
@@ -547,16 +543,20 @@ function showScreen(name){
   window.scrollTo(0,0);
 }
 
-// ═══════════════════════════════════════════
-// SCREEN 1: KOD DOSTĘPU
-// ═══════════════════════════════════════════
+// ═══ RESET ═══
+function resetAll(){
+  if(!confirm('Resetować ustawienia? Kod dostępu wróci do domyślnego, dane zostaną usunięte.')) return;
+  localStorage.clear();
+  location.reload();
+}
+
+// ═══ SCREEN 1 ═══
 function checkAccess(){
   const v=document.getElementById('access-in').value.trim();
   const err=document.getElementById('access-err');
   if(v===S.code){
     err.style.display='none';
-    applyTheme();
-    if(S.name&&S.cls){renderMain();showScreen('main');}
+    if(S.name&&S.level){renderMain();showScreen('main');}
     else showScreen('onboarding');
   } else {
     err.style.display='block';
@@ -565,62 +565,42 @@ function checkAccess(){
 }
 document.getElementById('access-in').addEventListener('keydown',e=>{if(e.key==='Enter')checkAccess();});
 
-// ═══════════════════════════════════════════
-// SCREEN 2: ONBOARDING
-// ═══════════════════════════════════════════
-document.querySelectorAll('.cls-btn').forEach(btn=>{
-  btn.addEventListener('click',function(){
-    document.querySelectorAll('.cls-btn').forEach(b=>b.classList.remove('sel'));
-    this.classList.add('sel');
-    S.cls=this.dataset.class;
-  });
-});
-
+// ═══ SCREEN 2 ═══
+function selLevel(btn){
+  document.querySelectorAll('.level-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  S.level=btn.dataset.level;
+}
 function saveOnboarding(){
   const n=document.getElementById('name-in').value.trim();
   if(!n){alert('Wpisz swoje imię 😊');return;}
-  if(!S.cls){alert('Wybierz klasę 🎒');return;}
+  if(!S.level){alert('Wybierz klasę 🎒');return;}
   S.name=n;
   localStorage.setItem('cname',n);
-  localStorage.setItem('ccls',S.cls);
-  applyTheme();renderMain();showScreen('main');
+  localStorage.setItem('clevel',S.level);
+  renderMain();showScreen('main');
 }
 
-// ═══════════════════════════════════════════
-// MOTYW
-// ═══════════════════════════════════════════
-function applyTheme(){
-  document.body.classList.remove('t-primary','t-high');
-  if(level()==='primary') document.body.classList.add('t-primary');
-  if(level()==='high')    document.body.classList.add('t-high');
-}
-
-// ═══════════════════════════════════════════
-// SCREEN 3: GŁÓWNY
-// ═══════════════════════════════════════════
+// ═══ SCREEN 3 ═══
 function renderMain(){
-  const h=new Date().getHours();
-  const g=h<12?'Dzień dobry':h<18?'Cześć':'Dobry wieczór';
-  document.getElementById('greeting-text').textContent=`${g}, ${S.name}! 👋`;
-  const subjs=SUBJECTS[level()]||SUBJECTS.middle;
+  document.getElementById('greeting-name').textContent=S.name+'!';
+  const subjs=SUBJECTS[S.level]||SUBJECTS.middle;
   const grid=document.getElementById('subj-grid');
   grid.innerHTML='';
   subjs.forEach(s=>{
     const btn=document.createElement('button');
-    btn.className='subj-card';
-    btn.innerHTML=`<div class="subj-em">${s.emoji}</div><div class="subj-name">${s.name}</div>`;
+    btn.className='subj-card '+s.ac;
+    btn.innerHTML=`<span class="subj-em">${s.emoji}</span><div class="subj-name">${s.name}</div>`;
     btn.addEventListener('click',()=>selectSubject(s.id,s));
     grid.appendChild(btn);
   });
 }
 
-// ═══════════════════════════════════════════
-// SCREEN 4: ZADANIE
-// ═══════════════════════════════════════════
+// ═══ SCREEN 4 ═══
 function selectSubject(id,data){
   S.subj=data;S.photo=null;
   document.getElementById('task-title').textContent=`${data.emoji} ${data.name}`;
-  const lv=level();
+  const lv=S.level||'middle';
   const qs={primary:'Co chcesz dzisiaj poćwiczyć? 😊',middle:'Jakie masz zadanie?',high:'Pokaż mi zadanie.'};
   document.getElementById('task-q').textContent=qs[lv];
   const exs=id==='unknown'?[]:((EXAMPLES[id]||{})[lv]||[]);
@@ -636,7 +616,7 @@ function selectSubject(id,data){
   setMethod('text');
   document.getElementById('task-ta').value='';
   document.getElementById('photo-prev').style.display='none';
-  document.getElementById('voice-result').style.display='none';
+  document.getElementById('voice-result-task').style.display='none';
   showScreen('task');
 }
 
@@ -648,9 +628,7 @@ function setMethod(m){
   document.getElementById('m-voice').classList.toggle('hidden',m!=='voice');
 }
 
-// ═══════════════════════════════════════════
-// ZDJĘCIE
-// ═══════════════════════════════════════════
+// ═══ ZDJĘCIE ═══
 function onPhotoSelected(e){
   const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
@@ -661,7 +639,6 @@ function onPhotoSelected(e){
   };
   r.readAsDataURL(f);
 }
-
 function onChatPhoto(e){
   const f=e.target.files[0];if(!f)return;
   const r=new FileReader();
@@ -669,58 +646,46 @@ function onChatPhoto(e){
   r.readAsDataURL(f);
 }
 
-// ═══════════════════════════════════════════
-// GŁOS
-// ═══════════════════════════════════════════
+// ═══ GŁOS ═══
 function makeRec(){
   if(!('webkitSpeechRecognition'in window)&&!('SpeechRecognition'in window))return null;
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   const r=new SR();r.lang='pl-PL';r.continuous=false;r.interimResults=false;
   return r;
 }
+function showVoiceOverlay(){document.getElementById('voice-overlay').classList.add('active');}
+function hideVoiceOverlay(){document.getElementById('voice-overlay').classList.remove('active');}
 
-function toggleVoice(){
-  if(S.listening){
-    if(S.rec)S.rec.stop();
-    S.listening=false;
-    document.getElementById('voice-ui').classList.remove('listening');
-    document.getElementById('voice-status').textContent='Kliknij przycisk, żeby mówić';
-    document.getElementById('voice-btn').textContent='🎤 Naciśnij i mów';
-    return;
-  }
-  S.rec=makeRec();
-  if(!S.rec){alert('Twoja przeglądarka nie obsługuje rozpoznawania głosu.\nUżyj opcji Tekst lub Zdjęcie.');return;}
-  S.rec.onstart=()=>{
-    S.listening=true;
-    document.getElementById('voice-ui').classList.add('listening');
-    document.getElementById('voice-icon').textContent='🔴';
-    document.getElementById('voice-status').textContent='Słucham... mów teraz';
-    document.getElementById('voice-btn').textContent='⏹ Zatrzymaj';
-  };
-  S.rec.onresult=ev=>{
+function toggleVoiceTask(){
+  const r=makeRec();
+  if(!r){alert('Twoja przeglądarka nie obsługuje rozpoznawania głosu.\nUżyj opcji Tekst lub Zdjęcie.');return;}
+  r.onstart=()=>showVoiceOverlay();
+  r.onresult=ev=>{
     const t=ev.results[0][0].transcript;
-    document.getElementById('voice-txt').textContent=t;
-    document.getElementById('voice-result').style.display='block';
+    document.getElementById('voice-txt-task').textContent=t;
+    document.getElementById('voice-result-task').style.display='block';
     document.getElementById('task-ta').value=t;
+    setMethod('text');
   };
-  S.rec.onend=()=>{
-    S.listening=false;
-    document.getElementById('voice-ui').classList.remove('listening');
-    document.getElementById('voice-icon').textContent='🎤';
-    document.getElementById('voice-status').textContent='Gotowe! Sprawdź tekst poniżej.';
-    document.getElementById('voice-btn').textContent='🎤 Nagraj jeszcze raz';
+  r.onend=()=>hideVoiceOverlay();
+  r.onerror=()=>{hideVoiceOverlay();alert('Nie udało się rozpoznać. Spróbuj ponownie.');};
+  r.start();
+}
+function chatVoice(){
+  const r=makeRec();
+  if(!r){alert('Twoja przeglądarka nie obsługuje rozpoznawania głosu.');return;}
+  r.onstart=()=>showVoiceOverlay();
+  r.onresult=ev=>{
+    const inp=document.getElementById('chat-in');
+    inp.value=ev.results[0][0].transcript;
+    autoH(inp);
   };
-  S.rec.onerror=ev=>{
-    S.listening=false;
-    document.getElementById('voice-status').textContent='Błąd: '+ev.error+'. Spróbuj ponownie.';
-    document.getElementById('voice-btn').textContent='🎤 Naciśnij i mów';
-  };
-  S.rec.start();
+  r.onend=()=>hideVoiceOverlay();
+  r.onerror=()=>{hideVoiceOverlay();alert('Nie udało się rozpoznać mowy. Spróbuj ponownie.');};
+  r.start();
 }
 
-// ═══════════════════════════════════════════
-// START CHATU
-// ═══════════════════════════════════════════
+// ═══ START CHATU ═══
 function startChat(){
   let txt='';
   if(S.method==='text'){
@@ -736,7 +701,7 @@ function startChat(){
     S.photo=null;
   }
   document.getElementById('chat-subj-name').textContent=`${S.subj.emoji} ${S.subj.name}`;
-  S.msgs=[];S.sesQ=0;S.sesStart=new Date();
+  S.msgs=[];S.sesQ=0;
   document.getElementById('chat-msgs').innerHTML='';
   showScreen('chat');
   if(S.photo){
@@ -752,21 +717,18 @@ function startChat(){
   callAI();
 }
 
-// ═══════════════════════════════════════════
-// CHAT
-// ═══════════════════════════════════════════
+// ═══ CHAT ═══
 function addMsg(role,text,photo=null){
   const el=document.getElementById('chat-msgs');
   const d=document.createElement('div');
   d.className='msg '+role;
   let h='';
   if(photo) h+=`<img src="${photo}" class="msg-img" alt="Zdjęcie">`;
-  if(text) h+=`<div class="bubble">${esc(text)}</div>`;
+  if(text) h+=`<div class="bubble">${role==='assistant'?mdToHtml(text):esc(text)}</div>`;
   d.innerHTML=h;
   el.appendChild(d);
   el.scrollTop=el.scrollHeight;
 }
-
 function showTyping(){
   const el=document.getElementById('chat-msgs');
   const d=document.createElement('div');
@@ -774,7 +736,6 @@ function showTyping(){
   d.innerHTML='<div class="tdot"></div><div class="tdot"></div><div class="tdot"></div>';
   el.appendChild(d);el.scrollTop=el.scrollHeight;
 }
-
 function hideTyping(){const t=document.getElementById('typing');if(t)t.remove();}
 
 async function callAI(){
@@ -813,7 +774,7 @@ function sendMsg(){
     addMsg('user',null,S.photo);
     const b64=S.photo.split(',')[1];
     const mt=S.photo.split(';')[0].split(':')[1];
-    S.msgs.push({role:'user',content:[{type:'image',source:{type:'base64',media_type:mt,data:b64}},{type:'text',text:txt||'Mam kolejne zadanie na zdjęciu.'}]});
+    S.msgs.push({role:'user',content:[{type:'image',source:{type:'base64',media_type:mt,data:b64}},{type:'text',text:txt||'Mam kolejne zadanie.'}]});
     S.photo=null;
     if(txt){inp.value='';inp.style.height='auto';}
     callAI();return;
@@ -824,25 +785,9 @@ function sendMsg(){
   inp.value='';inp.style.height='auto';
   callAI();
 }
-
 function chatKeyDown(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
-
 function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
-
 function chatPhoto(){document.getElementById('chat-cam-in').click();}
-
-function chatVoice(){
-  const r=makeRec();
-  if(!r){alert('Twoja przeglądarka nie obsługuje rozpoznawania głosu.');return;}
-  r.onresult=ev=>{
-    const inp=document.getElementById('chat-in');
-    inp.value=ev.results[0][0].transcript;
-    autoH(inp);
-  };
-  r.onerror=()=>alert('Nie udało się rozpoznać mowy. Spróbuj ponownie.');
-  r.start();
-}
-
 function exitChat(){
   if(S.sesQ>0){
     S.sessions.push({date:new Date().toLocaleDateString('pl-PL'),subj:S.subj.name,q:S.sesQ});
@@ -852,14 +797,11 @@ function exitChat(){
   S.msgs=[];showScreen('main');
 }
 
-// ═══════════════════════════════════════════
-// RAPORT RODZICA
-// ═══════════════════════════════════════════
+// ═══ RAPORT ═══
 function openReport(){
   if(!S.pin) startPin('set');
   else startPin('verify');
 }
-
 function renderReport(){
   document.getElementById('st-total').textContent=S.total;
   const days=[...new Set(S.sessions.map(s=>s.date))].length;
@@ -867,42 +809,29 @@ function renderReport(){
   document.getElementById('st-sess').textContent=S.sessions.length;
   const bars=document.getElementById('subj-bars');
   const maxV=Math.max(...Object.values(S.stats),1);
-  const subjs=SUBJECTS[level()]||SUBJECTS.middle;
+  const subjs=SUBJECTS[S.level]||SUBJECTS.middle;
   const filtered=subjs.filter(s=>S.stats[s.id]>0);
-  if(!filtered.length){bars.innerHTML='<p style="color:var(--textl);font-size:14px">Brak danych — zacznij naukę!</p>';}
-  else{
-    bars.innerHTML=filtered.map(s=>{
-      const c=S.stats[s.id]||0;
-      const p=Math.round(c/maxV*100);
-      return `<div class="subj-bar">
-        <div class="subj-bar-lbl">${s.emoji} ${s.name}</div>
-        <div class="subj-bar-track"><div class="subj-bar-fill" style="width:${p}%"></div></div>
-        <div class="subj-bar-num">${c}</div>
-      </div>`;
-    }).join('');
-  }
+  bars.innerHTML=filtered.length
+    ?filtered.map(s=>{const c=S.stats[s.id]||0;const p=Math.round(c/maxV*100);
+      return `<div class="subj-bar"><div class="subj-bar-lbl">${s.emoji} ${s.name}</div><div class="subj-bar-track"><div class="subj-bar-fill" style="width:${p}%"></div></div><div class="subj-bar-num">${c}</div></div>`;
+    }).join('')
+    :'<p style="color:#888;font-size:14px">Brak danych — zacznij naukę!</p>';
   const lastSess=[...S.sessions].reverse().slice(0,10);
-  const rSess=document.getElementById('recent-sess');
-  if(!lastSess.length){rSess.innerHTML='<p style="color:var(--textl);font-size:14px">Brak sesji.</p>';}
-  else{
-    rSess.innerHTML=lastSess.map(s=>`<div class="sess-item"><span>${s.date} — ${s.subj}</span><span>${s.q} zapytań</span></div>`).join('');
-  }
+  document.getElementById('recent-sess').innerHTML=lastSess.length
+    ?lastSess.map(s=>`<div class="sess-item"><span>${s.date} — ${s.subj}</span><span>${s.q} zapytań</span></div>`).join('')
+    :'<p style="color:#888;font-size:14px">Brak sesji.</p>';
+  const lvLabels={primary:'Klasy 1–3',middle:'Klasy 4–8',high:'Liceum'};
   document.getElementById('set-name').textContent=S.name||'—';
-  document.getElementById('set-class').textContent=S.cls?'Klasa '+S.cls:'—';
+  document.getElementById('set-level').textContent=lvLabels[S.level]||'—';
   showScreen('report');
 }
-
 function chgName(){
   const n=prompt('Nowe imię dziecka:',S.name);
   if(n&&n.trim()){S.name=n.trim();localStorage.setItem('cname',S.name);renderReport();renderMain();}
 }
-function chgClass(){
-  const opts=['1','2','3','4','5','6','7','8','LO1','LO2','LO3','LO4'];
-  const v=prompt(`Klasa (${opts.join(', ')}):`,S.cls);
-  if(v&&opts.includes(v.toUpperCase())){
-    S.cls=v.toUpperCase();localStorage.setItem('ccls',S.cls);
-    applyTheme();renderReport();renderMain();
-  }
+function chgLevel(){
+  const v=prompt('Poziom (primary / middle / high):',S.level);
+  if(v&&['primary','middle','high'].includes(v)){S.level=v;localStorage.setItem('clevel',v);renderReport();renderMain();}
 }
 function chgCode(){
   const v=prompt('Nowy kod dostępu (min. 4 znaki):','');
@@ -910,9 +839,7 @@ function chgCode(){
 }
 function chgPin(){startPin('set');}
 
-// ═══════════════════════════════════════════
-// PIN
-// ═══════════════════════════════════════════
+// ═══ PIN ═══
 function startPin(mode){
   S.pinMode=mode;S.pinBuf='';S.pinFirst='';
   document.getElementById('pin-title').textContent=mode==='verify'?'🔐 Raport rodzica':'🔐 Ustaw PIN';
@@ -922,7 +849,6 @@ function startPin(mode){
   document.getElementById('modal-pin').classList.add('active');
 }
 function closePin(){document.getElementById('modal-pin').classList.remove('active');S.pinMode=null;S.pinBuf='';}
-
 function pk(k){
   if(k==='X'){closePin();return;}
   if(k==='DEL'){S.pinBuf=S.pinBuf.slice(0,-1);updateDots();return;}
@@ -930,11 +856,9 @@ function pk(k){
   S.pinBuf+=k;updateDots();
   if(S.pinBuf.length===4) setTimeout(pinDone,200);
 }
-
 function updateDots(){
   document.querySelectorAll('.pin-dot').forEach((d,i)=>d.classList.toggle('filled',i<S.pinBuf.length));
 }
-
 function pinDone(){
   const pin=S.pinBuf;
   if(S.pinMode==='verify'){
@@ -944,6 +868,7 @@ function pinDone(){
     if(!S.pinFirst){
       S.pinFirst=pin;S.pinBuf='';updateDots();
       document.getElementById('pin-sub').textContent='Powtórz PIN';
+      document.getElementById('pin-err').style.display='none';
     } else {
       if(pin===S.pinFirst){
         S.pin=pin;localStorage.setItem('cpin',pin);closePin();renderReport();
@@ -957,17 +882,11 @@ function pinDone(){
   }
 }
 
-// ═══════════════════════════════════════════
-// UTILS
-// ═══════════════════════════════════════════
 function esc(t){
   return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
 }
 
-// INIT
-(function init(){
-  if(S.cls) applyTheme();
-})();
+(function(){if(S.name&&S.level) renderMain();})();
 </script>
 </body>
 </html>
