@@ -755,7 +755,7 @@ async function callAI(){
     const res=await fetch('/api/claude',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:S.msgs,systemPrompt:buildPrompt(S.subj.id,S.subj.name)})
+      body:JSON.stringify({messages:S.msgs,systemPrompt:buildPrompt(S.subj.id,S.subj.name),subjId:S.subj.id})
     });
     if(!res.ok) throw new Error('HTTP '+res.status);
     const data=await res.json();
