@@ -59,7 +59,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .level-btn:hover{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.6)}
 .level-btn.sel{background:#fff;border-color:#fff;color:#7B4FD4}
 
-/* ── SCREEN 3: GŁÓWNY ── */
+/* ── SCREEN 3 ── */
 #screen-main{justify-content:flex-start;align-items:center;padding:20px;min-height:100vh}
 .main-inner{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center}
 .main-top{display:flex;flex-direction:column;align-items:center;margin-bottom:20px}
@@ -67,8 +67,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .main-greeting{font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;text-align:center}
 .main-greeting span{color:#FFD95A}
 .main-sub{color:rgba(255,255,255,.8);font-size:14px;text-align:center}
-
-/* Karty niedokończonych zadań */
 .pending-section{width:100%;margin-bottom:16px}
 .pending-label{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
 .pending-cards{display:flex;flex-direction:column;gap:8px}
@@ -81,7 +79,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .pc-btn{border:none;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
 .pc-btn-back{background:rgba(255,255,255,.9);color:#7B4FD4}
 .pc-btn-del{background:rgba(255,255,255,.15);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2)}
-
 .subj-section{width:100%}
 .subj-label-txt{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
 .subj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;margin-bottom:12px}
@@ -98,7 +95,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .ac-prz,.ac-bio,.ac-geo{--accent:#A8E063}.ac-his{--accent:#F7B731}
 .ac-che{--accent:#A29BFE}.ac-fiz{--accent:#74B9FF}
 
-/* ── SCREEN 4: ZADANIE ── */
+/* ── SCREEN 4 ── */
 #screen-task{background:#F0F4FF}
 .task-hdr{background:linear-gradient(135deg,#7B4FD4,#C05FA0);padding:20px;display:flex;align-items:center;gap:12px}
 .task-hdr-info .title{font-size:20px;font-weight:700;color:#fff}
@@ -112,9 +109,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .method-icon{font-size:24px;display:block;margin-bottom:4px}
 .task-ta{width:100%;min-height:120px;padding:16px;border:2px solid #D0BCFF;border-radius:14px;font-size:16px;background:#fff;color:#1A1A2E;outline:none;resize:vertical;font-family:inherit;transition:border-color .2s}
 .task-ta:focus{border-color:#7B4FD4}
-.photo-preview{width:100%;max-height:220px;border-radius:14px;object-fit:contain;border:2px solid #D0BCFF;display:none;margin-bottom:14px}
-
-/* OCR panel */
+.photo-preview{width:100%;max-height:220px;border-radius:14px;object-fit:contain;border:2px solid #D0BCFF;display:none;margin-bottom:10px}
+.ocr-info{background:#F3EEFF;border:1px solid #D0BCFF;border-radius:10px;padding:10px 14px;font-size:13px;color:#555;margin-bottom:12px;display:none;line-height:1.5}
 .ocr-panel{display:none;background:#fff;border:2px solid #D0BCFF;border-radius:14px;padding:16px;margin-bottom:14px}
 .ocr-title{font-size:13px;font-weight:700;color:#7B4FD4;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
 .ocr-tasks{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
@@ -125,13 +121,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .ocr-edit{width:100%;padding:10px 14px;border:2px solid #D0BCFF;border-radius:10px;font-size:14px;background:#fff;color:#1A1A2E;outline:none;resize:vertical;min-height:80px;font-family:inherit;margin-bottom:12px}
 .ocr-edit:focus{border-color:#7B4FD4}
 .ocr-loading{text-align:center;padding:20px;color:#888;font-size:14px}
-
-/* Głos */
 .voice-result-box{display:none;padding:12px 16px;background:#fff;border:1px solid #D0BCFF;border-radius:12px;font-size:14px;color:#555;margin-bottom:14px}
-.ex-label{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin:16px 0 10px}
-.ex-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.ex-chip{background:#fff;border:1px solid #D0BCFF;border-radius:12px;padding:12px 16px;cursor:pointer;font-size:14px;color:#333;transition:all .2s;text-align:left}
-.ex-chip:hover{border-color:#7B4FD4;color:#7B4FD4;background:#F3EEFF}
 .task-footer{padding:16px 20px 24px;background:#F0F4FF}
 
 /* ── SCREEN 5: CHAT ── */
@@ -150,6 +140,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .bubble strong{font-weight:700}.bubble em{font-style:italic}
 .msg.user .bubble{background:linear-gradient(135deg,#7B4FD4,#9B59D0);color:#fff;border-bottom-right-radius:4px}
 .msg.assistant .bubble{background:#fff;color:#1A1A2E;border:1px solid #E0D5FF;border-bottom-left-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.msg-vulgar{width:120px;height:36px;background:#E74C3C;border-radius:8px;display:block}
 .msg-img{max-width:220px;border-radius:12px;display:block;margin-bottom:4px}
 .typing{display:flex;gap:5px;padding:12px 16px;background:#fff;border:1px solid #E0D5FF;border-radius:18px;border-bottom-left-radius:4px;width:fit-content;align-self:flex-start;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .tdot{width:8px;height:8px;border-radius:50%;background:#C0A8FF;animation:tb 1.2s infinite}
@@ -161,6 +152,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .chat-in:focus{border-color:#7B4FD4}
 .cab{background:#F0EAFF;border:1px solid #D0BCFF;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;flex-shrink:0}
 .cab:hover{border-color:#7B4FD4;background:#E8DEFF}
+.cab:disabled{opacity:.35;cursor:not-allowed}
 .send-btn{background:linear-gradient(135deg,#7B4FD4,#9B59D0);border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;flex-shrink:0;box-shadow:0 3px 10px rgba(123,79,212,.4)}
 .send-btn:hover{transform:scale(1.08)}
 .send-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
@@ -184,13 +176,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .sess-item span:last-child{color:#7B4FD4;font-weight:700}
 .set-item{background:#fff;border:1px solid #E0D5FF;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;transition:all .2s}
 .set-item:hover{border-color:#7B4FD4}
+.set-item-danger{border-color:#FFCDD2}
+.set-item-danger:hover{border-color:#E74C3C}
+.set-item-danger .set-label{color:#E74C3C}
 .set-icon{font-size:20px}
 .set-text{flex:1}
 .set-label{font-size:15px;font-weight:600;color:#1A1A2E}
 .set-value{font-size:13px;color:#888}
 .set-arrow{color:#999}
 
-/* ── MODAL PIN ── */
+/* ── MODALS ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .modal-overlay.active{display:flex;animation:fIn .25s ease}
 .modal-box{background:#fff;border-radius:24px;padding:32px 24px;width:100%;max-width:340px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
@@ -204,6 +199,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .pin-key:hover{background:#E8DEFF;border-color:#7B4FD4}
 .pin-key:active{transform:scale(.92)}
 .pin-err{color:#E74C3C;font-size:13px;text-align:center;display:none;margin-bottom:10px}
+
+/* Popup REDAGUJ */
+.redaguj-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:2500;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)}
+.redaguj-popup.active{display:flex;animation:fIn .25s ease}
+.redaguj-box{background:#fff;border-radius:24px;padding:28px 24px;max-width:340px;width:100%;text-align:center}
+.redaguj-emoji{font-size:48px;margin-bottom:12px}
+.redaguj-title{font-size:18px;font-weight:800;color:#1A1A2E;margin-bottom:8px}
+.redaguj-sub{font-size:14px;color:#666;line-height:1.5}
 
 /* ── VOICE OVERLAY ── */
 .voice-overlay{display:none;position:fixed;inset:0;background:rgba(30,0,60,.8);z-index:2000;align-items:center;justify-content:center;flex-direction:column;gap:24px;backdrop-filter:blur(8px)}
@@ -246,7 +249,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
       <button class="reset-btn" onclick="resetAll()">Resetuj ustawienia</button>
     </div>
   </div>
-  <div class="app-version">v0.8</div>
+  <div class="app-version">v0.9</div>
 </div>
 
 <!-- SCREEN 2: ONBOARDING -->
@@ -282,7 +285,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
       <h2 class="main-greeting">Cześć, <span id="greeting-name">!</span></h2>
       <p class="main-sub">Czego się dzisiaj uczymy? 📚</p>
     </div>
-    <!-- Karty niedokończonych zadań -->
     <div class="pending-section hidden" id="pending-section">
       <div class="pending-label">Niedokończone zadania</div>
       <div class="pending-cards" id="pending-cards"></div>
@@ -323,12 +325,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
       <textarea id="task-ta" class="task-ta" placeholder="Wpisz treść zadania..."></textarea>
     </div>
     <div id="m-photo" class="hidden">
+      <div class="ocr-info" id="ocr-info">
+        Nie radzę sobie dobrze z interpretacją obrazków, ale mogę odczytać tekst zadania. Sprawdź czy wszystko się zgadza!
+      </div>
       <img id="photo-prev" class="photo-preview" alt="Podgląd">
       <input type="file" id="cam-in" accept="image/*" capture="environment" onchange="onPhotoSelected(event)">
       <button class="btn btn-secondary" onclick="document.getElementById('cam-in').click()" style="margin-bottom:14px">
         📷 Zrób lub wybierz zdjęcie
       </button>
-      <!-- OCR Panel -->
       <div class="ocr-panel" id="ocr-panel">
         <div class="ocr-title">Odczytałem zadanie 📖</div>
         <div id="ocr-content"></div>
@@ -342,8 +346,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
         Rozpoznano: "<span id="voice-txt-task"></span>"
       </div>
     </div>
-    <div class="ex-label">Przykładowe zadania</div>
-    <div class="ex-list" id="ex-list"></div>
   </div>
   <div class="task-footer">
     <button class="btn btn-primary" id="start-chat-btn" onclick="startChat()">Porozmawiajmy! →</button>
@@ -364,8 +366,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
     <div class="chat-row">
       <button class="cab" onclick="chatPhoto()" title="Zdjęcie">📷</button>
       <textarea class="chat-in" id="chat-in" placeholder="Napisz odpowiedź..." rows="1"
-        onkeydown="chatKeyDown(event)" oninput="autoH(this)"></textarea>
-      <button class="cab" onclick="chatVoice()" title="Głos">🎤</button>
+        onkeydown="chatKeyDown(event)" oninput="autoH(this);checkRedagujTyping(this)"></textarea>
+      <button class="cab" id="voice-chat-btn" onclick="chatVoice()" title="Głos">🎤</button>
       <button class="send-btn" id="send-btn" onclick="sendMsg()">➤</button>
     </div>
     <input type="file" id="chat-cam-in" accept="image/*" capture="environment" onchange="onChatPhoto(event)">
@@ -428,6 +430,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
         <div class="set-text"><div class="set-label">PIN rodzica</div><div class="set-value">Zmień PIN</div></div>
         <div class="set-arrow">›</div>
       </div>
+      <div class="set-item set-item-danger" onclick="logout()">
+        <div class="set-icon">🚪</div>
+        <div class="set-text"><div class="set-label">Wyloguj</div><div class="set-value">Wróć do ekranu kodu dostępu</div></div>
+        <div class="set-arrow">›</div>
+      </div>
     </div>
   </div>
 </div>
@@ -453,6 +460,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
   </div>
 </div>
 
+<!-- POPUP REDAGUJ -->
+<div class="redaguj-popup" id="redaguj-popup">
+  <div class="redaguj-box">
+    <div class="redaguj-emoji">✍️</div>
+    <div class="redaguj-title">Czas na pisanie!</div>
+    <div class="redaguj-sub">Teraz zastanów się chwilę i napisz zdanie na klawiaturze</div>
+  </div>
+</div>
+
 <!-- VOICE OVERLAY -->
 <div class="voice-overlay" id="voice-overlay">
   <div class="voice-anim">
@@ -463,7 +479,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
   <div class="voice-hint">Powiedz swoje zadanie lub odpowiedź</div>
 </div>
 
-<!-- BLOKADA OVERLAY -->
+<!-- BLOKADA -->
 <div class="block-overlay" id="block-overlay">
   <div class="block-emoji">🦉</div>
   <div class="block-title" id="block-title">Cluedu ma za zadanie pomóc Ci w NAUCE, a wydaje mi się że w tej chwili nie masz na to ochoty.</div>
@@ -478,25 +494,43 @@ const BLOCK_DURATION = 5 * 60 * 1000;
 const MAX_OFFTOPIC = 5;
 const MAX_VULGAR = 3;
 const MAX_PENDING = 3;
+const HISTORY_LIMIT = 12; // 6 wymian = 12 wiadomości
 
+// ═══ STATE ═══
 const S = {
-  code:       localStorage.getItem('code') || DEFAULT_CODE,
-  name:       localStorage.getItem('cname') || '',
-  level:      localStorage.getItem('clevel') || '',
-  pin:        localStorage.getItem('cpin') || '',
-  total:      parseInt(localStorage.getItem('ctotal') || '0'),
-  sessions:   JSON.parse(localStorage.getItem('csess') || '[]'),
-  stats:      JSON.parse(localStorage.getItem('cstats') || '{}'),
+  code:     localStorage.getItem('code') || DEFAULT_CODE,
+  name:     localStorage.getItem('cname') || '',
+  level:    localStorage.getItem('clevel') || '',
+  pin:      localStorage.getItem('cpin') || '',
+  loggedIn: localStorage.getItem('clogged') === '1',
+  total:    parseInt(localStorage.getItem('ctotal') || '0'),
+  sessions: JSON.parse(localStorage.getItem('csess') || '[]'),
+  stats:    JSON.parse(localStorage.getItem('cstats') || '{}'),
   offtopicTotal: parseInt(localStorage.getItem('cot') || '0'),
   vulgarTotal:   parseInt(localStorage.getItem('cvt') || '0'),
   blocksTotal:   parseInt(localStorage.getItem('cbt') || '0'),
   subj: null, msgs: [], photo: null, photoB64: null, photoMt: null,
   method: 'text', pinMode: null, pinBuf: '', pinFirst: '',
-  sesQ: 0, offtopicCount: 0, vulgarCount: 0,
-  ocrTasks: [], ocrPhoto: null, ocrPhotoMt: null,
+  sesQ: 0, offtopicCount: 0,
+  ocrPhoto: null, ocrPhotoMt: null,
   pendingTasks: JSON.parse(localStorage.getItem('cpending') || '[]'),
-  blockTimer: null
+  blockTimer: null,
+  redagujActive: false
 };
+
+// ═══ WULGARYZMY — licznik dzienny ═══
+function getVulgarToday(){
+  const saved = JSON.parse(localStorage.getItem('cvulgar_day') || '{"date":"","count":0}');
+  const today = new Date().toLocaleDateString('pl-PL');
+  if(saved.date !== today) return 0;
+  return saved.count;
+}
+function incVulgarToday(){
+  const today = new Date().toLocaleDateString('pl-PL');
+  const count = getVulgarToday() + 1;
+  localStorage.setItem('cvulgar_day', JSON.stringify({date: today, count}));
+  return count;
+}
 
 // ═══ BLOKADA ═══
 function checkBlock(){
@@ -510,7 +544,7 @@ function triggerBlock(type){
   localStorage.setItem('cbt', S.blocksTotal);
   const titles = {
     offtopic: 'Cluedu ma za zadanie pomóc Ci w NAUCE, a wydaje mi się że w tej chwili nie masz na to ochoty.',
-    vulgar: 'Takich słów tutaj nie używamy. Wróć gdy będziesz gotowy do nauki.'
+    vulgar: 'Dziś użyłeś już 3 razy nieodpowiednich słów. Wróć za 5 minut.'
   };
   document.getElementById('block-title').textContent = titles[type] || titles.offtopic;
   showBlock(until);
@@ -525,7 +559,6 @@ function showBlock(until){
       document.getElementById('block-overlay').classList.remove('active');
       localStorage.removeItem('cblocked');
       S.offtopicCount = 0;
-      S.vulgarCount = 0;
     } else {
       const m = Math.floor(left/60000);
       const s = Math.floor((left%60000)/1000);
@@ -564,30 +597,6 @@ const SUBJECTS = {
   ]
 };
 
-const EXAMPLES = {
-  mat:{
-    primary:['2 × 7 = ?','Mam 15 jabłek i oddałam 6. Ile zostało?','Napisz liczbę 237 słowami','Ile to 100 − 48?'],
-    middle:['Rozwiąż równanie: 2x + 5 = 13','Pole trójkąta: podstawa 8 cm, wysokość 6 cm','Ile to 20% z 150?','Uprość: 3a + 2b − a + 5b'],
-    high:['Rozwiąż układ: x+y=5, 2x−y=4','Pochodna f(x) = x³ − 2x²','Miejsca zerowe: y = x² − 4x + 3','Oblicz ∫(2x+1)dx']
-  },
-  pol:{
-    primary:['Napisz zdanie z wyrazem "dom"','Co to jest rzeczownik?','Kiedy piszemy "ó", a kiedy "u"?','Opowiadanie: Mój najlepszy dzień'],
-    middle:['Rozprawka: Kłamstwo — czy zawsze złe?','Co to jest epitet i metafora?','Omów cechy renesansu','Jak napisać streszczenie?'],
-    high:['Motywy patriotyczne w Panu Tadeuszu','Romantyzm w Dziadach Mickiewicza','Interpretacja wiersza Szymborskiej','Co to jest archetyp literacki?']
-  },
-  ang:{
-    primary:['How do you say "pies" in English?','Count from 1 to 20','What color is the sky?','My name is... — przetłumacz'],
-    middle:['Present perfect vs past simple','Przetłumacz: Wczoraj byłem w kinie','Co to są modalne?','Write about your hobby'],
-    high:['Pros and cons of social media','Since vs for — różnica','Passive voice — co to?','Essay: climate change']
-  },
-  prz:{primary:['Jakie są pory roku?','Dlaczego niebo jest niebieskie?','Co to jest fotosynteza?','Wymień 5 zwierząt z lasu'],middle:[],high:[]},
-  bio:{primary:[],middle:['Co to jest DNA?','Budowa komórki roślinnej','Etapy mitozy','Co to jest ekosystem?'],high:['Translacja — synteza białek','Ewolucja i dobór naturalny','Jak działa układ immunologiczny?','Homeostaza']},
-  his:{primary:[],middle:['Kim był Napoleon?','Przyczyny I Wojny Światowej','Rewolucja francuska','Kiedy upadł mur berliński?'],high:['Skutki II Wojny Światowej','Zimna wojna','Rewolucja przemysłowa','Kim był Józef Piłsudski?']},
-  che:{primary:[],middle:['Co to jest atom?','Masa molowa H₂O','Kwasy i zasady','Układ okresowy — jak czytać?'],high:['Zbilansuj: Fe + O₂ → Fe₂O₃','Elektrochemia','Wiązania chemiczne','pH — co to?']},
-  fiz:{primary:[],middle:['Co to jest siła? F = ma','Prędkość średnia','Co to jest ciśnienie?','Jak działa dźwignia?'],high:['Energia kinetyczna: m=2 kg, v=10 m/s','Prawo Ohma','Ruch jednostajnie przyspieszony','Fale elektromagnetyczne']},
-  geo:{primary:[],middle:['Kontynenty i oceany','Klimat vs pogoda','Jak powstają góry?','Południk i równoleżnik'],high:['Strefy klimatyczne','Urbanizacja','El Niño','Problem przeludnienia']}
-};
-
 // ═══ SYSTEM PROMPT ═══
 function buildPrompt(subjId, subjName){
   const lv = S.level || 'middle';
@@ -603,48 +612,37 @@ UCZEŃ: ${S.name||'uczeń'}, poziom: ${lvName}, przedmiot: ${subjName}
 
 ━━━ ZASADY JĘZYKOWE ━━━
 • Imię ucznia ZAWSZE w formie podstawowej: "${S.name||'uczeń'}". Nigdy nie odmieniaj.
-• Nigdy nie poprawiaj formy gramatycznej ani rodzaju w wypowiedzi ucznia. Skup się wyłącznie na treści zadania.
+• Nigdy nie poprawiaj formy gramatycznej ani rodzaju w wypowiedzi ucznia.
 
-━━━ OFFTOPIC I NIEODPOWIEDNIE TREŚCI ━━━
-• Gdy uczeń pisze rzeczy niezwiązane z zadaniem — krótko zareaguj i wróć do tematu. NIE kontynuuj rozmowy towarzyskiej.
-• Jeśli wiadomość jest niezwiązana z zadaniem, zakończ odpowiedź słowem [OFFTOPIC]
-• Przy łagodnym przekleństwie/wulgaryzmie odpowiedz: "Hej, takich słów tutaj nie używamy 😊 Wróćmy do zadania!" i dodaj [VULGAR1]
-• Przy drugim przekleństwie odpowiedz stanowczo i dodaj [VULGAR2]
-• Przy trzecim dodaj [VULGAR3]
+━━━ OFFTOPIC I WULGARYZMY ━━━
+• Gdy uczeń pisze rzeczy niezwiązane z zadaniem → krótko zareaguj, wróć do tematu, dodaj [OFFTOPIC] na końcu odpowiedzi
+• Przy pierwszym wulgarnym słowie → odpowiedz: "Hej, takich słów tutaj nie używamy 😊 Wróćmy do zadania!" i dodaj [VULGAR1]
+• Przy drugim → stanowcza odpowiedź + [VULGAR2]
+• Przy trzecim → dodaj [VULGAR3]
+
+━━━ ZADANIA TWÓRCZE (opowiadania, wypracowania) ━━━
+Gdy uczeń pracuje nad zadaniem twórczym:
+1. Po każdej wypowiedzi ucznia związanej z tematem: najpierw WYŚWIETL zebrane myśli ucznia wyraźnie w odpowiedzi (np. "Powiedziałeś że..."), potem poproś o ułożenie zdania z tej myśli i dodaj [REDAGUJ] na końcu
+2. Po wysłaniu zdania przez ucznia: zacytuj je w cudzysłowie i zapytaj "Czy to zdanie pasuje do twojego opowiadania? Czy chcesz coś jeszcze dodać?"
+3. Co 3 wymiany: wyświetl podsumowanie dotychczasowej pracy: "Świetna robota! Zobacz ile już mamy: [podsumowanie]. Czy chcesz coś jeszcze dodać?"
+4. NIGDY nie pisz za ucznia — tylko naprowadzaj
 
 ━━━ ZADANIA TESTOWE (A/B/C/D/E) ━━━
-Gdy uczeń napisze samą literę lub "odpowiedź X" gdzie X to litera A-E:
-1. ZAWSZE interpretuj to jako wybór odpowiedzi testowej
-2. OBLICZ wartość każdej odpowiedzi matematycznie — nie porównuj wzrokowo zapisów
-3. Jeśli odpowiedź POPRAWNA → potwierdź natychmiast i ZAKOŃCZ zadanie
-4. Jeśli NIEPOPRAWNA → zapytaj dlaczego wybrał tę odpowiedź i naprowadź
+• Gdy uczeń podaje literę A-E → ZAWSZE interpretuj jako wybór odpowiedzi testowej
+• OBLICZ wartość matematycznie, nie porównuj wzrokowo
+• Poprawna → potwierdź natychmiast i ZAKOŃCZ zadanie
+• Niepoprawna → zapytaj dlaczego i naprowadź
 
-━━━ POTWIERDZANIE I KOŃCZENIE ZADANIA ━━━
-Gdy uczeń poda prawidłową odpowiedź:
-1. Natychmiast potwierdź entuzjastycznie: "Tak!", "Dokładnie!", "Świetnie!", "Brawo!"
-2. BEZWZGLĘDNIE zakończ to zadanie — nie zadawaj kolejnych pytań, nie proś o sprawdzenie
-3. Możesz jedynie zapytać: "Chcesz spróbować kolejnego zadania?" — i nic więcej
+━━━ POTWIERDZANIE I KOŃCZENIE ━━━
+• Poprawna odpowiedź → natychmiast potwierdź + BEZWZGLĘDNIE zakończ
+• Możesz tylko zapytać: "Chcesz spróbować kolejnego zadania?"
 
 ━━━ 3-POZIOMOWY SYSTEM POMOCY ━━━
-POZIOM 1 — NAPROWADZANIE (domyślny):
-• Jedno pytanie na raz, oceniaj zaangażowanie nie liczbę wiadomości
-• Po ${helpLevels.l1} wymianach gdzie uczeń szczerze próbuje ale utyka → Poziom 2
-
-POZIOM 2 — WSKAZÓWKA:
-• Konkretna wskazówka ale nie pełne rozwiązanie
-• Max ${helpLevels.l2} wskazówki → Poziom 3
-
-POZIOM 3 — PEŁNE ROZWIĄZANIE:
-• Krok po kroku z wyjaśnieniem każdego kroku
-• Na końcu: "Rozumiesz dlaczego tak wychodzi?"
-• Zadania twórcze → Poziom 3 nie istnieje
-
-━━━ ROZPOZNANIE ZADANIA ━━━
-• Jedno zadanie → od razu zacznij pomagać
-• Nieczytelne → poproś o ponowne przesłanie
+Poziom 1 (naprowadzanie, ${helpLevels.l1} wymiany) → Poziom 2 (wskazówka, ${helpLevels.l2} razy) → Poziom 3 (pełne rozwiązanie krok po kroku)
+Zadania twórcze: Poziom 3 nie istnieje.
 
 STYL: ${styles[lv]}
-Odpowiadaj zawsze po polsku. Max 3-4 zdania na wiadomość.`;
+Odpowiadaj po polsku. Max 3-4 zdania na wiadomość.`;
 }
 
 // ═══ MARKDOWN ═══
@@ -663,11 +661,16 @@ function showScreen(name){
   window.scrollTo(0,0);
 }
 
-// ═══ RESET ═══
+// ═══ RESET I WYLOGOWANIE ═══
 function resetAll(){
-  if(!confirm('Resetować ustawienia? Wszystkie dane zostaną usunięte, kod wróci do domyślnego.')) return;
-  localStorage.clear();
-  location.reload();
+  if(!confirm('Resetować ustawienia? Wszystkie dane zostaną usunięte.')) return;
+  localStorage.clear();location.reload();
+}
+function logout(){
+  if(!confirm('Wylogować? Przy następnym otwarciu będzie potrzebny kod dostępu.')) return;
+  localStorage.removeItem('clogged');
+  S.loggedIn=false;
+  showScreen('access');
 }
 
 // ═══ SCREEN 1 ═══
@@ -676,6 +679,8 @@ function checkAccess(){
   const err=document.getElementById('access-err');
   if(v===S.code){
     err.style.display='none';
+    localStorage.setItem('clogged','1');
+    S.loggedIn=true;
     checkBlock();
     if(S.name&&S.level){renderMain();showScreen('main');}
     else showScreen('onboarding');
@@ -739,22 +744,16 @@ function renderPending(){
 
 function savePendingTask(){
   if(!S.subj||!S.msgs.length) return;
-  const firstUserMsg = S.msgs.find(m=>m.role==='user');
-  const preview = typeof firstUserMsg?.content === 'string'
-    ? firstUserMsg.content.slice(0,60)
-    : 'Zadanie ze zdjęcia';
-  const existing = S.pendingTasks.findIndex(t=>t.subjId===S.subj.id&&t.taskPreview===preview.slice(0,60));
-  const task = {
-    subjId: S.subj.id,
-    subjName: S.subj.name,
-    emoji: S.subj.emoji,
-    taskPreview: preview,
-    date: new Date().toLocaleString('pl-PL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),
-    msgs: S.msgs,
-    photo: S.ocrPhoto,
-    photoMt: S.ocrPhotoMt
+  const firstUser=S.msgs.find(m=>m.role==='user');
+  const preview=typeof firstUser?.content==='string'?firstUser.content.slice(0,60):'Zadanie ze zdjęcia';
+  const existing=S.pendingTasks.findIndex(t=>t.subjId===S.subj.id&&t.taskPreview===preview.slice(0,60));
+  const task={
+    subjId:S.subj.id, subjName:S.subj.name, emoji:S.subj.emoji,
+    taskPreview:preview,
+    date:new Date().toLocaleString('pl-PL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),
+    msgs:S.msgs
   };
-  if(existing >= 0) S.pendingTasks[existing]=task;
+  if(existing>=0) S.pendingTasks[existing]=task;
   else S.pendingTasks.unshift(task);
   if(S.pendingTasks.length>MAX_PENDING) S.pendingTasks=S.pendingTasks.slice(0,MAX_PENDING);
   localStorage.setItem('cpending',JSON.stringify(S.pendingTasks));
@@ -764,20 +763,25 @@ function resumeTask(i){
   const t=S.pendingTasks[i];
   S.subj={id:t.subjId,name:t.subjName,emoji:t.emoji};
   S.msgs=t.msgs;
-  S.ocrPhoto=t.photo||null;
-  S.ocrPhotoMt=t.photoMt||null;
   S.sesQ=0;
   document.getElementById('chat-subj-name').textContent=`${t.emoji} ${t.subjName}`;
-  document.getElementById('chat-msgs').innerHTML='';
+  const el=document.getElementById('chat-msgs');
+  el.innerHTML='';
   S.msgs.forEach(m=>{
-    if(typeof m.content==='string') addMsg(m.role,m.content);
-    else if(Array.isArray(m.content)){
-      const img=m.content.find(c=>c.type==='image');
+    if(m.vulgar){
+      // Wulgarna wiadomość — czerwony prostokąt
+      const d=document.createElement('div');
+      d.className='msg user';
+      d.innerHTML='<div class="bubble" style="background:transparent;padding:4px 0"><div class="msg-vulgar"></div></div>';
+      el.appendChild(d);
+    } else if(typeof m.content==='string'){
+      addMsg(m.role,m.content);
+    } else if(Array.isArray(m.content)){
       const txt=m.content.find(c=>c.type==='text');
-      if(img) addMsg(m.role,txt?.text||null,`data:${img.source.media_type};base64,${img.source.data}`);
-      else if(txt) addMsg(m.role,txt.text);
+      if(txt) addMsg(m.role,txt.text);
     }
   });
+  el.scrollTop=el.scrollHeight;
   showScreen('chat');
 }
 
@@ -803,20 +807,11 @@ function selectSubject(id,data){
   const lv=S.level||'middle';
   const qs={primary:'Co chcesz dzisiaj poćwiczyć? 😊',middle:'Jakie masz zadanie?',high:'Pokaż mi zadanie.'};
   document.getElementById('task-q').textContent=qs[lv];
-  const exs=id==='unknown'?[]:((EXAMPLES[id]||{})[lv]||[]);
-  const exList=document.getElementById('ex-list');
-  exList.innerHTML='';
-  exs.forEach(ex=>{
-    const c=document.createElement('button');
-    c.className='ex-chip';
-    c.textContent='💡 '+ex;
-    c.addEventListener('click',()=>{document.getElementById('task-ta').value=ex;setMethod('text');});
-    exList.appendChild(c);
-  });
   setMethod('text');
   document.getElementById('task-ta').value='';
   document.getElementById('photo-prev').style.display='none';
   document.getElementById('ocr-panel').style.display='none';
+  document.getElementById('ocr-info').style.display='none';
   document.getElementById('voice-result-task').style.display='none';
   showScreen('task');
 }
@@ -827,23 +822,22 @@ function setMethod(m){
   document.getElementById('m-text').classList.toggle('hidden',m!=='text');
   document.getElementById('m-photo').classList.toggle('hidden',m!=='photo');
   document.getElementById('m-voice').classList.toggle('hidden',m!=='voice');
+  if(m==='photo') document.getElementById('ocr-info').style.display='block';
 }
 
 // ═══ KOMPRESJA ZDJĘCIA ═══
-function compressImage(file, cb){
+function compressImage(file,cb){
   const reader=new FileReader();
   reader.onload=ev=>{
     const img=new Image();
     img.onload=()=>{
       const MAX=1000;
-      let w=img.width, h=img.height;
+      let w=img.width,h=img.height;
       if(w>h&&w>MAX){h=Math.round(h*MAX/w);w=MAX;}
-      else if(h>w&&h>MAX){w=Math.round(w*MAX/h);h=MAX;}
-      else if(w>MAX&&h>MAX){w=MAX;h=MAX;}
+      else if(h>=w&&h>MAX){w=Math.round(w*MAX/h);h=MAX;}
       const canvas=document.createElement('canvas');
       canvas.width=w;canvas.height=h;
       const ctx=canvas.getContext('2d');
-      // Skala szarości
       ctx.filter='grayscale(100%)';
       ctx.drawImage(img,0,0,w,h);
       const b64=canvas.toDataURL('image/jpeg',0.6).split(',')[1];
@@ -855,14 +849,13 @@ function compressImage(file, cb){
 }
 
 // ═══ OCR ═══
-async function runOCR(b64, mt){
-  S.ocrPhoto=b64;S.ocrPhotoMt=mt;
+async function runOCR(b64,mt){
+  // Zachowujemy zdjęcie tymczasowo tylko do OCR — potem wyrzucamy
   const panel=document.getElementById('ocr-panel');
   const content=document.getElementById('ocr-content');
   panel.style.display='block';
   content.innerHTML='<div class="ocr-loading">📖 Odczytuję zadanie...</div>';
   document.getElementById('start-chat-btn').disabled=true;
-
   try {
     const res=await fetch('/api/claude',{
       method:'POST',
@@ -870,40 +863,33 @@ async function runOCR(b64, mt){
       body:JSON.stringify({
         messages:[{role:'user',content:[
           {type:'image',source:{type:'base64',media_type:mt,data:b64}},
-          {type:'text',text:'Na zdjęciu może być jedno lub kilka zadań oraz ilustracje. Wypisz TYLKO teksty zadań jako osobną numerowaną listę. Każde zadanie w osobnej linii zaczynającej się od numeru i kropki. Ilustracje, rysunki i obrazki zignoruj — napisz przy danym zadaniu "(zawiera ilustrację)" jeśli zadanie wymaga rysunku do rozwiązania. Zwróć TYLKO listę zadań, bez żadnych komentarzy.'}
+          {type:'text',text:'Wypisz TYLKO teksty zadań jako numerowaną listę. Każde zadanie w osobnej linii zaczynającej się od numeru i kropki. Jeśli zadanie wymaga rysunku/ilustracji do rozwiązania, dopisz na końcu "(zawiera ilustrację)". Zwróć TYLKO listę, bez komentarzy.'}
         ]}],
-        systemPrompt:'Jesteś asystentem OCR. Odczytujesz tekst ze zdjęć zadań szkolnych. Odpowiadasz WYŁĄCZNIE listą zadań, bez żadnych wstępów ani komentarzy.'
+        systemPrompt:'Jesteś asystentem OCR. Odczytujesz tekst ze zdjęć zadań szkolnych. Odpowiadasz WYŁĄCZNIE listą zadań, bez wstępów.'
       })
     });
     const data=await res.json();
     const text=data.content?.[0]?.text||'';
     const lines=text.split('\n').filter(l=>l.trim().match(/^\d+\./));
     S.ocrTasks=lines.map(l=>l.replace(/^\d+\.\s*/,'').trim());
-
     if(S.ocrTasks.length===0){
-      // Nie znaleziono zadań — pokaż cały tekst do edycji
       content.innerHTML=`
         <div class="ocr-confirm">Odczytany tekst — sprawdź czy jest poprawny:</div>
         <textarea class="ocr-edit" id="ocr-edit">${text}</textarea>
-        <button class="btn btn-primary" onclick="confirmOCR(document.getElementById('ocr-edit').value)">Tak, to moje zadanie ✅</button>
-      `;
+        <button class="btn btn-primary" onclick="confirmOCR(document.getElementById('ocr-edit').value,false,'${b64}','${mt}')">Tak, to moje zadanie ✅</button>`;
     } else if(S.ocrTasks.length===1){
-      // Jedno zadanie — pokaż do potwierdzenia
+      const hasImg=S.ocrTasks[0].includes('(zawiera ilustrację)');
+      const clean=S.ocrTasks[0].replace('(zawiera ilustrację)','').trim();
       content.innerHTML=`
         <div class="ocr-confirm">Czy dobrze odczytałem zadanie?</div>
-        <textarea class="ocr-edit" id="ocr-edit">${S.ocrTasks[0]}</textarea>
-        <div style="display:flex;gap:10px;margin-top:4px">
-          <button class="btn btn-primary" style="flex:1" onclick="confirmOCR(document.getElementById('ocr-edit').value)">Tak ✅</button>
-        </div>
-      `;
+        <textarea class="ocr-edit" id="ocr-edit">${clean}</textarea>
+        <button class="btn btn-primary" style="margin-top:8px" onclick="confirmOCR(document.getElementById('ocr-edit').value,${hasImg},'${b64}','${mt}')">Tak ✅</button>`;
     } else {
-      // Kilka zadań — lista do wyboru
       content.innerHTML=`
         <div class="ocr-confirm">Znalazłem kilka zadań. Które chcesz rozwiązać?</div>
         <div class="ocr-tasks">${S.ocrTasks.map((t,i)=>`
-          <button class="ocr-task-btn" onclick="selectOCRTask(${i},this)">${i+1}. ${t}</button>
-        `).join('')}</div>
-      `;
+          <button class="ocr-task-btn" onclick="selectOCRTask(${i},this,'${b64}','${mt}')">${i+1}. ${t.replace('(zawiera ilustrację)','').trim()}</button>
+        `).join('')}</div>`;
     }
   } catch(e){
     content.innerHTML='<div style="color:#E74C3C;font-size:14px">❌ Nie udało się odczytać zdjęcia. Wpisz zadanie ręcznie.</div>';
@@ -911,33 +897,40 @@ async function runOCR(b64, mt){
   document.getElementById('start-chat-btn').disabled=false;
 }
 
-function selectOCRTask(i, btn){
+function selectOCRTask(i,btn,b64,mt){
   document.querySelectorAll('.ocr-task-btn').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
   const task=S.ocrTasks[i];
-  const hasIllustration=task.includes('(zawiera ilustrację)');
-  const cleanTask=task.replace('(zawiera ilustrację)','').trim();
+  const hasImg=task.includes('(zawiera ilustrację)');
+  const clean=task.replace('(zawiera ilustrację)','').trim();
   const content=document.getElementById('ocr-content');
-  const extra=hasIllustration
-    ?'<div style="font-size:12px;color:#7B4FD4;margin-bottom:10px">ℹ️ To zadanie zawiera rysunek — zdjęcie zostanie dołączone do rozmowy</div>'
-    :'';
-  content.innerHTML+=`
-    <div style="margin-top:12px">
-      ${extra}
-      <textarea class="ocr-edit" id="ocr-edit">${cleanTask}</textarea>
-      <button class="btn btn-primary" style="margin-top:8px" onclick="confirmOCR(document.getElementById('ocr-edit').value,${hasIllustration})">Tak, to moje zadanie ✅</button>
-    </div>
-  `;
+  const extra=hasImg?'<div style="font-size:12px;color:#7B4FD4;margin-bottom:10px">ℹ️ To zadanie zawiera rysunek — zdjęcie zostanie dołączone</div>':'';
+  // Usuń poprzedni formularz jeśli istnieje
+  const prev=content.querySelector('.ocr-confirm-form');
+  if(prev) prev.remove();
+  const form=document.createElement('div');
+  form.className='ocr-confirm-form';
+  form.style.marginTop='12px';
+  form.innerHTML=`${extra}<textarea class="ocr-edit" id="ocr-edit">${clean}</textarea>
+    <button class="btn btn-primary" style="margin-top:8px" onclick="confirmOCR(document.getElementById('ocr-edit').value,${hasImg},'${b64}','${mt}')">Tak, to moje zadanie ✅</button>`;
+  content.appendChild(form);
 }
 
-function confirmOCR(text, needsPhoto=false){
+function confirmOCR(text,needsPhoto,b64,mt){
   document.getElementById('task-ta').value=text;
-  S.method='text';
-  // Jeśli zadanie wymaga ilustracji, zachowaj zdjęcie do rozmowy
-  if(!needsPhoto){S.ocrPhoto=null;S.ocrPhotoMt=null;}
+  // Zachowaj zdjęcie TYLKO jeśli zadanie wymaga ilustracji
+  if(needsPhoto){
+    S.ocrPhoto=b64;
+    S.ocrPhotoMt=mt;
+  } else {
+    S.ocrPhoto=null;
+    S.ocrPhotoMt=null;
+  }
   document.getElementById('ocr-panel').style.display='none';
   document.getElementById('m-text').classList.remove('hidden');
   document.getElementById('m-photo').classList.add('hidden');
+  S.method='text';
+  document.querySelectorAll('.method-btn').forEach(b=>b.classList.toggle('active',b.dataset.method==='text'));
 }
 
 // ═══ ZDJĘCIE ═══
@@ -949,7 +942,6 @@ function onPhotoSelected(e){
     runOCR(b64,mt);
   });
 }
-
 function onChatPhoto(e){
   const f=e.target.files[0];if(!f)return;
   compressImage(f,(b64,mt)=>{
@@ -986,6 +978,7 @@ function toggleVoiceTask(){
 }
 
 function chatVoice(){
+  if(S.redagujActive) return;
   const r=makeRec();
   if(!r){alert('Twoja przeglądarka nie obsługuje rozpoznawania głosu.');return;}
   r.onstart=()=>showVoiceOverlay();
@@ -995,25 +988,44 @@ function chatVoice(){
   r.start();
 }
 
+// ═══ REDAGUJ ═══
+function activateRedaguj(){
+  S.redagujActive=true;
+  document.getElementById('redaguj-popup').classList.add('active');
+  document.getElementById('voice-chat-btn').disabled=true;
+  document.getElementById('chat-in').focus();
+}
+function deactivateRedaguj(){
+  S.redagujActive=false;
+  document.getElementById('redaguj-popup').classList.remove('active');
+  document.getElementById('voice-chat-btn').disabled=false;
+}
+function checkRedagujTyping(el){
+  if(S.redagujActive && el.value.length > 0){
+    document.getElementById('redaguj-popup').classList.remove('active');
+  }
+}
+
 // ═══ START CHATU ═══
 function startChat(){
   let txt='';
   if(S.method==='text'){
     txt=document.getElementById('task-ta').value.trim();
-    if(!txt){alert('Wpisz treść zadania lub wybierz przykład 😊');return;}
+    if(!txt){alert('Wpisz treść zadania 😊');return;}
   } else if(S.method==='photo'){
-    if(!S.ocrPhoto){alert('Zrób lub wybierz zdjęcie zadania 📷');return;}
+    if(!S.ocrPhoto&&!document.getElementById('photo-prev').src.includes('base64')){
+      alert('Zrób lub wybierz zdjęcie zadania 📷');return;
+    }
     txt=document.getElementById('task-ta').value.trim()||'Mam zadanie na zdjęciu.';
   } else {
     txt=document.getElementById('task-ta').value.trim();
     if(!txt){alert('Nagraj najpierw swoje zadanie 🎤');return;}
   }
   document.getElementById('chat-subj-name').textContent=`${S.subj.emoji} ${S.subj.name}`;
-  S.msgs=[];S.sesQ=0;S.offtopicCount=0;S.vulgarCount=0;
+  S.msgs=[];S.sesQ=0;S.offtopicCount=0;S.redagujActive=false;
   document.getElementById('chat-msgs').innerHTML='';
+  document.getElementById('voice-chat-btn').disabled=false;
   showScreen('chat');
-
-  // Jeśli zadanie wymaga zdjęcia jako kontekstu
   if(S.ocrPhoto){
     addMsg('user',txt);
     S.msgs.push({role:'user',content:[
@@ -1028,13 +1040,17 @@ function startChat(){
 }
 
 // ═══ CHAT ═══
-function addMsg(role,text,photo=null){
+function addMsg(role,text,photo=null,isVulgar=false){
   const el=document.getElementById('chat-msgs');
   const d=document.createElement('div');
   d.className='msg '+role;
   let h='';
-  if(photo) h+=`<img src="${photo}" class="msg-img" alt="Zdjęcie">`;
-  if(text) h+=`<div class="bubble">${role==='assistant'?mdToHtml(text):esc(text)}</div>`;
+  if(isVulgar){
+    h='<div class="bubble" style="background:transparent;padding:4px 0"><div class="msg-vulgar"></div></div>';
+  } else {
+    if(photo) h+=`<img src="${photo}" class="msg-img" alt="Zdjęcie">`;
+    if(text) h+=`<div class="bubble">${role==='assistant'?mdToHtml(text):esc(text)}</div>`;
+  }
   d.innerHTML=h;
   el.appendChild(d);
   el.scrollTop=el.scrollHeight;
@@ -1048,37 +1064,42 @@ function showTyping(){
 }
 function hideTyping(){const t=document.getElementById('typing');if(t)t.remove();}
 
+// ═══ MODERACJA ═══
 function handleModeration(txt){
-  // Wykryj sygnały od Claude
   if(txt.includes('[VULGAR3]')){
-    S.vulgarCount++;
-    S.vulgarTotal++;
-    localStorage.setItem('cvt',S.vulgarTotal);
-    triggerBlock('vulgar');
+    const count=incVulgarToday();
+    S.vulgarTotal++;localStorage.setItem('cvt',S.vulgarTotal);
+    if(count>=MAX_VULGAR) triggerBlock('vulgar');
     return txt.replace('[VULGAR3]','').trim();
   }
   if(txt.includes('[VULGAR2]')){
-    S.vulgarCount++;
-    S.vulgarTotal++;
-    localStorage.setItem('cvt',S.vulgarTotal);
+    incVulgarToday();
+    S.vulgarTotal++;localStorage.setItem('cvt',S.vulgarTotal);
     return txt.replace('[VULGAR2]','').trim();
   }
   if(txt.includes('[VULGAR1]')){
-    S.vulgarCount++;
-    S.vulgarTotal++;
-    localStorage.setItem('cvt',S.vulgarTotal);
+    incVulgarToday();
+    S.vulgarTotal++;localStorage.setItem('cvt',S.vulgarTotal);
     return txt.replace('[VULGAR1]','').trim();
   }
   if(txt.includes('[OFFTOPIC]')){
     S.offtopicCount++;
-    S.offtopicTotal++;
-    localStorage.setItem('cot',S.offtopicTotal);
+    S.offtopicTotal++;localStorage.setItem('cot',S.offtopicTotal);
     if(S.offtopicCount>=MAX_OFFTOPIC) triggerBlock('offtopic');
     return txt.replace('[OFFTOPIC]','').trim();
   }
-  // Reset licznika offtopic gdy uczeń wraca do tematu
+  if(txt.includes('[REDAGUJ]')){
+    const clean=txt.replace('[REDAGUJ]','').trim();
+    setTimeout(()=>activateRedaguj(),300);
+    return clean;
+  }
   S.offtopicCount=0;
   return txt;
+}
+
+// ═══ PRZYCINANIE HISTORII ═══
+function trimmedMessages(){
+  return S.msgs.slice(-HISTORY_LIMIT);
 }
 
 async function callAI(){
@@ -1088,7 +1109,10 @@ async function callAI(){
     const res=await fetch('/api/claude',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:S.msgs,systemPrompt:buildPrompt(S.subj.id,S.subj.name)})
+      body:JSON.stringify({
+        messages:trimmedMessages(),
+        systemPrompt:buildPrompt(S.subj.id,S.subj.name)
+      })
     });
     if(!res.ok) throw new Error('HTTP '+res.status);
     const data=await res.json();
@@ -1115,6 +1139,7 @@ async function callAI(){
 function sendMsg(){
   const inp=document.getElementById('chat-in');
   const txt=inp.value.trim();
+  if(S.redagujActive) deactivateRedaguj();
   if(S.photo){
     addMsg('user',null,S.photo);
     S.msgs.push({role:'user',content:[
@@ -1126,16 +1151,23 @@ function sendMsg(){
     callAI();return;
   }
   if(!txt)return;
+  // Sprawdź wulgaryzmy przed wysłaniem
+  const vulgarDay=getVulgarToday();
+  if(vulgarDay>=MAX_VULGAR){
+    triggerBlock('vulgar');return;
+  }
   addMsg('user',txt);
-  S.msgs.push({role:'user',content:txt});
+  S.msgs.push({role:'user',content:txt,vulgar:false});
   inp.value='';inp.style.height='auto';
   callAI();
 }
+
 function chatKeyDown(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
 function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
 function chatPhoto(){document.getElementById('chat-cam-in').click();}
 
 function exitChat(){
+  deactivateRedaguj();
   savePendingTask();
   if(S.sesQ>0){
     S.sessions.push({date:new Date().toLocaleDateString('pl-PL'),subj:S.subj.name,q:S.sesQ});
@@ -1225,9 +1257,18 @@ function pinDone(){
 
 function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
 
+// ═══ INIT ═══
 (function(){
   checkBlock();
-  if(S.name&&S.level) renderMain();
+  // Jeśli zalogowany — pomiń ekran kodu
+  if(S.loggedIn && S.name && S.level){
+    document.getElementById('screen-access').classList.remove('active');
+    renderMain();
+    document.getElementById('screen-main').classList.add('active');
+  } else if(S.loggedIn){
+    document.getElementById('screen-access').classList.remove('active');
+    document.getElementById('screen-onboarding').classList.add('active');
+  }
 })();
 </script>
 </body>
