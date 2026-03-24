@@ -8,24 +8,21 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;overflow-x:hidden}
-
 .screen{display:none;min-height:100vh;flex-direction:column}
 .screen.active{display:flex;animation:fIn .3s ease}
 @keyframes fIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 #screen-chat{height:100dvh;height:100vh;overflow:hidden}
-
 .grad-bg{background:linear-gradient(160deg,#7B4FD4 0%,#9B59D0 40%,#C05FA0 75%,#D4556A 100%);position:relative;overflow:hidden}
 .grad-bg::before,.grad-bg::after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
 .grad-bg::before{width:300px;height:300px;top:-80px;right:-80px}
 .grad-bg::after{width:200px;height:200px;bottom:-60px;left:-60px}
 .flat-bg{background:#F0F4FF}
-
 .btn{border:none;border-radius:16px;padding:16px 24px;font-size:16px;font-weight:700;cursor:pointer;width:100%;transition:all .2s}
 .btn-white{background:#fff;color:#7B4FD4;box-shadow:0 4px 20px rgba(0,0,0,.15)}
 .btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.2)}
 .btn-white:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .btn-primary{background:#7B4FD4;color:#fff;box-shadow:0 4px 12px rgba(123,79,212,.4)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(123,79,212,.5)}
+.btn-primary:hover{transform:translateY(-2px)}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .btn-secondary{background:#fff;color:#7B4FD4;border:2px solid #D0BCFF}
 .btn-secondary:hover{border-color:#7B4FD4;background:#F3EEFF}
@@ -33,7 +30,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .input:focus{border-color:#7B4FD4}
 .back-btn{background:rgba(255,255,255,.2);border:none;border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;color:#fff;transition:all .2s}
 .back-btn:hover{background:rgba(255,255,255,.3)}
-.err{color:#ff6b6b;font-size:14px;text-align:center;display:none;margin-top:-6px}
 
 /* ── SCREEN 1 ── */
 #screen-access{justify-content:center;align-items:center;padding:24px}
@@ -63,30 +59,46 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .level-btn:hover{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.6)}
 .level-btn.sel{background:#fff;border-color:#fff;color:#7B4FD4}
 
-/* ── SCREEN 3 ── */
-#screen-main{justify-content:center;align-items:center;padding:24px;min-height:100vh}
+/* ── SCREEN 3: GŁÓWNY ── */
+#screen-main{justify-content:flex-start;align-items:center;padding:20px;min-height:100vh}
 .main-inner{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center}
-.main-owl{font-size:72px;margin-bottom:12px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.2))}
-.main-greeting{font-size:30px;font-weight:800;color:#fff;margin-bottom:6px;text-align:center}
+.main-top{display:flex;flex-direction:column;align-items:center;margin-bottom:20px}
+.main-owl{font-size:60px;margin-bottom:8px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.2))}
+.main-greeting{font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;text-align:center}
 .main-greeting span{color:#FFD95A}
-.main-sub{color:rgba(255,255,255,.8);font-size:15px;margin-bottom:32px;text-align:center}
-.subj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;width:100%;margin-bottom:14px}
-.subj-card{background:#fff;border:none;border-radius:20px;padding:22px 16px;cursor:pointer;transition:all .25s;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.12);position:relative;overflow:hidden}
-.subj-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--accent,#7B4FD4);border-radius:0 0 20px 20px}
-.subj-card:hover{transform:translateY(-4px);box-shadow:0 10px 32px rgba(0,0,0,.18)}
-.subj-card:active{transform:translateY(-1px)}
-.subj-em{font-size:40px;margin-bottom:8px;display:block}
-.subj-name{font-size:15px;font-weight:700;color:#1A1A2E}
-.btn-dontknow{background:rgba(255,255,255,.2);border:2px dashed rgba(255,255,255,.5);border-radius:16px;padding:16px;width:100%;cursor:pointer;font-size:15px;color:rgba(255,255,255,.9);font-weight:600;transition:all .2s}
+.main-sub{color:rgba(255,255,255,.8);font-size:14px;text-align:center}
+
+/* Karty niedokończonych zadań */
+.pending-section{width:100%;margin-bottom:16px}
+.pending-label{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.pending-cards{display:flex;flex-direction:column;gap:8px}
+.pending-card{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.pending-card-info{flex:1;min-width:0}
+.pending-card-subj{font-size:13px;font-weight:700;color:#fff}
+.pending-card-task{font-size:12px;color:rgba(255,255,255,.65);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pending-card-date{font-size:11px;color:rgba(255,255,255,.45);margin-top:2px}
+.pending-card-btns{display:flex;gap:6px;flex-shrink:0}
+.pc-btn{border:none;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
+.pc-btn-back{background:rgba(255,255,255,.9);color:#7B4FD4}
+.pc-btn-del{background:rgba(255,255,255,.15);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2)}
+
+.subj-section{width:100%}
+.subj-label-txt{font-size:12px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.subj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;width:100%;margin-bottom:12px}
+.subj-card{background:#fff;border:none;border-radius:18px;padding:18px 14px;cursor:pointer;transition:all .25s;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.12);position:relative;overflow:hidden}
+.subj-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--accent,#7B4FD4);border-radius:0 0 18px 18px}
+.subj-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.18)}
+.subj-em{font-size:36px;margin-bottom:6px;display:block}
+.subj-name{font-size:14px;font-weight:700;color:#1A1A2E}
+.btn-dontknow{background:rgba(255,255,255,.2);border:2px dashed rgba(255,255,255,.5);border-radius:14px;padding:14px;width:100%;cursor:pointer;font-size:14px;color:rgba(255,255,255,.9);font-weight:600;transition:all .2s}
 .btn-dontknow:hover{background:rgba(255,255,255,.3);border-color:#fff}
 .parent-icon{position:fixed;top:16px;right:16px;background:rgba(255,255,255,.25);border:none;border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;transition:all .2s;z-index:10}
 .parent-icon:hover{background:rgba(255,255,255,.4)}
-
 .ac-mat{--accent:#FF6B6B}.ac-pol{--accent:#FF9ECD}.ac-ang{--accent:#4ECDC4}
 .ac-prz,.ac-bio,.ac-geo{--accent:#A8E063}.ac-his{--accent:#F7B731}
 .ac-che{--accent:#A29BFE}.ac-fiz{--accent:#74B9FF}
 
-/* ── SCREEN 4 ── */
+/* ── SCREEN 4: ZADANIE ── */
 #screen-task{background:#F0F4FF}
 .task-hdr{background:linear-gradient(135deg,#7B4FD4,#C05FA0);padding:20px;display:flex;align-items:center;gap:12px}
 .task-hdr-info .title{font-size:20px;font-weight:700;color:#fff}
@@ -100,14 +112,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .method-icon{font-size:24px;display:block;margin-bottom:4px}
 .task-ta{width:100%;min-height:120px;padding:16px;border:2px solid #D0BCFF;border-radius:14px;font-size:16px;background:#fff;color:#1A1A2E;outline:none;resize:vertical;font-family:inherit;transition:border-color .2s}
 .task-ta:focus{border-color:#7B4FD4}
-.photo-preview{width:100%;max-height:260px;border-radius:14px;object-fit:contain;border:2px solid #D0BCFF;display:none;margin-bottom:14px}
+.photo-preview{width:100%;max-height:220px;border-radius:14px;object-fit:contain;border:2px solid #D0BCFF;display:none;margin-bottom:14px}
+
+/* OCR panel */
+.ocr-panel{display:none;background:#fff;border:2px solid #D0BCFF;border-radius:14px;padding:16px;margin-bottom:14px}
+.ocr-title{font-size:13px;font-weight:700;color:#7B4FD4;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.ocr-tasks{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.ocr-task-btn{background:#F3EEFF;border:2px solid #D0BCFF;border-radius:10px;padding:10px 14px;cursor:pointer;font-size:14px;color:#1A1A2E;text-align:left;transition:all .2s;line-height:1.4}
+.ocr-task-btn:hover{border-color:#7B4FD4;background:#E8DEFF}
+.ocr-task-btn.sel{border-color:#7B4FD4;background:#7B4FD4;color:#fff}
+.ocr-confirm{font-size:13px;color:#555;margin-bottom:12px;line-height:1.5}
+.ocr-edit{width:100%;padding:10px 14px;border:2px solid #D0BCFF;border-radius:10px;font-size:14px;background:#fff;color:#1A1A2E;outline:none;resize:vertical;min-height:80px;font-family:inherit;margin-bottom:12px}
+.ocr-edit:focus{border-color:#7B4FD4}
+.ocr-loading{text-align:center;padding:20px;color:#888;font-size:14px}
+
+/* Głos */
+.voice-result-box{display:none;padding:12px 16px;background:#fff;border:1px solid #D0BCFF;border-radius:12px;font-size:14px;color:#555;margin-bottom:14px}
 .ex-label{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin:16px 0 10px}
 .ex-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
 .ex-chip{background:#fff;border:1px solid #D0BCFF;border-radius:12px;padding:12px 16px;cursor:pointer;font-size:14px;color:#333;transition:all .2s;text-align:left}
 .ex-chip:hover{border-color:#7B4FD4;color:#7B4FD4;background:#F3EEFF}
 .task-footer{padding:16px 20px 24px;background:#F0F4FF}
 
-/* ── SCREEN 5 ── */
+/* ── SCREEN 5: CHAT ── */
 .chat-hdr{background:linear-gradient(135deg,#7B4FD4,#C05FA0);padding:14px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
 .chat-subj-name{font-weight:700;font-size:16px;color:#fff}
 .chat-subj-hint{font-size:11px;color:rgba(255,255,255,.75)}
@@ -138,7 +165,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .send-btn:hover{transform:scale(1.08)}
 .send-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 
-/* ── SCREEN 6 ── */
+/* ── SCREEN 6: RAPORT ── */
 #screen-report{background:#F0F4FF}
 .report-hdr{background:linear-gradient(135deg,#7B4FD4,#C05FA0);padding:20px;display:flex;align-items:center;gap:12px}
 .report-body{padding:20px;flex:1;overflow-y:auto}
@@ -191,6 +218,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .voice-label{color:#fff;font-size:22px;font-weight:800;letter-spacing:.5px}
 .voice-hint{color:rgba(255,255,255,.55);font-size:14px}
 
+/* ── BLOKADA ── */
+.block-overlay{display:none;position:fixed;inset:0;background:rgba(20,0,40,.92);z-index:3000;align-items:center;justify-content:center;flex-direction:column;gap:20px;padding:32px;backdrop-filter:blur(10px)}
+.block-overlay.active{display:flex;animation:fIn .3s ease}
+.block-emoji{font-size:64px}
+.block-title{color:#fff;font-size:20px;font-weight:800;text-align:center;line-height:1.4;max-width:320px}
+.block-sub{color:rgba(255,255,255,.6);font-size:14px;text-align:center;max-width:280px;line-height:1.5}
+.block-timer{font-size:56px;font-weight:800;color:#FFD95A;font-variant-numeric:tabular-nums}
+.block-timer-label{color:rgba(255,255,255,.5);font-size:13px}
+
 .hidden{display:none!important}
 #cam-in,#chat-cam-in{display:none}
 </style>
@@ -205,12 +241,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
     <p class="access-sub">AI Korepetytor dla dzieci</p>
     <div class="access-form">
       <input type="password" id="access-in" class="input" placeholder="Wpisz kod dostępu" autocomplete="off">
-      <div id="access-err" class="err">❌ Nieprawidłowy kod dostępu</div>
+      <div id="access-err" style="color:#ff6b6b;font-size:14px;text-align:center;display:none;margin-top:-6px">❌ Nieprawidłowy kod dostępu</div>
       <button class="btn btn-white" onclick="checkAccess()">Wchodzę! →</button>
       <button class="reset-btn" onclick="resetAll()">Resetuj ustawienia</button>
     </div>
   </div>
-  <div class="app-version">v0.7</div>
+  <div class="app-version">v0.8</div>
 </div>
 
 <!-- SCREEN 2: ONBOARDING -->
@@ -241,13 +277,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 <div id="screen-main" class="screen grad-bg">
   <button class="parent-icon" onclick="openReport()">👤</button>
   <div class="main-inner">
-    <div class="main-owl">🦉</div>
-    <h2 class="main-greeting">Cześć, <span id="greeting-name">!</span></h2>
-    <p class="main-sub">Czego się dzisiaj uczymy? 📚</p>
-    <div class="subj-grid" id="subj-grid"></div>
-    <button class="btn-dontknow" onclick="selectSubject('unknown',{id:'unknown',name:'Dowolny przedmiot',emoji:'🤔'})">
-      🤷 Nie wiem z jakiego to przedmiotu
-    </button>
+    <div class="main-top">
+      <div class="main-owl">🦉</div>
+      <h2 class="main-greeting">Cześć, <span id="greeting-name">!</span></h2>
+      <p class="main-sub">Czego się dzisiaj uczymy? 📚</p>
+    </div>
+    <!-- Karty niedokończonych zadań -->
+    <div class="pending-section hidden" id="pending-section">
+      <div class="pending-label">Niedokończone zadania</div>
+      <div class="pending-cards" id="pending-cards"></div>
+    </div>
+    <div class="subj-section">
+      <div class="subj-label-txt">Wybierz przedmiot</div>
+      <div class="subj-grid" id="subj-grid"></div>
+      <button class="btn-dontknow" onclick="selectSubject('unknown',{id:'unknown',name:'Dowolny przedmiot',emoji:'🤔'})">
+        🤷 Nie wiem z jakiego to przedmiotu
+      </button>
+    </div>
   </div>
 </div>
 
@@ -282,12 +328,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
       <button class="btn btn-secondary" onclick="document.getElementById('cam-in').click()" style="margin-bottom:14px">
         📷 Zrób lub wybierz zdjęcie
       </button>
+      <!-- OCR Panel -->
+      <div class="ocr-panel" id="ocr-panel">
+        <div class="ocr-title">Odczytałem zadanie 📖</div>
+        <div id="ocr-content"></div>
+      </div>
     </div>
     <div id="m-voice" class="hidden">
       <button class="btn btn-primary" onclick="toggleVoiceTask()" style="margin-bottom:14px">
         🎤 Naciśnij i mów
       </button>
-      <div id="voice-result-task" style="display:none;padding:12px 16px;background:#fff;border:1px solid #D0BCFF;border-radius:12px;font-size:14px;color:#555;margin-bottom:14px">
+      <div class="voice-result-box" id="voice-result-task">
         Rozpoznano: "<span id="voice-txt-task"></span>"
       </div>
     </div>
@@ -295,7 +346,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
     <div class="ex-list" id="ex-list"></div>
   </div>
   <div class="task-footer">
-    <button class="btn btn-primary" onclick="startChat()">Porozmawiajmy! →</button>
+    <button class="btn btn-primary" id="start-chat-btn" onclick="startChat()">Porozmawiajmy! →</button>
   </div>
 </div>
 
@@ -344,6 +395,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
       <div id="subj-bars"></div>
     </div>
     <div class="rpt-section">
+      <h3>Zachowanie</h3>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-val" id="st-offtopic" style="font-size:22px">0</div><div class="stat-lbl">Offtopic</div></div>
+        <div class="stat-card"><div class="stat-val" id="st-vulgar" style="font-size:22px;color:#E74C3C">0</div><div class="stat-lbl">Nieodpowiednie</div></div>
+        <div class="stat-card"><div class="stat-val" id="st-blocks" style="font-size:22px">0</div><div class="stat-lbl">Blokady</div></div>
+      </div>
+    </div>
+    <div class="rpt-section">
       <h3>Ostatnie sesje</h3>
       <div id="recent-sess"></div>
     </div>
@@ -384,15 +443,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
     </div>
     <div class="pin-err" id="pin-err">❌ Nieprawidłowy PIN</div>
     <div class="pin-pad">
-      <button class="pin-key" onclick="pk('1')">1</button>
-      <button class="pin-key" onclick="pk('2')">2</button>
-      <button class="pin-key" onclick="pk('3')">3</button>
-      <button class="pin-key" onclick="pk('4')">4</button>
-      <button class="pin-key" onclick="pk('5')">5</button>
-      <button class="pin-key" onclick="pk('6')">6</button>
-      <button class="pin-key" onclick="pk('7')">7</button>
-      <button class="pin-key" onclick="pk('8')">8</button>
-      <button class="pin-key" onclick="pk('9')">9</button>
+      <button class="pin-key" onclick="pk('1')">1</button><button class="pin-key" onclick="pk('2')">2</button><button class="pin-key" onclick="pk('3')">3</button>
+      <button class="pin-key" onclick="pk('4')">4</button><button class="pin-key" onclick="pk('5')">5</button><button class="pin-key" onclick="pk('6')">6</button>
+      <button class="pin-key" onclick="pk('7')">7</button><button class="pin-key" onclick="pk('8')">8</button><button class="pin-key" onclick="pk('9')">9</button>
       <button class="pin-key" style="font-size:14px;font-weight:600" onclick="pk('X')">Anuluj</button>
       <button class="pin-key" onclick="pk('0')">0</button>
       <button class="pin-key" onclick="pk('DEL')">⌫</button>
@@ -403,30 +456,85 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 <!-- VOICE OVERLAY -->
 <div class="voice-overlay" id="voice-overlay">
   <div class="voice-anim">
-    <div class="voice-ring"></div>
-    <div class="voice-ring"></div>
-    <div class="voice-ring"></div>
+    <div class="voice-ring"></div><div class="voice-ring"></div><div class="voice-ring"></div>
     <div class="voice-mic">🎤</div>
   </div>
   <div class="voice-label">Mów teraz...</div>
   <div class="voice-hint">Powiedz swoje zadanie lub odpowiedź</div>
 </div>
 
+<!-- BLOKADA OVERLAY -->
+<div class="block-overlay" id="block-overlay">
+  <div class="block-emoji">🦉</div>
+  <div class="block-title" id="block-title">Cluedu ma za zadanie pomóc Ci w NAUCE, a wydaje mi się że w tej chwili nie masz na to ochoty.</div>
+  <div class="block-sub">Spróbujmy ponownie za:</div>
+  <div class="block-timer" id="block-timer">5:00</div>
+  <div class="block-timer-label">minut</div>
+</div>
+
 <script>
 const DEFAULT_CODE = 'cluedu2026';
+const BLOCK_DURATION = 5 * 60 * 1000;
+const MAX_OFFTOPIC = 5;
+const MAX_VULGAR = 3;
+const MAX_PENDING = 3;
 
 const S = {
-  code:     localStorage.getItem('code') || DEFAULT_CODE,
-  name:     localStorage.getItem('cname') || '',
-  level:    localStorage.getItem('clevel') || '',
-  pin:      localStorage.getItem('cpin') || '',
-  total:    parseInt(localStorage.getItem('ctotal') || '0'),
-  sessions: JSON.parse(localStorage.getItem('csess') || '[]'),
-  stats:    JSON.parse(localStorage.getItem('cstats') || '{}'),
-  subj:null, msgs:[], photo:null, method:'text',
-  pinMode:null, pinBuf:'', pinFirst:'', sesQ:0
+  code:       localStorage.getItem('code') || DEFAULT_CODE,
+  name:       localStorage.getItem('cname') || '',
+  level:      localStorage.getItem('clevel') || '',
+  pin:        localStorage.getItem('cpin') || '',
+  total:      parseInt(localStorage.getItem('ctotal') || '0'),
+  sessions:   JSON.parse(localStorage.getItem('csess') || '[]'),
+  stats:      JSON.parse(localStorage.getItem('cstats') || '{}'),
+  offtopicTotal: parseInt(localStorage.getItem('cot') || '0'),
+  vulgarTotal:   parseInt(localStorage.getItem('cvt') || '0'),
+  blocksTotal:   parseInt(localStorage.getItem('cbt') || '0'),
+  subj: null, msgs: [], photo: null, photoB64: null, photoMt: null,
+  method: 'text', pinMode: null, pinBuf: '', pinFirst: '',
+  sesQ: 0, offtopicCount: 0, vulgarCount: 0,
+  ocrTasks: [], ocrPhoto: null, ocrPhotoMt: null,
+  pendingTasks: JSON.parse(localStorage.getItem('cpending') || '[]'),
+  blockTimer: null
 };
 
+// ═══ BLOKADA ═══
+function checkBlock(){
+  const until = parseInt(localStorage.getItem('cblocked') || '0');
+  if(Date.now() < until) showBlock(until);
+}
+function triggerBlock(type){
+  const until = Date.now() + BLOCK_DURATION;
+  localStorage.setItem('cblocked', until);
+  S.blocksTotal++;
+  localStorage.setItem('cbt', S.blocksTotal);
+  const titles = {
+    offtopic: 'Cluedu ma za zadanie pomóc Ci w NAUCE, a wydaje mi się że w tej chwili nie masz na to ochoty.',
+    vulgar: 'Takich słów tutaj nie używamy. Wróć gdy będziesz gotowy do nauki.'
+  };
+  document.getElementById('block-title').textContent = titles[type] || titles.offtopic;
+  showBlock(until);
+}
+function showBlock(until){
+  document.getElementById('block-overlay').classList.add('active');
+  if(S.blockTimer) clearInterval(S.blockTimer);
+  S.blockTimer = setInterval(()=>{
+    const left = until - Date.now();
+    if(left <= 0){
+      clearInterval(S.blockTimer);
+      document.getElementById('block-overlay').classList.remove('active');
+      localStorage.removeItem('cblocked');
+      S.offtopicCount = 0;
+      S.vulgarCount = 0;
+    } else {
+      const m = Math.floor(left/60000);
+      const s = Math.floor((left%60000)/1000);
+      document.getElementById('block-timer').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+    }
+  }, 500);
+}
+
+// ═══ DANE PRZEDMIOTÓW ═══
 const SUBJECTS = {
   primary:[
     {id:'mat',name:'Matematyka',emoji:'🔢',ac:'ac-mat'},
@@ -475,7 +583,7 @@ const EXAMPLES = {
   prz:{primary:['Jakie są pory roku?','Dlaczego niebo jest niebieskie?','Co to jest fotosynteza?','Wymień 5 zwierząt z lasu'],middle:[],high:[]},
   bio:{primary:[],middle:['Co to jest DNA?','Budowa komórki roślinnej','Etapy mitozy','Co to jest ekosystem?'],high:['Translacja — synteza białek','Ewolucja i dobór naturalny','Jak działa układ immunologiczny?','Homeostaza']},
   his:{primary:[],middle:['Kim był Napoleon?','Przyczyny I Wojny Światowej','Rewolucja francuska','Kiedy upadł mur berliński?'],high:['Skutki II Wojny Światowej','Zimna wojna','Rewolucja przemysłowa','Kim był Józef Piłsudski?']},
-  che:{primary:[],middle:['Co to jest atom?','Masa molowa H₂O','Kwasy i zasady','Układ okresowy — jak czytać?'],high:['Zbilansuj: Fe + O₂ → Fe₂O₃','Elektrochemia','Wiązania chemiczne','pH — co to i jak obliczyć?']},
+  che:{primary:[],middle:['Co to jest atom?','Masa molowa H₂O','Kwasy i zasady','Układ okresowy — jak czytać?'],high:['Zbilansuj: Fe + O₂ → Fe₂O₃','Elektrochemia','Wiązania chemiczne','pH — co to?']},
   fiz:{primary:[],middle:['Co to jest siła? F = ma','Prędkość średnia','Co to jest ciśnienie?','Jak działa dźwignia?'],high:['Energia kinetyczna: m=2 kg, v=10 m/s','Prawo Ohma','Ruch jednostajnie przyspieszony','Fale elektromagnetyczne']},
   geo:{primary:[],middle:['Kontynenty i oceany','Klimat vs pogoda','Jak powstają góry?','Południk i równoleżnik'],high:['Strefy klimatyczne','Urbanizacja','El Niño','Problem przeludnienia']}
 };
@@ -484,64 +592,55 @@ const EXAMPLES = {
 function buildPrompt(subjId, subjName){
   const lv = S.level || 'middle';
   const lvName = {primary:'szkoła podstawowa kl. 1-3',middle:'szkoła podstawowa kl. 4-8',high:'liceum'}[lv];
-
-  const helpLevels = {
-    primary:  {l1:2, l2:2},
-    middle:   {l1:3, l2:2},
-    high:     {l1:4, l2:2}
-  }[lv];
-
+  const helpLevels = {primary:{l1:2,l2:2},middle:{l1:3,l2:2},high:{l1:4,l2:2}}[lv];
   const styles = {
     primary:`Używaj bardzo prostego języka. Dużo emojis 😊🎉. Krótkie zdania. Bądź entuzjastyczny i ciepły.`,
     middle:`Używaj normalnego języka. Emojis z umiarem. Bądź przyjazny i motywujący.`,
     high:`Używaj dojrzałego, merytorycznego języka. Traktuj jak dorosłego. Minimalne emojis.`
   };
-
   return `Jesteś Cluedu — AI korepetytorem dla polskich uczniów.
-
 UCZEŃ: ${S.name||'uczeń'}, poziom: ${lvName}, przedmiot: ${subjName}
 
 ━━━ ZASADY JĘZYKOWE ━━━
 • Imię ucznia ZAWSZE w formie podstawowej: "${S.name||'uczeń'}". Nigdy nie odmieniaj.
 • Nigdy nie poprawiaj formy gramatycznej ani rodzaju w wypowiedzi ucznia. Skup się wyłącznie na treści zadania.
 
+━━━ OFFTOPIC I NIEODPOWIEDNIE TREŚCI ━━━
+• Gdy uczeń pisze rzeczy niezwiązane z zadaniem — krótko zareaguj i wróć do tematu. NIE kontynuuj rozmowy towarzyskiej.
+• Jeśli wiadomość jest niezwiązana z zadaniem, zakończ odpowiedź słowem [OFFTOPIC]
+• Przy łagodnym przekleństwie/wulgaryzmie odpowiedz: "Hej, takich słów tutaj nie używamy 😊 Wróćmy do zadania!" i dodaj [VULGAR1]
+• Przy drugim przekleństwie odpowiedz stanowczo i dodaj [VULGAR2]
+• Przy trzecim dodaj [VULGAR3]
+
 ━━━ ZADANIA TESTOWE (A/B/C/D/E) ━━━
-Gdy uczeń wskazuje odpowiedź literą (np. "A", "B", "odpowiedź C"):
-1. Sprawdź czy jest poprawna
-2. Jeśli TAK → potwierdź natychmiast i entuzjastycznie: "Tak! Odpowiedź A jest prawidłowa! 🎉"
-3. Jeśli NIE → nie mów "źle", zapytaj dlaczego wybrał tę odpowiedź i naprowadź
-
-━━━ 3-POZIOMOWY SYSTEM POMOCY ━━━
-
-POZIOM 1 — NAPROWADZANIE (domyślny):
-• Zadawaj jedno pytanie na raz, prowadź krok po kroku
-• Oceniaj zaangażowanie ucznia, nie liczbę wiadomości
-• Uczeń wykazuje myślenie (pokazuje tok rozumowania, zadaje pytania) → kontynuuj naprowadzanie
-• Po ${helpLevels.l1} wymianach gdzie uczeń szczerze próbuje ale utyka → przejdź do Poziomu 2
-• Gdy uczeń odpowiada bezsensownie lub "nie wiem" bez żadnej próby → zapytaj inaczej, max 2 razy, potem zaproponuj wskazówkę
-
-POZIOM 2 — WSKAZÓWKA:
-• Daj konkretną wskazówkę która naprowadza na rozwiązanie, ale go nie zdradza
-• Przykład: "Spróbuj zacząć od obliczenia 2−0, co wychodzi?"
-• Max ${helpLevels.l2} wskazówki, potem przejdź do Poziomu 3
-• Jeśli uczeń po wskazówce sam dojdzie do odpowiedzi → potwierdź entuzjastycznie!
-
-POZIOM 3 — PEŁNE ROZWIĄZANIE:
-• Pokaż rozwiązanie krok po kroku z wyjaśnieniem każdego kroku
-• NIGDY nie podawaj samej odpowiedzi bez wyjaśnienia
-• Na końcu zapytaj: "Rozumiesz dlaczego tak wychodzi?"
-• WYJĄTEK: Zadania twórcze (opowiadania, wypracowania) — Poziom 3 nie istnieje, zawsze pomagasz rozwijać pomysły ucznia
+Gdy uczeń napisze samą literę lub "odpowiedź X" gdzie X to litera A-E:
+1. ZAWSZE interpretuj to jako wybór odpowiedzi testowej
+2. OBLICZ wartość każdej odpowiedzi matematycznie — nie porównuj wzrokowo zapisów
+3. Jeśli odpowiedź POPRAWNA → potwierdź natychmiast i ZAKOŃCZ zadanie
+4. Jeśli NIEPOPRAWNA → zapytaj dlaczego wybrał tę odpowiedź i naprowadź
 
 ━━━ POTWIERDZANIE I KOŃCZENIE ZADANIA ━━━
-Gdy uczeń poda prawidłową odpowiedź na DOWOLNYM etapie:
-1. Natychmiast i entuzjastycznie potwierdź: "Tak!", "Dokładnie!", "Świetnie!", "Brawo!" itp.
-2. BEZWZGLĘDNIE zakończ to zadanie — nie zadawaj kolejnych pytań, nie proś o sprawdzenie, nie kontynuuj rozwiązywania.
-3. Możesz jedynie krótko zapytać: "Chcesz spróbować kolejnego zadania?" — i nic więcej.
-Nigdy nie kontynuuj pracy nad zadaniem które uczeń już poprawnie rozwiązał.
+Gdy uczeń poda prawidłową odpowiedź:
+1. Natychmiast potwierdź entuzjastycznie: "Tak!", "Dokładnie!", "Świetnie!", "Brawo!"
+2. BEZWZGLĘDNIE zakończ to zadanie — nie zadawaj kolejnych pytań, nie proś o sprawdzenie
+3. Możesz jedynie zapytać: "Chcesz spróbować kolejnego zadania?" — i nic więcej
+
+━━━ 3-POZIOMOWY SYSTEM POMOCY ━━━
+POZIOM 1 — NAPROWADZANIE (domyślny):
+• Jedno pytanie na raz, oceniaj zaangażowanie nie liczbę wiadomości
+• Po ${helpLevels.l1} wymianach gdzie uczeń szczerze próbuje ale utyka → Poziom 2
+
+POZIOM 2 — WSKAZÓWKA:
+• Konkretna wskazówka ale nie pełne rozwiązanie
+• Max ${helpLevels.l2} wskazówki → Poziom 3
+
+POZIOM 3 — PEŁNE ROZWIĄZANIE:
+• Krok po kroku z wyjaśnieniem każdego kroku
+• Na końcu: "Rozumiesz dlaczego tak wychodzi?"
+• Zadania twórcze → Poziom 3 nie istnieje
 
 ━━━ ROZPOZNANIE ZADANIA ━━━
 • Jedno zadanie → od razu zacznij pomagać
-• Kilka zadań na zdjęciu → zapytaj które
 • Nieczytelne → poproś o ponowne przesłanie
 
 STYL: ${styles[lv]}
@@ -550,11 +649,9 @@ Odpowiadaj zawsze po polsku. Max 3-4 zdania na wiadomość.`;
 
 // ═══ MARKDOWN ═══
 function mdToHtml(t){
-  return t
-    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+  return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
     .replace(/\*(.+?)\*/g,'<em>$1</em>')
-    .replace(/\n\n+/g,'</p><p>')
-    .replace(/\n/g,'<br>')
+    .replace(/\n\n+/g,'</p><p>').replace(/\n/g,'<br>')
     .replace(/^/,'<p>').replace(/$/,'</p>');
 }
 
@@ -568,7 +665,7 @@ function showScreen(name){
 
 // ═══ RESET ═══
 function resetAll(){
-  if(!confirm('Resetować ustawienia? Kod dostępu wróci do domyślnego, wszystkie dane zostaną usunięte.')) return;
+  if(!confirm('Resetować ustawienia? Wszystkie dane zostaną usunięte, kod wróci do domyślnego.')) return;
   localStorage.clear();
   location.reload();
 }
@@ -579,6 +676,7 @@ function checkAccess(){
   const err=document.getElementById('access-err');
   if(v===S.code){
     err.style.display='none';
+    checkBlock();
     if(S.name&&S.level){renderMain();showScreen('main');}
     else showScreen('onboarding');
   } else {
@@ -598,9 +696,7 @@ function saveOnboarding(){
   const n=document.getElementById('name-in').value.trim();
   if(!n){alert('Wpisz swoje imię 😊');return;}
   if(!S.level){alert('Wybierz klasę 🎒');return;}
-  S.name=n;
-  localStorage.setItem('cname',n);
-  localStorage.setItem('clevel',S.level);
+  S.name=n;localStorage.setItem('cname',n);localStorage.setItem('clevel',S.level);
   renderMain();showScreen('main');
 }
 
@@ -617,11 +713,92 @@ function renderMain(){
     btn.addEventListener('click',()=>selectSubject(s.id,s));
     grid.appendChild(btn);
   });
+  renderPending();
+}
+
+// ═══ PAMIĘĆ SESJI ═══
+function renderPending(){
+  const sec=document.getElementById('pending-section');
+  const cards=document.getElementById('pending-cards');
+  if(!S.pendingTasks.length){sec.classList.add('hidden');return;}
+  sec.classList.remove('hidden');
+  cards.innerHTML=S.pendingTasks.map((t,i)=>`
+    <div class="pending-card">
+      <div class="pending-card-info">
+        <div class="pending-card-subj">${t.emoji} ${t.subjName}</div>
+        <div class="pending-card-task">${t.taskPreview}</div>
+        <div class="pending-card-date">${t.date}</div>
+      </div>
+      <div class="pending-card-btns">
+        <button class="pc-btn pc-btn-back" onclick="resumeTask(${i})">Wróć</button>
+        <button class="pc-btn pc-btn-del" onclick="deleteTask(${i})">Usuń</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function savePendingTask(){
+  if(!S.subj||!S.msgs.length) return;
+  const firstUserMsg = S.msgs.find(m=>m.role==='user');
+  const preview = typeof firstUserMsg?.content === 'string'
+    ? firstUserMsg.content.slice(0,60)
+    : 'Zadanie ze zdjęcia';
+  const existing = S.pendingTasks.findIndex(t=>t.subjId===S.subj.id&&t.taskPreview===preview.slice(0,60));
+  const task = {
+    subjId: S.subj.id,
+    subjName: S.subj.name,
+    emoji: S.subj.emoji,
+    taskPreview: preview,
+    date: new Date().toLocaleString('pl-PL',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}),
+    msgs: S.msgs,
+    photo: S.ocrPhoto,
+    photoMt: S.ocrPhotoMt
+  };
+  if(existing >= 0) S.pendingTasks[existing]=task;
+  else S.pendingTasks.unshift(task);
+  if(S.pendingTasks.length>MAX_PENDING) S.pendingTasks=S.pendingTasks.slice(0,MAX_PENDING);
+  localStorage.setItem('cpending',JSON.stringify(S.pendingTasks));
+}
+
+function resumeTask(i){
+  const t=S.pendingTasks[i];
+  S.subj={id:t.subjId,name:t.subjName,emoji:t.emoji};
+  S.msgs=t.msgs;
+  S.ocrPhoto=t.photo||null;
+  S.ocrPhotoMt=t.photoMt||null;
+  S.sesQ=0;
+  document.getElementById('chat-subj-name').textContent=`${t.emoji} ${t.subjName}`;
+  document.getElementById('chat-msgs').innerHTML='';
+  S.msgs.forEach(m=>{
+    if(typeof m.content==='string') addMsg(m.role,m.content);
+    else if(Array.isArray(m.content)){
+      const img=m.content.find(c=>c.type==='image');
+      const txt=m.content.find(c=>c.type==='text');
+      if(img) addMsg(m.role,txt?.text||null,`data:${img.source.media_type};base64,${img.source.data}`);
+      else if(txt) addMsg(m.role,txt.text);
+    }
+  });
+  showScreen('chat');
+}
+
+function deleteTask(i){
+  S.pendingTasks.splice(i,1);
+  localStorage.setItem('cpending',JSON.stringify(S.pendingTasks));
+  renderPending();
+}
+
+function checkPendingLimit(){
+  if(S.pendingTasks.length>=MAX_PENDING){
+    alert('Masz już 3 rozpoczęte zadania. Dokończ lub usuń jedno żeby zacząć nowe.');
+    return true;
+  }
+  return false;
 }
 
 // ═══ SCREEN 4 ═══
 function selectSubject(id,data){
-  S.subj=data;S.photo=null;
+  if(id!=='unknown'&&checkPendingLimit()) return;
+  S.subj=data;S.photo=null;S.ocrPhoto=null;S.ocrTasks=[];
   document.getElementById('task-title').textContent=`${data.emoji} ${data.name}`;
   const lv=S.level||'middle';
   const qs={primary:'Co chcesz dzisiaj poćwiczyć? 😊',middle:'Jakie masz zadanie?',high:'Pokaż mi zadanie.'};
@@ -639,9 +816,11 @@ function selectSubject(id,data){
   setMethod('text');
   document.getElementById('task-ta').value='';
   document.getElementById('photo-prev').style.display='none';
+  document.getElementById('ocr-panel').style.display='none';
   document.getElementById('voice-result-task').style.display='none';
   showScreen('task');
 }
+
 function setMethod(m){
   S.method=m;
   document.querySelectorAll('.method-btn').forEach(b=>b.classList.toggle('active',b.dataset.method===m));
@@ -650,18 +829,134 @@ function setMethod(m){
   document.getElementById('m-voice').classList.toggle('hidden',m!=='voice');
 }
 
+// ═══ KOMPRESJA ZDJĘCIA ═══
+function compressImage(file, cb){
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const img=new Image();
+    img.onload=()=>{
+      const MAX=1000;
+      let w=img.width, h=img.height;
+      if(w>h&&w>MAX){h=Math.round(h*MAX/w);w=MAX;}
+      else if(h>w&&h>MAX){w=Math.round(w*MAX/h);h=MAX;}
+      else if(w>MAX&&h>MAX){w=MAX;h=MAX;}
+      const canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      const ctx=canvas.getContext('2d');
+      // Skala szarości
+      ctx.filter='grayscale(100%)';
+      ctx.drawImage(img,0,0,w,h);
+      const b64=canvas.toDataURL('image/jpeg',0.6).split(',')[1];
+      cb(b64,'image/jpeg');
+    };
+    img.src=ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ═══ OCR ═══
+async function runOCR(b64, mt){
+  S.ocrPhoto=b64;S.ocrPhotoMt=mt;
+  const panel=document.getElementById('ocr-panel');
+  const content=document.getElementById('ocr-content');
+  panel.style.display='block';
+  content.innerHTML='<div class="ocr-loading">📖 Odczytuję zadanie...</div>';
+  document.getElementById('start-chat-btn').disabled=true;
+
+  try {
+    const res=await fetch('/api/claude',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        messages:[{role:'user',content:[
+          {type:'image',source:{type:'base64',media_type:mt,data:b64}},
+          {type:'text',text:'Na zdjęciu może być jedno lub kilka zadań oraz ilustracje. Wypisz TYLKO teksty zadań jako osobną numerowaną listę. Każde zadanie w osobnej linii zaczynającej się od numeru i kropki. Ilustracje, rysunki i obrazki zignoruj — napisz przy danym zadaniu "(zawiera ilustrację)" jeśli zadanie wymaga rysunku do rozwiązania. Zwróć TYLKO listę zadań, bez żadnych komentarzy.'}
+        ]}],
+        systemPrompt:'Jesteś asystentem OCR. Odczytujesz tekst ze zdjęć zadań szkolnych. Odpowiadasz WYŁĄCZNIE listą zadań, bez żadnych wstępów ani komentarzy.'
+      })
+    });
+    const data=await res.json();
+    const text=data.content?.[0]?.text||'';
+    const lines=text.split('\n').filter(l=>l.trim().match(/^\d+\./));
+    S.ocrTasks=lines.map(l=>l.replace(/^\d+\.\s*/,'').trim());
+
+    if(S.ocrTasks.length===0){
+      // Nie znaleziono zadań — pokaż cały tekst do edycji
+      content.innerHTML=`
+        <div class="ocr-confirm">Odczytany tekst — sprawdź czy jest poprawny:</div>
+        <textarea class="ocr-edit" id="ocr-edit">${text}</textarea>
+        <button class="btn btn-primary" onclick="confirmOCR(document.getElementById('ocr-edit').value)">Tak, to moje zadanie ✅</button>
+      `;
+    } else if(S.ocrTasks.length===1){
+      // Jedno zadanie — pokaż do potwierdzenia
+      content.innerHTML=`
+        <div class="ocr-confirm">Czy dobrze odczytałem zadanie?</div>
+        <textarea class="ocr-edit" id="ocr-edit">${S.ocrTasks[0]}</textarea>
+        <div style="display:flex;gap:10px;margin-top:4px">
+          <button class="btn btn-primary" style="flex:1" onclick="confirmOCR(document.getElementById('ocr-edit').value)">Tak ✅</button>
+        </div>
+      `;
+    } else {
+      // Kilka zadań — lista do wyboru
+      content.innerHTML=`
+        <div class="ocr-confirm">Znalazłem kilka zadań. Które chcesz rozwiązać?</div>
+        <div class="ocr-tasks">${S.ocrTasks.map((t,i)=>`
+          <button class="ocr-task-btn" onclick="selectOCRTask(${i},this)">${i+1}. ${t}</button>
+        `).join('')}</div>
+      `;
+    }
+  } catch(e){
+    content.innerHTML='<div style="color:#E74C3C;font-size:14px">❌ Nie udało się odczytać zdjęcia. Wpisz zadanie ręcznie.</div>';
+  }
+  document.getElementById('start-chat-btn').disabled=false;
+}
+
+function selectOCRTask(i, btn){
+  document.querySelectorAll('.ocr-task-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  const task=S.ocrTasks[i];
+  const hasIllustration=task.includes('(zawiera ilustrację)');
+  const cleanTask=task.replace('(zawiera ilustrację)','').trim();
+  const content=document.getElementById('ocr-content');
+  const extra=hasIllustration
+    ?'<div style="font-size:12px;color:#7B4FD4;margin-bottom:10px">ℹ️ To zadanie zawiera rysunek — zdjęcie zostanie dołączone do rozmowy</div>'
+    :'';
+  content.innerHTML+=`
+    <div style="margin-top:12px">
+      ${extra}
+      <textarea class="ocr-edit" id="ocr-edit">${cleanTask}</textarea>
+      <button class="btn btn-primary" style="margin-top:8px" onclick="confirmOCR(document.getElementById('ocr-edit').value,${hasIllustration})">Tak, to moje zadanie ✅</button>
+    </div>
+  `;
+}
+
+function confirmOCR(text, needsPhoto=false){
+  document.getElementById('task-ta').value=text;
+  S.method='text';
+  // Jeśli zadanie wymaga ilustracji, zachowaj zdjęcie do rozmowy
+  if(!needsPhoto){S.ocrPhoto=null;S.ocrPhotoMt=null;}
+  document.getElementById('ocr-panel').style.display='none';
+  document.getElementById('m-text').classList.remove('hidden');
+  document.getElementById('m-photo').classList.add('hidden');
+}
+
 // ═══ ZDJĘCIE ═══
 function onPhotoSelected(e){
   const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{S.photo=ev.target.result;const p=document.getElementById('photo-prev');p.src=S.photo;p.style.display='block';};
-  r.readAsDataURL(f);
+  compressImage(f,(b64,mt)=>{
+    const prev=document.getElementById('photo-prev');
+    prev.src=`data:${mt};base64,${b64}`;prev.style.display='block';
+    runOCR(b64,mt);
+  });
 }
+
 function onChatPhoto(e){
   const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();
-  r.onload=ev=>{S.photo=ev.target.result;sendMsg();};
-  r.readAsDataURL(f);
+  compressImage(f,(b64,mt)=>{
+    S.photo=`data:${mt};base64,${b64}`;
+    S.photoB64=b64;S.photoMt=mt;
+    sendMsg();
+  });
 }
 
 // ═══ GŁOS ═══
@@ -689,6 +984,7 @@ function toggleVoiceTask(){
   r.onerror=()=>{hideVoiceOverlay();alert('Nie udało się rozpoznać. Spróbuj ponownie.');};
   r.start();
 }
+
 function chatVoice(){
   const r=makeRec();
   if(!r){alert('Twoja przeglądarka nie obsługuje rozpoznawania głosu.');return;}
@@ -705,25 +1001,25 @@ function startChat(){
   if(S.method==='text'){
     txt=document.getElementById('task-ta').value.trim();
     if(!txt){alert('Wpisz treść zadania lub wybierz przykład 😊');return;}
-    S.photo=null;
   } else if(S.method==='photo'){
-    if(!S.photo){alert('Zrób lub wybierz zdjęcie zadania 📷');return;}
-    txt='Mam zadanie na zdjęciu.';
+    if(!S.ocrPhoto){alert('Zrób lub wybierz zdjęcie zadania 📷');return;}
+    txt=document.getElementById('task-ta').value.trim()||'Mam zadanie na zdjęciu.';
   } else {
     txt=document.getElementById('task-ta').value.trim();
     if(!txt){alert('Nagraj najpierw swoje zadanie 🎤');return;}
-    S.photo=null;
   }
   document.getElementById('chat-subj-name').textContent=`${S.subj.emoji} ${S.subj.name}`;
-  S.msgs=[];S.sesQ=0;
+  S.msgs=[];S.sesQ=0;S.offtopicCount=0;S.vulgarCount=0;
   document.getElementById('chat-msgs').innerHTML='';
   showScreen('chat');
-  if(S.photo){
-    addMsg('user',null,S.photo);
-    const b64=S.photo.split(',')[1];
-    const mt=S.photo.split(';')[0].split(':')[1];
-    S.msgs.push({role:'user',content:[{type:'image',source:{type:'base64',media_type:mt,data:b64}},{type:'text',text:'To jest moje zadanie.'}]});
-    S.photo=null;
+
+  // Jeśli zadanie wymaga zdjęcia jako kontekstu
+  if(S.ocrPhoto){
+    addMsg('user',txt);
+    S.msgs.push({role:'user',content:[
+      {type:'image',source:{type:'base64',media_type:S.ocrPhotoMt,data:S.ocrPhoto}},
+      {type:'text',text:txt}
+    ]});
   } else {
     addMsg('user',txt);
     S.msgs.push({role:'user',content:txt});
@@ -752,6 +1048,39 @@ function showTyping(){
 }
 function hideTyping(){const t=document.getElementById('typing');if(t)t.remove();}
 
+function handleModeration(txt){
+  // Wykryj sygnały od Claude
+  if(txt.includes('[VULGAR3]')){
+    S.vulgarCount++;
+    S.vulgarTotal++;
+    localStorage.setItem('cvt',S.vulgarTotal);
+    triggerBlock('vulgar');
+    return txt.replace('[VULGAR3]','').trim();
+  }
+  if(txt.includes('[VULGAR2]')){
+    S.vulgarCount++;
+    S.vulgarTotal++;
+    localStorage.setItem('cvt',S.vulgarTotal);
+    return txt.replace('[VULGAR2]','').trim();
+  }
+  if(txt.includes('[VULGAR1]')){
+    S.vulgarCount++;
+    S.vulgarTotal++;
+    localStorage.setItem('cvt',S.vulgarTotal);
+    return txt.replace('[VULGAR1]','').trim();
+  }
+  if(txt.includes('[OFFTOPIC]')){
+    S.offtopicCount++;
+    S.offtopicTotal++;
+    localStorage.setItem('cot',S.offtopicTotal);
+    if(S.offtopicCount>=MAX_OFFTOPIC) triggerBlock('offtopic');
+    return txt.replace('[OFFTOPIC]','').trim();
+  }
+  // Reset licznika offtopic gdy uczeń wraca do tematu
+  S.offtopicCount=0;
+  return txt;
+}
+
 async function callAI(){
   document.getElementById('send-btn').disabled=true;
   showTyping();
@@ -759,11 +1088,12 @@ async function callAI(){
     const res=await fetch('/api/claude',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({messages:S.msgs,systemPrompt:buildPrompt(S.subj.id,S.subj.name),subjId:S.subj.id})
+      body:JSON.stringify({messages:S.msgs,systemPrompt:buildPrompt(S.subj.id,S.subj.name)})
     });
     if(!res.ok) throw new Error('HTTP '+res.status);
     const data=await res.json();
-    const txt=data.content?.[0]?.text||'Przepraszam, wystąpił błąd. Spróbuj ponownie.';
+    let txt=data.content?.[0]?.text||'Przepraszam, wystąpił błąd. Spróbuj ponownie.';
+    txt=handleModeration(txt);
     hideTyping();
     addMsg('assistant',txt);
     S.msgs.push({role:'assistant',content:txt});
@@ -772,6 +1102,7 @@ async function callAI(){
     if(!S.stats[S.subj.id]) S.stats[S.subj.id]=0;
     S.stats[S.subj.id]++;
     localStorage.setItem('cstats',JSON.stringify(S.stats));
+    savePendingTask();
   } catch(e){
     hideTyping();
     addMsg('assistant','❌ Ups! Coś poszło nie tak. Sprawdź internet i spróbuj ponownie.');
@@ -786,10 +1117,11 @@ function sendMsg(){
   const txt=inp.value.trim();
   if(S.photo){
     addMsg('user',null,S.photo);
-    const b64=S.photo.split(',')[1];
-    const mt=S.photo.split(';')[0].split(':')[1];
-    S.msgs.push({role:'user',content:[{type:'image',source:{type:'base64',media_type:mt,data:b64}},{type:'text',text:txt||'Mam kolejne zadanie.'}]});
-    S.photo=null;
+    S.msgs.push({role:'user',content:[
+      {type:'image',source:{type:'base64',media_type:S.photoMt,data:S.photoB64}},
+      {type:'text',text:txt||'Mam kolejne zadanie.'}
+    ]});
+    S.photo=null;S.photoB64=null;S.photoMt=null;
     if(txt){inp.value='';inp.style.height='auto';}
     callAI();return;
   }
@@ -802,13 +1134,15 @@ function sendMsg(){
 function chatKeyDown(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
 function autoH(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
 function chatPhoto(){document.getElementById('chat-cam-in').click();}
+
 function exitChat(){
+  savePendingTask();
   if(S.sesQ>0){
     S.sessions.push({date:new Date().toLocaleDateString('pl-PL'),subj:S.subj.name,q:S.sesQ});
     if(S.sessions.length>50) S.sessions=S.sessions.slice(-50);
     localStorage.setItem('csess',JSON.stringify(S.sessions));
   }
-  S.msgs=[];showScreen('main');
+  S.msgs=[];showScreen('main');renderMain();
 }
 
 // ═══ RAPORT ═══
@@ -821,6 +1155,9 @@ function renderReport(){
   const days=[...new Set(S.sessions.map(s=>s.date))].length;
   document.getElementById('st-days').textContent=days;
   document.getElementById('st-sess').textContent=S.sessions.length;
+  document.getElementById('st-offtopic').textContent=S.offtopicTotal;
+  document.getElementById('st-vulgar').textContent=S.vulgarTotal;
+  document.getElementById('st-blocks').textContent=S.blocksTotal;
   const maxV=Math.max(...Object.values(S.stats),1);
   const subjs=SUBJECTS[S.level]||SUBJECTS.middle;
   const filtered=subjs.filter(s=>S.stats[s.id]>0);
@@ -888,7 +1225,10 @@ function pinDone(){
 
 function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
 
-(function(){if(S.name&&S.level) renderMain();})();
+(function(){
+  checkBlock();
+  if(S.name&&S.level) renderMain();
+})();
 </script>
 </body>
 </html>

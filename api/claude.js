@@ -1,7 +1,4 @@
-// Przedmioty wymagające lepszego rozumowania → Sonnet
-const SONNET_SUBJECTS = ['mat', 'fiz', 'che'];
-const SONNET_MODEL = 'claude-sonnet-4-6';
-const HAIKU_MODEL  = 'claude-haiku-4-5-20251001';
+const HAIKU_MODEL = 'claude-haiku-4-5-20251001';
 
 const handler = async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -12,10 +9,8 @@ const handler = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { messages, systemPrompt, subjId } = req.body;
+  const { messages, systemPrompt } = req.body;
   if (!messages || !systemPrompt) return res.status(400).json({ error: 'Brak danych' });
-
-  const model = SONNET_SUBJECTS.includes(subjId) ? SONNET_MODEL : HAIKU_MODEL;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -27,7 +22,7 @@ const handler = async (req, res) => {
         'anthropic-beta': 'prompt-caching-2024-07-31'
       },
       body: JSON.stringify({
-        model,
+        model: HAIKU_MODEL,
         max_tokens: 600,
         system: [
           {
