@@ -997,7 +997,7 @@ function activateRedaguj(){
   const d=document.createElement('div');
   d.id='redaguj-inline';
   d.className='redaguj-inline';
-  d.innerHTML='<div class="redaguj-inline-emoji">✍️</div><div><div class="redaguj-inline-title">Czas na pisanie!</div><div class="redaguj-inline-sub">Napisz zdanie na klawiaturze</div></div>';
+  d.innerHTML='<div class="redaguj-inline-emoji">✍️</div><div><div class="redaguj-inline-title">Czas na pisanie!</div><div class="redaguj-inline-sub">Teraz ułóż ładne zdanie do opowiadania.</div></div>';
   el.appendChild(d);
   el.scrollTop=el.scrollHeight;
   document.getElementById('voice-chat-btn').disabled=true;
@@ -1010,7 +1010,7 @@ function deactivateRedaguj(){
     const el=document.getElementById('chat-msgs');
     const marker=document.createElement('div');
     marker.className='redaguj-marker';
-    marker.textContent='✍️ napisano na klawiaturze';
+    marker.textContent='✍️ zdanie napisane na klawiaturze';
     el.replaceChild(marker,inline);
   }
   document.getElementById('voice-chat-btn').disabled=false;
