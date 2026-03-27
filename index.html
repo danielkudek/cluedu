@@ -517,7 +517,7 @@ const S = {
   ocrPhoto: null, ocrPhotoMt: null,
   pendingTasks: JSON.parse(localStorage.getItem('cpending') || '[]'),
   blockTimer: null,
-  redagujActive: false
+  redagujActive: false, redagujSkip: 0
 };
 
 // ═══ WULGARYZMY — licznik dzienny ═══
@@ -1005,6 +1005,7 @@ function activateRedaguj(){
 }
 function deactivateRedaguj(){
   S.redagujActive=false;
+  S.redagujSkip=2;
   const inline=document.getElementById('redaguj-inline');
   if(inline){
     const el=document.getElementById('chat-msgs');
@@ -1105,7 +1106,11 @@ function handleModeration(txt){
   }
   if(txt.includes('[REDAGUJ]')){
     const clean=txt.replace('[REDAGUJ]','').trim();
-    setTimeout(()=>activateRedaguj(),300);
+    if(S.redagujSkip>0){
+      S.redagujSkip--;
+    } else {
+      setTimeout(()=>activateRedaguj(),300);
+    }
     return clean;
   }
   S.offtopicCount=0;
