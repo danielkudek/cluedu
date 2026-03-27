@@ -1099,7 +1099,7 @@ function handleModeration(txt){
 
 // ═══ PRZYCINANIE HISTORII ═══
 function trimmedMessages(){
-  return S.msgs.slice(-HISTORY_LIMIT);
+  return S.msgs.slice(-HISTORY_LIMIT).map(({role, content}) => ({role, content}));
 }
 
 async function callAI(){
