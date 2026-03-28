@@ -1,65 +1,93 @@
 # CLAUDE.md
+# Opis projektu Cluedu — dokument stały
+# Aktualizuj tylko gdy zmienia się architektura, struktura plików lub kluczowe zasady
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Aktualny changelog
+# Pliki updates mają format: updates[ddmm].md (np. updates2803.md)
+# Przy każdej sesji: znajdź plik updates[ddmm].md z najpóźniejszą datą
+# spośród wszystkich plików w Project Knowledge — to jest aktualny changelog.
 
-## Project Overview
+## Co to jest Cluedu
+AI Korepetytor dla polskich dzieci. Aplikacja webowa działająca w przeglądarce.
+Uczeń wybiera przedmiot, wpisuje (lub fotografuje / nagrywa) zadanie, a AI prowadzi
+go do rozwiązania metodą sokratejską — naprowadza, nie podaje gotowych odpowiedzi.
 
-**Cluedu** is an AI tutoring app for Polish children ("AI Korepetytor dla dzieci"). It consists of two files:
-- `index.html` — single-file SPA (vanilla JS, CSS, HTML, ~1300 lines)
-- `api/claude.js` — Vercel serverless function that proxies requests to the Anthropic API
+## Technologia
+- Frontend: `index.html` — single-file SPA, vanilla JS + CSS, zero zewnętrznych zależności
+- Backend: Vercel Serverless Functions (`api/*.js`)
+- AI: Anthropic Claude Haiku 4.5 z prompt cachingiem
+- Deploy: Vercel (push do main = auto-deploy)
+- Dane: localStorage (brak bazy danych)
 
-No build system, no package manager (frontend), no test framework. Deploy directly to Vercel.
+## Struktura plików
+```
+api/
+  claude.js       ← handler HTTP, wywołuje Anthropic API
+  prompts.js      ← system prompty per przedmiot, budowane po stronie serwera
+  config.js       ← wszystkie stałe aplikacji (limity, kredyty, model AI)
+  subjects.js     ← lista przedmiotów per poziom + endpoint GET /api/subjects
+  moderation.js   ← flagi moderacji + endpoint GET /api/moderation
+  auth.js         ← (planowany) autoryzacja — odkładamy do fazy skalowania
 
-## Development
+index.html        ← cały frontend: UI, CSS, logika klienta
+CLAUDE.md         ← ten plik — stały opis projektu
+updates[ddmm].md  ← changelog i plany — szukaj pliku z najpóźniejszą datą
+```
 
-**Run locally:** Open `index.html` in a browser, or use a local HTTP server. The `/api/claude` endpoint requires Vercel CLI or a live Vercel environment.
+## Architektura — kluczowe zasady
+- Logika biznesowa, prompty, konfiguracja → TYLKO na serwerze (`api/`)
+- `index.html` zawiera wyłącznie UI i obsługę zdarzeń
+- Żadnych haseł, progów moderacji ani flag w przeglądarce
+- Stałe konfiguracyjne edytuj w `api/config.js`, nie w `index.html`
+- Przedmioty i flagi moderacji pobierane przez fetch z `/api/subjects` i `/api/moderation`
 
-**Deploy:** Push to main branch; Vercel auto-deploys. The API key (`ANTHROPIC_API_KEY`) must be set as a Vercel environment variable.
+## Ekrany aplikacji (CSS class toggle, brak routera)
+1. `#screen-access` — kod dostępu
+2. `#screen-onboarding` — imię + poziom nauczania
+3. `#screen-main` — wybór przedmiotu + niedokończone zadania
+4. `#screen-task` — wprowadzanie zadania (tekst / zdjęcie / głos)
+5. `#screen-chat` — rozmowa z AI
+6. `#screen-report` — panel rodzica (PIN-chroniony)
 
-**Vercel local dev:**
+## System promptów
+- Każdy przedmiot ma osobny prompt w `api/prompts.js`
+- Wspólny rdzeń (`core()`) zawiera: imię ucznia, poziom, styl, zasady moderacji
+- Prompt budowany po stronie serwera — niewidoczny w przeglądarce
+- Przedmioty: mat, pol, ang, bio, his, che, fiz, geo, prz, unknown
+- Poziomy: primary (kl. 1–3), middle (kl. 4–8), high (liceum)
+
+## Flagi moderacji (zwracane przez AI w odpowiedzi)
+- `[OFFTOPIC]` — odpowiedź niezwiązana z zadaniem
+- `[VULGAR1/2/3]` — wulgaryzmy (przy 3 w ciągu dnia → blokada 5 min)
+- `[REDAGUJ]` — tryb pisania wypracowań (blokuje mikrofon)
+- `[DONE]` — zadanie zakończone poprawnie
+
+## System kredytów
+- 2500 kredytów miesięcznie, reset 1. dnia miesiąca
+- Wiadomość = 2 kredyty, zdjęcie = 4 kredyty
+- Koniec kredytów = brak dostępu do końca miesiąca
+- Kredyty przechowywane w localStorage (`ccredits`, `ccredits_month`)
+
+## Limity
+- Historia czatu wysyłana do API: 8 wiadomości (`HISTORY_LIMIT`)
+- Max długość wiadomości ucznia: 500 znaków
+- Max zdjęć OCR dziennie: 3
+- Max niedokończonych zadań: 3 (`MAX_PENDING`)
+- Max tokenów odpowiedzi AI: 400 (`MAX_TOKENS`)
+
+## Autoryzacja (obecna — uproszczona)
+- Kod dostępu: przechowywany w localStorage, domyślnie `cluedu2026`
+- PIN rodzica: 4 cyfry, przechowywany w localStorage
+- Planowana zmiana: przeniesienie do zmiennych środowiskowych Vercel (`ACCESS_CODE`, `PARENT_PIN`)
+
+## Zmienne środowiskowe Vercel
+- `ANTHROPIC_API_KEY` — klucz API Anthropic (wymagany)
+
+## Rozwój lokalny
 ```bash
 npm install -g vercel
 vercel dev
 ```
 
-## Architecture
-
-### Frontend (`index.html`)
-
-Six CSS-class-toggled screens (no router):
-1. `#screen-access` — password entry (`cluedu2026` default)
-2. `#screen-onboarding` — name + grade level
-3. `#screen-main` — subject selection + pending tasks
-4. `#screen-task` — task input (text / photo / voice)
-5. `#screen-chat` — tutoring conversation
-6. `#screen-report` — parent stats dashboard
-
-All state lives in `localStorage`. No external JS dependencies.
-
-**Key constants (embedded in JS):**
-- `BLOCK_DURATION = 5` (minutes) — block after moderation violations
-- `MAX_OFFTOPIC = 5`, `MAX_VULGAR = 3` — violation thresholds
-- `MAX_PENDING = 3` — concurrent unfinished tasks
-- `HISTORY_LIMIT = 12` — chat messages sent to API
-
-### Backend (`api/claude.js`)
-
-Simple Vercel serverless function:
-- `POST /api/claude` — accepts `{ messages[], systemPrompt }`, proxies to Claude Haiku 4.5 with prompt caching on the system prompt
-- Max output: 600 tokens
-- Model: `claude-haiku-4-5-20251001`
-
-### Dynamic System Prompt
-
-Built client-side based on student name, grade level (`primary`/`middle`/`high`), and subject. Includes:
-- 3-level help system (hints → clues → full solution; disabled for creative/essay tasks)
-- Server-side moderation flags parsed by the client: `[OFFTOPIC]`, `[VULGAR1]`, `[VULGAR2]`, `[VULGAR3]`, `[REDAGUJ]`
-- Special "REDAGUJ" mode for essays — scaffolds thinking instead of writing for the student
-
-### Input Pipeline
-
-Text / photo (compressed to max 1000×1000px grayscale via Canvas API) / voice (Web Speech API) → optional OCR via vision call → chat message → `/api/claude` → parse moderation flags → update localStorage stats + session history.
-
-## Language
-
-All UI text, system prompts, and AI responses are in **Polish**.
+## Język
+Cały UI, prompty i odpowiedzi AI — po polsku.
