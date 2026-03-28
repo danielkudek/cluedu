@@ -523,6 +523,7 @@ const S = {
   pendingTasks: JSON.parse(localStorage.getItem('cpending') || '[]'),
   blockTimer: null,
   redagujActive: false, redagujSkip: 0,
+  subjects: null,
   flags: {
     OFFTOPIC: '[OFFTOPIC]',
     VULGAR1:  '[VULGAR1]',
@@ -650,6 +651,7 @@ function renderMain(){
   fetch('/api/subjects')
     .then(r=>r.json())
     .then(data=>{
+      S.subjects = data;
       const subjs=data[S.level]||data.middle;
       grid.innerHTML='';
       subjs.forEach(s=>{
@@ -1229,7 +1231,8 @@ function renderReport(){
   document.getElementById('st-vulgar').textContent=S.vulgarTotal;
   document.getElementById('st-blocks').textContent=S.blocksTotal;
   const maxV=Math.max(...Object.values(S.stats),1);
-  const subjs=SUBJECTS[S.level]||SUBJECTS.middle;
+  const allSubjects = S.subjects || {};
+  const subjs = allSubjects[S.level] || allSubjects.middle || [];
   const filtered=subjs.filter(s=>S.stats[s.id]>0);
   document.getElementById('subj-bars').innerHTML=filtered.length
     ?filtered.map(s=>{const c=S.stats[s.id]||0;const p=Math.round(c/maxV*100);
