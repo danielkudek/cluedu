@@ -933,6 +933,7 @@ function onChatPhoto(e){
   compressImage(f,(b64,mt)=>{
     S.photo=`data:${mt};base64,${b64}`;
     S.photoB64=b64;S.photoMt=mt;
+    spendCredits(2); // dodatkowe 2 kredyty za zdjęcie (callAI doliczy kolejne 2)
     sendMsg();
   });
 }
@@ -1194,6 +1195,7 @@ async function callAI(){
     addMsg('assistant',txt);
     S.msgs.push({role:'assistant',content:txt});
     S.total++;S.sesQ++;
+    spendCredits(2);
     localStorage.setItem('ctotal',S.total);
     if(!S.stats[S.subj.id]) S.stats[S.subj.id]=0;
     S.stats[S.subj.id]++;
