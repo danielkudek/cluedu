@@ -1249,7 +1249,16 @@ function renderReport(){
   showScreen('report');
 }
 function chgName(){const n=prompt('Nowe imię dziecka:',S.name);if(n&&n.trim()){S.name=n.trim();localStorage.setItem('cname',S.name);renderReport();renderMain();}}
-function chgLevel(){const v=prompt('Poziom (primary / middle / high):',S.level);if(v&&['primary','middle','high'].includes(v)){S.level=v;localStorage.setItem('clevel',v);renderReport();renderMain();}}
+function chgLevel(){
+  const options = {'1':'primary','2':'middle','3':'high'};
+  const v = prompt('Wybierz poziom:\n1 — Klasy 1–3\n2 — Klasy 4–8\n3 — Liceum', '');
+  if(v && options[v.trim()]){
+    S.level = options[v.trim()];
+    localStorage.setItem('clevel', S.level);
+    renderReport();
+    renderMain();
+  }
+}
 function chgCode(){const v=prompt('Nowy kod dostępu (min. 4 znaki):','');if(v&&v.length>=4){S.code=v;localStorage.setItem('code',v);alert('Kod zmieniony! ✅');}}
 function chgPin(){startPin('set');}
 
