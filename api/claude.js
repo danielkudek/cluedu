@@ -1,6 +1,5 @@
 const { buildPrompt } = require('./prompts');
-
-const HAIKU_MODEL = 'claude-haiku-4-5-20251001';
+const config = require('./config');
 
 const handler = async (req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true);
@@ -26,8 +25,8 @@ const handler = async (req, res) => {
         'anthropic-beta': 'prompt-caching-2024-07-31'
       },
       body: JSON.stringify({
-        model: HAIKU_MODEL,
-        max_tokens: 600,
+        model: config.MODEL,
+        max_tokens: config.MAX_TOKENS,
         system: [
           {
             type: 'text',
