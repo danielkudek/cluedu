@@ -574,36 +574,6 @@ function showBlock(until){
   }, 500);
 }
 
-// ═══ DANE PRZEDMIOTÓW ═══
-const SUBJECTS = {
-  primary:[
-    {id:'mat',name:'Matematyka',emoji:'🔢',ac:'ac-mat'},
-    {id:'pol',name:'Polski',emoji:'📖',ac:'ac-pol'},
-    {id:'ang',name:'Angielski',emoji:'🌍',ac:'ac-ang'},
-    {id:'prz',name:'Przyroda',emoji:'🌿',ac:'ac-prz'}
-  ],
-  middle:[
-    {id:'mat',name:'Matematyka',emoji:'📐',ac:'ac-mat'},
-    {id:'pol',name:'Polski',emoji:'📝',ac:'ac-pol'},
-    {id:'ang',name:'Angielski',emoji:'🌍',ac:'ac-ang'},
-    {id:'bio',name:'Biologia',emoji:'🧬',ac:'ac-bio'},
-    {id:'his',name:'Historia',emoji:'🏛️',ac:'ac-his'},
-    {id:'che',name:'Chemia',emoji:'⚗️',ac:'ac-che'},
-    {id:'fiz',name:'Fizyka',emoji:'⚡',ac:'ac-fiz'},
-    {id:'geo',name:'Geografia',emoji:'🌎',ac:'ac-geo'}
-  ],
-  high:[
-    {id:'mat',name:'Matematyka',emoji:'∑',ac:'ac-mat'},
-    {id:'pol',name:'Polski',emoji:'✒️',ac:'ac-pol'},
-    {id:'ang',name:'Angielski',emoji:'🌐',ac:'ac-ang'},
-    {id:'bio',name:'Biologia',emoji:'🔬',ac:'ac-bio'},
-    {id:'his',name:'Historia',emoji:'📜',ac:'ac-his'},
-    {id:'che',name:'Chemia',emoji:'⚗️',ac:'ac-che'},
-    {id:'fiz',name:'Fizyka',emoji:'🔭',ac:'ac-fiz'},
-    {id:'geo',name:'Geografia',emoji:'🗺️',ac:'ac-geo'}
-  ]
-};
-
 // ═══ MARKDOWN ═══
 function mdToHtml(t){
   return t.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
@@ -667,17 +637,25 @@ function saveOnboarding(){
 // ═══ SCREEN 3 ═══
 function renderMain(){
   document.getElementById('greeting-name').textContent=S.name+'!';
-  const subjs=SUBJECTS[S.level]||SUBJECTS.middle;
   const grid=document.getElementById('subj-grid');
-  grid.innerHTML='';
-  subjs.forEach(s=>{
-    const btn=document.createElement('button');
-    btn.className='subj-card '+s.ac;
-    btn.innerHTML=`<span class="subj-em">${s.emoji}</span><div class="subj-name">${s.name}</div>`;
-    btn.addEventListener('click',()=>selectSubject(s.id,s));
-    grid.appendChild(btn);
-  });
-  renderPending();
+  grid.innerHTML='<div style="color:rgba(255,255,255,.5);font-size:14px">Ładowanie...</div>';
+  fetch('/api/subjects')
+    .then(r=>r.json())
+    .then(data=>{
+      const subjs=data[S.level]||data.middle;
+      grid.innerHTML='';
+      subjs.forEach(s=>{
+        const btn=document.createElement('button');
+        btn.className='subj-card '+s.ac;
+        btn.innerHTML=`<span class="subj-em">${s.emoji}</span><div class="subj-name">${s.name}</div>`;
+        btn.addEventListener('click',()=>selectSubject(s.id,s));
+        grid.appendChild(btn);
+      });
+      renderPending();
+    })
+    .catch(()=>{
+      grid.innerHTML='<div style="color:#ff6b6b;font-size:14px">❌ Błąd ładowania przedmiotów</div>';
+    });
 }
 
 // ═══ PAMIĘĆ SESJI ═══
