@@ -524,6 +524,8 @@ const S = {
   blockTimer: null,
   redagujActive: false, redagujSkip: 0,
   subjects: null,
+  credits: parseInt(localStorage.getItem('ccredits') || '2500'),
+  creditsMonth: localStorage.getItem('ccredits_month') || '',
   flags: {
     OFFTOPIC: '[OFFTOPIC]',
     VULGAR1:  '[VULGAR1]',
@@ -546,6 +548,36 @@ function incVulgarToday(){
   const count = getVulgarToday() + 1;
   localStorage.setItem('cvulgar_day', JSON.stringify({date: today, count}));
   return count;
+}
+
+function checkCreditsReset(){
+  const m = new Date().toISOString().slice(0,7);
+  if(S.creditsMonth !== m){
+    S.credits = 2500;
+    S.creditsMonth = m;
+    localStorage.setItem('ccredits', S.credits);
+    localStorage.setItem('ccredits_month', m);
+  }
+}
+function spendCredits(n){
+  S.credits = Math.max(0, S.credits - n);
+  localStorage.setItem('ccredits', S.credits);
+  updateCreditCircle();
+}
+function updateCreditCircle(){
+  const el = document.getElementById('credit-circle-fill');
+  if(!el) return;
+  const used = 2500 - S.credits;
+  const pct = used / 2500;
+  const circ = 2 * Math.PI * 18;
+  el.style.strokeDashoffset = circ * (1 - pct);
+}
+function hasCredits(n){
+  if(S.credits < n){
+    alert('Wykorzystałeś wszystkie kredyty na ten miesiąc. Wróć w przyszłym miesiącu! 🦉');
+    return false;
+  }
+  return true;
 }
 
 // ═══ BLOKADA ═══
