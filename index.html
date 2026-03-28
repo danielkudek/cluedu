@@ -515,6 +515,7 @@ const S = {
   method: 'text', pinMode: null, pinBuf: '', pinFirst: '',
   sesQ: 0, offtopicCount: 0,
   ocrPhoto: null, ocrPhotoMt: null,
+  ocrTasksRemaining: [], ocrCurrentIndex: -1,
   pendingTasks: JSON.parse(localStorage.getItem('cpending') || '[]'),
   blockTimer: null,
   redagujActive: false, redagujSkip: 0
@@ -636,7 +637,7 @@ Gdy uczeń pracuje nad zadaniem twórczym:
 • Niepoprawna → zapytaj dlaczego i naprowadź
 
 ━━━ POTWIERDZANIE I KOŃCZENIE ━━━
-• Poprawna odpowiedź → natychmiast potwierdź + BEZWZGLĘDNIE zakończ
+• Poprawna odpowiedź → natychmiast potwierdź + BEZWZGLĘDNIE zakończ + dodaj [DONE]
 • Możesz tylko zapytać: "Chcesz spróbować kolejnego zadania?"
 
 ━━━ 3-POZIOMOWY SYSTEM POMOCY ━━━
@@ -919,6 +920,11 @@ function selectOCRTask(i,btn,b64,mt){
 }
 
 function confirmOCR(text,needsPhoto,b64,mt){
+  // Zapamiętaj pozostałe zadania
+  const allTasks = S.ocrTasks || [];
+  const chosen = allTasks.indexOf(allTasks.find(t => t.replace('(zawiera ilustrację)','').trim() === text.trim()));
+  S.ocrTasksRemaining = allTasks.filter((_,i) => i !== chosen);
+  S.ocrCurrentIndex = chosen;
   document.getElementById('task-ta').value=text;
   // Zachowaj zdjęcie TYLKO jeśli zadanie wymaga ilustracji
   if(needsPhoto){
@@ -1003,6 +1009,65 @@ function activateRedaguj(){
   document.getElementById('voice-chat-btn').disabled=true;
   document.getElementById('chat-in').focus();
 }
+function showRemainingOcrTasks(){
+  const el = document.getElementById('chat-msgs');
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'msg assistant';
+
+  const remaining = S.ocrTasksRemaining;
+  const label = document.createElement('div');
+  label.className = 'bubble';
+  label.style.background = '#F3EEFF';
+  label.style.border = '1px solid #D0BCFF';
+
+  let html = '<div style="font-size:14px;font-weight:700;color:#7B4FD4;margin-bottom:10px">📋 Mam jeszcze zadania z Twojego zdjęcia:</div>';
+  html += '<div style="display:flex;flex-direction:column;gap:8px">';
+  remaining.forEach((task, i) => {
+    const clean = task.replace('(zawiera ilustrację)','').trim();
+    const hasImg = task.includes('(zawiera ilustrację)');
+    html += `<button
+      onclick="startOcrTask(${i})"
+      style="background:#fff;border:2px solid #D0BCFF;border-radius:10px;padding:10px 14px;cursor:pointer;font-size:14px;color:#1A1A2E;text-align:left;transition:all .2s;line-height:1.4"
+      onmouseover="this.style.borderColor='#7B4FD4'"
+      onmouseout="this.style.borderColor='#D0BCFF'">
+      ${i+1}. ${clean}${hasImg?' 🖼️':''}
+    </button>`;
+  });
+  html += '</div>';
+
+  label.innerHTML = html;
+  wrapper.appendChild(label);
+  el.appendChild(wrapper);
+  el.scrollTop = el.scrollHeight;
+}
+
+function startOcrTask(i){
+  const task = S.ocrTasksRemaining[i];
+  const hasImg = task.includes('(zawiera ilustrację)');
+  const clean = task.replace('(zawiera ilustrację)','').trim();
+
+  // Usuń listę zadań z chatu
+  const btns = document.querySelectorAll('#chat-msgs .msg.assistant:last-child');
+  if(btns.length) btns[btns.length-1].remove();
+
+  // Usuń to zadanie z listy pozostałych
+  S.ocrTasksRemaining = S.ocrTasksRemaining.filter((_,idx) => idx !== i);
+
+  // Wyślij jako nową wiadomość
+  if(hasImg && S.ocrPhoto){
+    addMsg('user', clean);
+    S.msgs.push({role:'user', content:[
+      {type:'image', source:{type:'base64', media_type:S.ocrPhotoMt, data:S.ocrPhoto}},
+      {type:'text', text:clean}
+    ]});
+  } else {
+    addMsg('user', clean);
+    S.msgs.push({role:'user', content:clean});
+  }
+  callAI();
+}
+
 function deactivateRedaguj(){
   S.redagujActive=false;
   S.redagujSkip=2;
@@ -1082,6 +1147,13 @@ function hideTyping(){const t=document.getElementById('typing');if(t)t.remove();
 
 // ═══ MODERACJA ═══
 function handleModeration(txt){
+  if(txt.includes('[DONE]')){
+    const clean = txt.replace('[DONE]','').trim();
+    if(S.ocrTasksRemaining && S.ocrTasksRemaining.length > 0){
+      setTimeout(()=>showRemainingOcrTasks(), 400);
+    }
+    return clean;
+  }
   if(txt.includes('[VULGAR3]')){
     const count=incVulgarToday();
     S.vulgarTotal++;localStorage.setItem('cvt',S.vulgarTotal);
@@ -1194,7 +1266,7 @@ function exitChat(){
     if(S.sessions.length>50) S.sessions=S.sessions.slice(-50);
     localStorage.setItem('csess',JSON.stringify(S.sessions));
   }
-  S.msgs=[];showScreen('main');renderMain();
+  S.msgs=[];S.ocrTasksRemaining=[];S.ocrCurrentIndex=-1;showScreen('main');renderMain();
 }
 
 // ═══ RAPORT ═══
