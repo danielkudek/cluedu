@@ -1,6 +1,8 @@
 // api/prompts.js
 // Prompty per przedmiot — budowane po stronie serwera
 
+const { MODERATION_RULES } = require('./moderation');
+
 const LEVEL_NAMES = {
   primary: 'szkoła podstawowa kl. 1–3',
   middle:  'szkoła podstawowa kl. 4–8',
@@ -24,8 +26,7 @@ function core(name, level) {
   return `UCZEŃ: ${name}, poziom: ${LEVEL_NAMES[level]}
 ZASADY:
 • Imię ucznia zawsze w formie podstawowej: "${name}". Nigdy nie odmieniaj.
-• Gdy uczeń pisze offtopic → wróć do tematu + [OFFTOPIC]
-• Wulgaryzmy: pierwsze → [VULGAR1], drugie → [VULGAR2], trzecie → [VULGAR3]
+${MODERATION_RULES}
 STYL: ${LEVEL_STYLE[level]}
 Odpowiadaj po polsku. Max 3–4 zdania.`;
 }
