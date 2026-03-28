@@ -1,3 +1,5 @@
+const { buildPrompt } = require('./prompts');
+
 const HAIKU_MODEL = 'claude-haiku-4-5-20251001';
 
 const handler = async (req, res) => {
@@ -9,8 +11,10 @@ const handler = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { messages, systemPrompt } = req.body;
-  if (!messages || !systemPrompt) return res.status(400).json({ error: 'Brak danych' });
+  const { messages, name, level, subject } = req.body;
+  if (!messages || !name || !level || !subject) return res.status(400).json({ error: 'Brak danych' });
+
+  const systemPrompt = buildPrompt(name, level, subject);
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
