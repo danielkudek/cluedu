@@ -35,4 +35,11 @@ const SUBJECTS = {
 
 };
 
-module.exports = { SUBJECTS };
+const handler = (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Cache-Control', 'public, max-age=86400'); // cache na 24h
+  if (req.method !== 'GET') return res.status(405).end();
+  res.status(200).json(SUBJECTS);
+};
+
+module.exports = handler;
