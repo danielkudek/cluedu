@@ -522,7 +522,15 @@ const S = {
   ocrTasksRemaining: [], ocrCurrentIndex: -1,
   pendingTasks: JSON.parse(localStorage.getItem('cpending') || '[]'),
   blockTimer: null,
-  redagujActive: false, redagujSkip: 0
+  redagujActive: false, redagujSkip: 0,
+  flags: {
+    OFFTOPIC: '[OFFTOPIC]',
+    VULGAR1:  '[VULGAR1]',
+    VULGAR2:  '[VULGAR2]',
+    VULGAR3:  '[VULGAR3]',
+    REDAGUJ:  '[REDAGUJ]',
+    DONE:     '[DONE]',
+  },
 };
 
 // ═══ WULGARYZMY — licznik dzienny ═══
@@ -1083,37 +1091,37 @@ function hideTyping(){const t=document.getElementById('typing');if(t)t.remove();
 
 // ═══ MODERACJA ═══
 function handleModeration(txt){
-  if(txt.includes('[DONE]')){
-    const clean = txt.replace('[DONE]','').trim();
+  if(txt.includes(S.flags.DONE)){
+    const clean = txt.replace(S.flags.DONE,'').trim();
     if(S.ocrTasksRemaining && S.ocrTasksRemaining.length > 0){
       setTimeout(()=>showRemainingOcrTasks(), 400);
     }
     return clean;
   }
-  if(txt.includes('[VULGAR3]')){
+  if(txt.includes(S.flags.VULGAR3)){
     const count=incVulgarToday();
     S.vulgarTotal++;localStorage.setItem('cvt',S.vulgarTotal);
     if(count>=MAX_VULGAR) triggerBlock('vulgar');
-    return txt.replace('[VULGAR3]','').trim();
+    return txt.replace(S.flags.VULGAR3,'').trim();
   }
-  if(txt.includes('[VULGAR2]')){
+  if(txt.includes(S.flags.VULGAR2)){
     incVulgarToday();
     S.vulgarTotal++;localStorage.setItem('cvt',S.vulgarTotal);
-    return txt.replace('[VULGAR2]','').trim();
+    return txt.replace(S.flags.VULGAR2,'').trim();
   }
-  if(txt.includes('[VULGAR1]')){
+  if(txt.includes(S.flags.VULGAR1)){
     incVulgarToday();
     S.vulgarTotal++;localStorage.setItem('cvt',S.vulgarTotal);
-    return txt.replace('[VULGAR1]','').trim();
+    return txt.replace(S.flags.VULGAR1,'').trim();
   }
-  if(txt.includes('[OFFTOPIC]')){
+  if(txt.includes(S.flags.OFFTOPIC)){
     S.offtopicCount++;
     S.offtopicTotal++;localStorage.setItem('cot',S.offtopicTotal);
     if(S.offtopicCount>=MAX_OFFTOPIC) triggerBlock('offtopic');
-    return txt.replace('[OFFTOPIC]','').trim();
+    return txt.replace(S.flags.OFFTOPIC,'').trim();
   }
-  if(txt.includes('[REDAGUJ]')){
-    const clean=txt.replace('[REDAGUJ]','').trim();
+  if(txt.includes(S.flags.REDAGUJ)){
+    const clean=txt.replace(S.flags.REDAGUJ,'').trim();
     if(S.redagujSkip>0){
       S.redagujSkip--;
     } else {
@@ -1289,6 +1297,11 @@ function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g
 
 // ═══ INIT ═══
 (function(){
+  // Pobierz flagi moderacji z serwera
+  fetch('/api/moderation')
+    .then(r=>r.json())
+    .then(data=>{ S.flags = data.flags; })
+    .catch(()=>{ console.warn('Nie udało się pobrać flag moderacji'); });
   checkBlock();
   // Jeśli zalogowany — pomiń ekran kodu
   if(S.loggedIn && S.name && S.level){
