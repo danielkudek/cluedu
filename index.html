@@ -230,6 +230,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 .block-timer{font-size:56px;font-weight:800;color:#FFD95A;font-variant-numeric:tabular-nums}
 .block-timer-label{color:rgba(255,255,255,.5);font-size:13px}
 
+.credit-hint{font-size:10px;color:#aaa;text-align:center;margin-top:2px;line-height:1}
+.credit-circle-wrap{position:fixed;top:14px;left:16px;width:44px;height:44px;z-index:10}
+.credit-circle-wrap svg{transform:rotate(-90deg)}
+.credit-circle-bg{fill:none;stroke:rgba(255,255,255,.2);stroke-width:3}
+.credit-circle-fill{fill:none;stroke:#FFD95A;stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .4s ease}
 .hidden{display:none!important}
 #cam-in,#chat-cam-in{display:none}
 </style>
@@ -279,6 +284,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
 <!-- SCREEN 3: GŁÓWNY -->
 <div id="screen-main" class="screen grad-bg">
   <button class="parent-icon" onclick="openReport()">👤</button>
+<div class="credit-circle-wrap">
+  <svg width="44" height="44" viewBox="0 0 44 44">
+    <circle class="credit-circle-bg" cx="22" cy="22" r="18"/>
+    <circle class="credit-circle-fill" id="credit-circle-fill" cx="22" cy="22" r="18"
+      style="stroke-dasharray:113;stroke-dashoffset:113"/>
+  </svg>
+</div>
   <div class="main-inner">
     <div class="main-top">
       <div class="main-owl">🦉</div>
@@ -1081,6 +1093,7 @@ function startChat(){
     txt=document.getElementById('task-ta').value.trim();
     if(!txt){alert('Nagraj najpierw swoje zadanie 🎤');return;}
   }
+  if(!hasCredits(2)) return;
   document.getElementById('chat-subj-name').textContent=`${S.subj.emoji} ${S.subj.name}`;
   S.msgs=[];S.sesQ=0;S.offtopicCount=0;S.redagujActive=false;
   document.getElementById('chat-msgs').innerHTML='';
@@ -1224,6 +1237,7 @@ function sendMsg(){
     if(txt){inp.value='';inp.style.height='auto';}
     callAI();return;
   }
+  if(!hasCredits(2)) return;
   if(!txt)return;
   // Sprawdź wulgaryzmy przed wysłaniem
   const vulgarDay=getVulgarToday();
