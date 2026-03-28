@@ -853,6 +853,17 @@ function compressImage(file,cb){
 
 // ═══ OCR ═══
 async function runOCR(b64,mt){
+  const ocrDay = JSON.parse(localStorage.getItem('cocr_day') || '{"date":"","count":0}');
+  const today = new Date().toLocaleDateString('pl-PL');
+  if(ocrDay.date === today && ocrDay.count >= 3){
+    alert('Dzienny limit zdjęć (3) został wykorzystany. Wpisz zadanie ręcznie lub wróć jutro. 📷');
+    setMethod('text');
+    return;
+  }
+  localStorage.setItem('cocr_day', JSON.stringify({
+    date: today,
+    count: ocrDay.date === today ? ocrDay.count + 1 : 1
+  }));
   // Zachowujemy zdjęcie tymczasowo tylko do OCR — potem wyrzucamy
   const panel=document.getElementById('ocr-panel');
   const content=document.getElementById('ocr-content');
@@ -1380,6 +1391,8 @@ function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g
     .then(data=>{ S.flags = data.flags; })
     .catch(()=>{ console.warn('Nie udało się pobrać flag moderacji'); });
   checkBlock();
+  checkCreditsReset();
+  updateCreditCircle();
   // Jeśli zalogowany — pomiń ekran kodu
   if(S.loggedIn && S.name && S.level){
     document.getElementById('screen-access').classList.remove('active');
