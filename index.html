@@ -376,11 +376,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
   <div class="chat-msgs" id="chat-msgs"></div>
   <div class="chat-input-area">
     <div class="chat-row">
-      <button class="cab" onclick="chatPhoto()" title="Zdjęcie">📷</button>
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <button class="cab" onclick="chatPhoto()" title="Zdjęcie">📷</button>
+        <div class="credit-hint">4 🔋</div>
+      </div>
       <textarea class="chat-in" id="chat-in" placeholder="Napisz odpowiedź..." rows="1"
         onkeydown="chatKeyDown(event)" oninput="autoH(this);checkRedagujTyping(this)"></textarea>
-      <button class="cab" id="voice-chat-btn" onclick="chatVoice()" title="Głos">🎤</button>
-      <button class="send-btn" id="send-btn" onclick="sendMsg()">➤</button>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+        <div style="display:flex;gap:8px">
+          <button class="cab" id="voice-chat-btn" onclick="chatVoice()" title="Głos">🎤</button>
+          <button class="send-btn" id="send-btn" onclick="sendMsg()">➤</button>
+        </div>
+        <div class="credit-hint">2 🔋</div>
+      </div>
     </div>
     <input type="file" id="chat-cam-in" accept="image/*" capture="environment" onchange="onChatPhoto(event)">
   </div>
@@ -399,6 +407,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;m
     <div class="rpt-section">
       <h3>Statystyki</h3>
       <div class="stats-grid">
+        <div class="stat-card" style="grid-column:1/-1;background:#F3EEFF;border-color:#D0BCFF">
+          <div class="stat-val" id="st-credits" style="color:#7B4FD4">2500</div>
+          <div class="stat-lbl">Pozostałe kredyty w tym miesiącu</div>
+        </div>
         <div class="stat-card"><div class="stat-val" id="st-total">0</div><div class="stat-lbl">Zapytań łącznie</div></div>
         <div class="stat-card"><div class="stat-val" id="st-days">0</div><div class="stat-lbl">Dni nauki</div></div>
         <div class="stat-card"><div class="stat-val" id="st-sess">0</div><div class="stat-lbl">Sesji</div></div>
@@ -1238,6 +1250,10 @@ function sendMsg(){
     callAI();return;
   }
   if(!hasCredits(2)) return;
+  if(txt.length > 500){
+    alert('Wiadomość jest za długa. Maksymalnie 500 znaków. ✂️');
+    return;
+  }
   if(!txt)return;
   // Sprawdź wulgaryzmy przed wysłaniem
   const vulgarDay=getVulgarToday();
@@ -1271,6 +1287,7 @@ function openReport(){
   else startPin('verify');
 }
 function renderReport(){
+  document.getElementById('st-credits').textContent=S.credits;
   document.getElementById('st-total').textContent=S.total;
   const days=[...new Set(S.sessions.map(s=>s.date))].length;
   document.getElementById('st-days').textContent=days;
